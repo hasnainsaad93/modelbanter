@@ -1,0 +1,159 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Sentiment {
+  POSITIVE
+  NEGATIVE
+  NEUTRAL
+}
+
+enum RunStatus {
+  RUNNING
+  COMPLETED
+  PARTIALLY_COMPLETED
+  FAILED
+  RATE_LIMITED
+  USAGE_LIMIT_REACHED
+}
+
+model Model {
+  id            String                 @id @default(cuid())
+  name          String
+  slug          String                 @unique
+  vendor        String
+  description   String
+  aliases       String[]
+  searchQuery   String
+  visual        String?
+  isEnabled     Boolean                @default(true)
+  displayOrder  Int                    @default(0)
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  mentions      ModelMention[]
+  ingestionRuns IngestionModelResult[]
+}
+
+model XPost {
+  id             String         @id @default(cuid())
+  xPostId        String         @unique
+  authorXId      String
+  authorUsername String
+  authorName     String
+  text           String
+  language       String         @default("en")
+  publishedAt    DateTime
+  conversationId String?
+  likeCount      Int            @default(0)
+  replyCount     Int            @default(0)
+  repostCount    Int            @default(0)
+  quoteCount     Int            @default(0)
+  viewCount      Int?
+  rawPayload     Json?
+  isDemo         Boolean        @default(false)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  mentions       ModelMention[]
+
+  @@index([publishedAt])
+  @@index([likeCount])
+  @@index([repostCount])
+  @@index([replyCount])
+  @@index([viewCount])
+}
+
+model ModelMention {
+  id               String         @id @default(cuid())
+  postId           String
+  modelId          String
+  sentiment        Sentiment
+  sentimentScore   Float
+  confidence       Float
+  explanation      String
+  strengths        String[]
+  weaknesses       String[]
+  analysisProvider String
+  analysisVersion  String
+  analyzedAt       DateTime       @default(now())
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  post             XPost          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  model            Model          @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  topics           MentionTopic[]
+
+  @@unique([postId, modelId])
+  @@index([modelId])
+  @@index([sentiment])
+  @@index([modelId, sentiment])
+}
+
+model Topic {
+  id       String         @id @default(cuid())
+  name     String
+  slug     String         @unique
+  mentions MentionTopic[]
+}
+
+model MentionTopic {
+  mentionId      String
+  topicId        String
+  sentimentScore Float
+  mention        ModelMention @relation(fields: [mentionId], references: [id], onDelete: Cascade)
+  topic          Topic        @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@id([mentionId, topicId])
+}
+
+model IngestionRun {
+  id           String                 @id @default(cuid())
+  status       RunStatus              @default(RUNNING)
+  startedAt    DateTime               @default(now())
+  completedAt  DateTime?
+  durationMs   Int?
+  errorMessage String?
+  metadata     Json?
+  results      IngestionModelResult[]
+
+  @@index([status])
+  @@index([startedAt])
+}
+
+model IngestionModelResult {
+  id                      String       @id @default(cuid())
+  ingestionRunId          String
+  modelId                 String
+  status                  RunStatus    @default(RUNNING)
+  pagesRequested          Int          @default(0)
+  postsFetched            Int          @default(0)
+  postsExamined           Int          @default(0)
+  existingPosts           Int          @default(0)
+  existingAssociations    Int          @default(0)
+  newPostsInserted        Int          @default(0)
+  newAssociationsInserted Int          @default(0)
+  rejectedPosts           Int          @default(0)
+  analysesCompleted       Int          @default(0)
+  targetCount             Int          @default(25)
+  targetReached           Boolean      @default(false)
+  rateLimitStatus         String?
+  errorMessage            String?
+  startedAt               DateTime     @default(now())
+  completedAt             DateTime?
+  durationMs              Int?
+  ingestionRun            IngestionRun @relation(fields: [ingestionRunId], references: [id], onDelete: Cascade)
+  model                   Model        @relation(fields: [modelId], references: [id])
+
+  @@unique([ingestionRunId, modelId])
+  @@index([status])
+}
+
+model JobLock {
+  name      String   @id
+  ownerId   String
+  expiresAt DateTime
+  updatedAt DateTime @updatedAt
+}
