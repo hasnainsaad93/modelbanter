@@ -8,7 +8,7 @@ A compact AI model sentiment dashboard. One overview combines a positive/negativ
 
 ## Run locally
 
-Requires Node.js 22.13+ and PostgreSQL 15+.
+Requires Node.js 24 and PostgreSQL 15+.
 
 For a fresh checkout, create the `modelbanter` PostgreSQL database before running migrations. Keep the existing database URL when upgrading an installation.
 
@@ -30,6 +30,43 @@ Catalog sources checked October 4, 2026:
 - Moonshot AI: https://github.com/MoonshotAI/Kimi-K3
 - DeepSeek: https://api-docs.deepseek.com/quick_start/pricing
 - xAI: https://docs.x.ai/developers/models
+
+## DigitalOcean managed database
+
+The existing installation uses the managed PostgreSQL database `modelbanterdb`. Its schema, data, and Prisma migration history were copied from the original local database. The local `.env` points to this managed database, so collection and analysis commands now write to the shared database. Credentials and migration backups remain outside Git.
+
+For App Platform, set `DATABASE_URL` as a secret environment variable using the database's connection URL, selecting `modelbanterdb` and retaining `sslmode=require` (and `schema=public`). The local `.env` is not uploaded with the repository. Run `npx prisma migrate deploy` against this connection for subsequent schema updates; do not use `migrate dev` or `migrate reset` against the managed database. The health endpoint `/api/health` checks connectivity.
+
+## DigitalOcean App Platform deployment
+
+Create the app in the account that owns the database. Connect the GitHub repository `hasnainsaad93/modelbanter`, select `main`, and enable Autodeploy for its components. The example spec [.do/app.json](.do/app.json) defines the web service and two jobs. Its secret fields are intentionally blank; configure them privately in App Platform. The Node 24 buildpack installs dependencies and prunes development packages. `tsx` is a production dependency because the collection job runs TypeScript.
+
+| Component | Type / trigger | Build command | Run command |
+| --- | --- | --- | --- |
+| `web` | Web service | `npm run build` | `npm run start -- --hostname 0.0.0.0 --port 8080` |
+| `migrate` | Job, before every deploy | `npm run db:generate` | `npm run db:deploy` |
+| `collect` | Job, on a schedule | `npm run db:generate` | `npm run ingest` |
+
+Set the web service's HTTP port to `8080` and health-check path to `/api/health`. Allow a 20-second startup delay and 10-second health-check timeout. Start with one shared 1 GB instance for web and shared 512 MB job instances. Choose a region near the managed database. No new database or continuously running worker is needed.
+
+Set collection's schedule to `0 */4 * * *`, timezone `Etc/UTC`: 00:00, 04:00, 08:00, 12:00, 16:00, and 20:00 UTC. It runs `npm run ingest` directly, so no external HTTP scheduler is required. The existing database lease and durable checkpoints still protect against overlap and interrupted runs. Collection exits after disconnecting its database client; failed, rate-limited, and quota-exhausted runs signal failure to App Platform. Partial runs retain their checkpoints for later rotation. X and TypeSafe quota costs still apply.
+
+Configure these app-level environment variables so all three components inherit them:
+
+| Variables | Scope | Handling |
+| --- | --- | --- |
+| `DATABASE_URL`, `CRON_SECRET`, `X_BEARER_TOKEN`, `TYPESAFE_JEV` | Run time | Encrypt; copy from the local `.env` |
+| `NODE_ENV=production` | Build and run time | Plain text |
+| `NEXT_PUBLIC_SITE_URL=https://modelbanter.com`, `NEXT_PUBLIC_POSTHOG_KEY`, `NEXT_PUBLIC_POSTHOG_HOST` | Build and run time | Plain text; the PostHog project token is public |
+| `SENTIMENT_PROVIDER=typesafe`, `TARGET_UNIQUE_POSTS_PER_MODEL=100`, `MODELS_PER_RUN=3`, `X_MAX_PAGES_PER_MODEL=20`, `X_RESULTS_PER_PAGE=100` | Run time | Plain text |
+
+For the deployed `DATABASE_URL`, keep `sslmode=require`, add `connect_timeout=20` and `connection_limit=5`, and select `/modelbanterdb`. If the managed database restricts trusted sources, add the app through the database's DigitalOcean settings. Credentials remain in private environment settings, not GitHub. `npm run deploy:prepare` optionally produces a private, Git-ignored spec at `work/digitalocean/app.secret.json` from `.env`; it does not access DigitalOcean or deploy anything. This file contains secrets and must never be committed.
+
+The migration job must succeed before web is released. It preserves existing data and only applies unapplied migrations. Do not run `db:seed`, `migrate dev`, or a database reset during deployment. If migrations cannot connect, correct database connectivity instead of disabling the migration job.
+
+After deployment, verify `/api/health`, overview and model pages, and the Job activity/logs for `collect`. PostHog tracking activates on the public hostname. Add `modelbanter.com` as a custom domain and use the DNS records DigitalOcean supplies in GoDaddy; DigitalOcean provisions the HTTPS certificate once DNS is verified. `vercel.json` is only for Vercel and has no effect on this deployment.
+
+Platform references: [scheduled and deployment jobs](https://docs.digitalocean.com/products/app-platform/how-to/manage-jobs/), [Node buildpack behavior](https://docs.digitalocean.com/products/app-platform/reference/buildpacks/nodejs/), and [app specification](https://docs.digitalocean.com/products/app-platform/reference/app-spec/).
 
 ## Classification and collection
 
