@@ -1,4 +1,9 @@
 import type { MetadataRoute } from "next";
-import { models } from "@/lib/demo-data";
-export default function sitemap(): MetadataRoute.Sitemap { const base = "https://codex-signalist.example"; return ["", "/compare", "/posts", "/methodology", ...models.map((model) => `/models/${model.slug}`)].map((path) => ({ url: `${base}${path}`, lastModified: new Date(), changeFrequency: path === "" ? "hourly" : "daily" })); }
-
+import { db } from "@/lib/server/db";
+import { site } from "@/lib/site";
+export const dynamic = "force-dynamic";
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const base = site.url;
+  const models = await db.model.findMany({ where: { isEnabled: true }, select: { slug: true, updatedAt: true } });
+  return [{ url: base, changeFrequency: "daily" }, ...models.map(model => ({ url: `${base}/models/${model.slug}`, lastModified: model.updatedAt, changeFrequency: "daily" as const }))];
+}

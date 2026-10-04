@@ -1,3 +1,2 @@
 import Link from "next/link";
-export default function NotFound() { return <div className="state-page"><span>404 / signal lost</span><h1>This model isn’t on our radar.</h1><p>The registry may have changed, or the URL is incorrect.</p><Link href="/">Return to overview</Link></div>; }
-
+export default function NotFound() { return <div className="error-state"><h1>Model not found.</h1><p>This model isn’t in the catalog.</p><Link href="/">Back to all models</Link></div>; }

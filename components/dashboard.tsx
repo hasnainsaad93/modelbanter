@@ -1,55 +1,61 @@
 "use client";
-
 import Link from "next/link";
-import { useState } from "react";
-import { ArrowRight, Clock3, Flame, Heart, MessageCircle, Repeat2, Sparkles, Zap } from "lucide-react";
-import { motion } from "motion/react";
-import { MentionChart, ModelScoreChart, SentimentDonut, TrendChart } from "./charts";
-import { Delta, DemoBadge, Eyebrow, NumberValue } from "./ui";
-import { models, posts, summary, topicRows } from "@/lib/demo-data";
+import { usePathname, useRouter } from "next/navigation";
+import { useTransition } from "react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, ExternalLink, MessageSquare, RefreshCw } from "lucide-react";
+import { categories, categoryKeys, MIN_SAMPLE } from "@/lib/analysis";
+import type { DashboardData, PostData } from "@/lib/analytics/data";
+import type { Counts } from "@/lib/analytics/aggregate";
+import type { DashboardQuery } from "@/lib/analytics/query";
+import { trackUsage } from "@/lib/analytics/client";
+import { SentimentTrend } from "./charts";
 
-const ranges = ["24H", "7D", "30D", "ALL"];
-const fade = { initial: { opacity: 0, y: 12 }, animate: { opacity: 1, y: 0 } };
+const ranges = [{ value: "24h", label: "24 hours" }, { value: "7d", label: "7 days" }, { value: "30d", label: "30 days" }, { value: "all", label: "All time" }];
+const date = (value: string) => new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+const percent = (value: number | null) => value === null ? "—" : `${Math.round(value)}%`;
+const label = (value: string) => value.toLowerCase().replaceAll("_", " ");
 
-export function Dashboard() {
-  const [range, setRange] = useState("7D");
-  return <div className="page dashboard-page">
-    <div className="topbar"><div><DemoBadge /><span className="updated"><Clock3 />Updated 4 minutes ago</span></div><div className="range-control" aria-label="Time range">{ranges.map((item) => <button key={item} onClick={() => setRange(item)} className={range === item ? "active" : ""}>{item}</button>)}</div></div>
-    <motion.header {...fade} className="page-header hero-header"><div><Eyebrow>Market intelligence / {range}</Eyebrow><h1>Read the room.<br /><span>Before it shifts.</span></h1></div><p>Real-time perception signals across the frontier model landscape, distilled from conversations on X.</p></motion.header>
-
-    <section className="metric-grid" aria-label="Market summary">
-      <motion.article {...fade} transition={{ delay: .05 }} className="metric-card metric-primary"><div><span>Posts analyzed</span><Sparkles /></div><NumberValue>{summary.total.toLocaleString()}</NumberValue><small><Delta value={12.8} /> vs previous 7 days</small></motion.article>
-      <motion.article {...fade} transition={{ delay: .1 }} className="metric-card"><div><span>Last 24 hours</span><Zap /></div><NumberValue>{summary.today.toLocaleString()}</NumberValue><small>Across {models.length} tracked models</small></motion.article>
-      <motion.article {...fade} transition={{ delay: .15 }} className="metric-card"><div><span>Market sentiment</span><Heart /></div><NumberValue>+{summary.marketScore.toFixed(2)}</NumberValue><small><span className="positive-text">60.4% positive</span> · unweighted</small></motion.article>
-      <motion.article {...fade} transition={{ delay: .2 }} className="metric-card"><div><span>Most discussed</span><Flame /></div><strong className="metric-model">GPT-5.6 Sol</strong><small>3,824 mentions · <Delta value={18.2} /></small></motion.article>
+export function Dashboard({ data, evidence, detail = false }: { data: DashboardData; evidence?: PostData; detail?: boolean }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [pending, startTransition] = useTransition();
+  const q = data.query;
+  const model = data.catalog.find(item => item.slug === q.model);
+  function url(changes: Partial<DashboardQuery>, path = pathname) {
+    const next = { ...q, ...changes };
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(next)) if (value !== "" && !(key === "page" && value === 1) && !(key === "model" && path.startsWith("/models/"))) params.set(key, String(value));
+    return `${path}?${params}`;
+  }
+  function change(key: keyof DashboardQuery, value: string) {
+    const changes: Partial<DashboardQuery> = { [key]: value, page: 1 };
+    if (key === "vendor") changes.model = "";
+    if (key === "category") changes.sentiment = "all";
+    trackUsage(key === "category" ? "category_selected" : "filter_changed", { filter: key, model: q.model, vendor: q.vendor, category: key === "category" ? value : q.category, range: key === "range" ? value : q.range, sentiment: key === "sentiment" ? value : q.sentiment });
+    startTransition(() => router.push(url(changes), { scroll: false }));
+  }
+  function modelUrl(slug: string, category: DashboardQuery["category"] = q.category) { return url({ model: slug, vendor: "", category, sentiment: "all", page: 1 }, `/models/${slug}`); }
+  const isStale = data.latestPostAt && +new Date(data.asOf) - +new Date(data.latestPostAt) > 48 * 3600000;
+  return <div className="dashboard" aria-busy={pending}>
+    {detail && <Link href={url({ model: "", vendor: "", page: 1 }, "/")} className="back-link"><ArrowLeft size={15} />All models</Link>}
+    <div className="intro"><div><div className="eyebrow">{detail ? model?.vendor : "PUBLIC PERCEPTION / AI MODELS"}</div><h1>{detail ? model?.name : <>What’s the word<br className="mobile-break" /> on AI?</>}</h1><p>{detail ? "The opinions, the patterns, and the posts behind them." : "Follow the sentiment. Explore what people praise—and what gets in the way."}</p></div><div className="intro-note"><span className="status-dot" />{data.catalog.filter(item => item.isEnabled).length} models tracked<span>{new Set(data.catalog.filter(item => item.isEnabled).map(item => item.vendor)).size} vendors · Source: X</span></div></div>
+    <section className="filter-bar" aria-label="Dashboard filters"><div className="filters-left">{!detail && <><label><span>Vendor</span><select aria-label="Vendor" value={q.vendor} onChange={event => change("vendor", event.target.value)}><option value="">All vendors</option>{[...new Set(data.catalog.map(item => item.vendor))].sort().map(vendor => <option key={vendor}>{vendor}</option>)}</select></label><label><span>Model</span><select aria-label="Model" value={q.model} onChange={event => change("model", event.target.value)}><option value="">All models</option>{data.catalog.filter(item => !q.vendor || item.vendor === q.vendor).map(item => <option value={item.slug} key={item.slug}>{item.name}{item.isEnabled ? "" : " · archive"}</option>)}</select></label></>}<label><span>Focus</span><select aria-label="Focus" value={q.category} onChange={event => change("category", event.target.value)}><option value="all">Overall sentiment</option>{categoryKeys.map(key => <option key={key} value={key}>{categories[key]}</option>)}</select></label></div><div className="range-control" aria-label="Time period">{ranges.map(range => <button key={range.value} onClick={() => change("range", range.value)} aria-pressed={q.range === range.value}>{range.label}</button>)}</div></section>
+    <div className="data-context" aria-live="polite"><span>{pending ? "Updating results…" : `${data.summary.total.toLocaleString()} classified mentions${data.excluded ? ` · ${data.excluded} outside this focus or uncertain` : ""}`}</span><span>{data.latestPostAt ? `${isStale ? "Historical data · " : ""}Newest post ${date(data.latestPostAt)}` : "Waiting for the first collection"}</span></div>
+    <section className="trend-section"><div className="section-heading"><div><div className="eyebrow">{q.category === "all" ? "THE BIG PICTURE" : categories[q.category].toUpperCase()}</div><h2>{detail ? "How the conversation is changing" : "Where the conversation stands"}</h2></div><div className="chart-legend"><span><i className="positive-dot" />Positive</span><span><i className="negative-dot" />Negative</span></div></div>
+      {data.summary.total ? <><div className="sentiment-summary"><div><strong className="positive-text">{percent(data.summary.positivePercent)}</strong><span>positive <small>({data.summary.positive})</small></span></div><div><strong className="negative-text">{percent(data.summary.negativePercent)}</strong><span>negative <small>({data.summary.negative})</small></span></div><div className="summary-rest"><span>{data.summary.neutral} neutral · {data.summary.mixed} mixed</span><span>{data.summary.total < MIN_SAMPLE ? "Small sample · interpret with care" : data.change === null ? "No comparable previous period" : <><Change value={data.change} /> net sentiment vs previous period</>}</span></div></div><SentimentTrend data={data.trend} range={q.range} /></> : <div className="empty-chart"><MessageSquare size={25} strokeWidth={1.3} /><h3>No classified mentions in this view</h3><p>{data.storedMentions ? "Stored posts may be outside this period or still awaiting analysis." : "This model is ready to track. Its first collected posts will appear here."}</p>{q.range !== "all" && data.storedMentions > 0 && <button className="text-button" onClick={() => change("range", "all")}>Explore all time <ArrowRight size={15} /></button>}{data.pending > 0 && <span className="muted">{data.pending} stored mentions awaiting analysis</span>}</div>}
+      <div className="chart-caption"><span>Share of classified mentions · UTC</span><span>Collected opinions, unweighted by likes or reposts</span></div>
     </section>
-
-    <section className="signal-strip">
-      <div className="signal-kicker"><span className="live-pulse" />Live signals</div>
-      <div><span>Positive leader</span><strong>Kimi K3</strong><small>63.2% positive</small></div>
-      <div><span>Fastest rising</span><strong>Kimi K3</strong><small><Delta value={32.4} /></small></div>
-      <div><span>Most negative volume</span><strong>Claude Opus</strong><small>723 critical posts</small></div>
-      <div><span>Highest engagement</span><strong>GPT-5.6 Sol</strong><small>38.4 avg. score</small></div>
-    </section>
-
-    <section className="dashboard-grid">
-      <ChartCard title="Mention velocity" subtitle="Conversation volume over the selected period" wide><TrendChart /></ChartCard>
-      <ChartCard title="Sentiment mix" subtitle="Unweighted classification"><SentimentDonut /></ChartCard>
-      <ChartCard title="Mentions by model" subtitle="Share of tracked conversation"><MentionChart /></ChartCard>
-      <ChartCard title="Sentiment score" subtitle="-1 negative · +1 positive"><ModelScoreChart /></ChartCard>
-      <ChartCard title="Polarity over time" subtitle="Positive and negative post volume" wide><TrendChart lines /></ChartCard>
-    </section>
-
-    <section className="section-block">
-      <div className="section-heading"><div><Eyebrow>Model leaderboard</Eyebrow><h2>Momentum, at a glance</h2></div><Link href="/compare" className="text-link">Compare models <ArrowRight /></Link></div>
-      <div className="leaderboard panel"><div className="table-head"><span>Model</span><span>Mentions</span><span>Sentiment</span><span>Engagement</span><span>7D change</span><span /></div>{models.map((model, index) => <div className="leader-row" key={model.slug}><div className="model-cell"><span className="rank">0{index + 1}</span><i style={{ background: model.color }}>{model.monogram}</i><span><strong>{model.name}</strong><small>{model.vendor}</small></span></div><strong>{model.mentions.toLocaleString()}</strong><span className="score-cell"><b className={model.score > .5 ? "great" : "good"}>+{model.score}</b><em><i style={{ width: `${(model.score + 1) * 50}%` }} /></em></span><span>{model.engagement}</span><Delta value={model.growth} /><Link href={`/models/${model.slug}`} aria-label={`View ${model.name}`}><ArrowRight /></Link></div>)}</div>
-    </section>
-
-    <section className="two-column section-block">
-      <div><div className="section-heading compact"><div><Eyebrow>Topic pulse</Eyebrow><h2>What people care about</h2></div></div><div className="topic-list panel">{topicRows.map((topic) => <div key={topic.topic}><span><strong>{topic.topic}</strong><small>{topic.volume.toLocaleString()} posts</small></span><span className="topic-positive">{topic.positive}% positive</span><Delta value={topic.change} /></div>)}</div></div>
-      <div><div className="section-heading compact"><div><Eyebrow>Representative posts</Eyebrow><h2>Inside the conversation</h2></div><Link className="text-link" href="/posts">View all <ArrowRight /></Link></div><div className="mini-posts">{posts.slice(0, 3).map((post) => <Link href={`/posts?model=${post.modelSlug}`} key={post.id} className="mini-post panel"><div><span className={`sentiment-dot ${post.sentiment}`} /><strong>{post.author}</strong><small>@{post.username}</small><span>{post.model}</span></div><p>“{post.text}”</p><footer><span><Heart />{post.likes}</span><span><MessageCircle />{post.replies}</span><span><Repeat2 />{post.reposts}</span></footer></Link>)}</div></div>
-    </section>
+    {!detail ? <section className="models-section"><div className="section-heading"><div><div className="eyebrow">FOLLOW THE SIGNAL</div><h2>Model by model</h2></div><span className="section-hint">Select a model or category to explore <ArrowRight size={14} /></span></div><div className="table-scroll"><table className="model-table"><thead><tr><th>Model</th><th>Mentions</th><th>Overall</th>{categoryKeys.map(key => <th key={key}>{categories[key]}</th>)}</tr></thead><tbody>{data.rows.map(row => <tr key={row.id}><td><Link prefetch={false} className="model-name" href={modelUrl(row.slug)} onClick={() => trackUsage("model_opened", { model: row.slug, range: q.range, category: q.category })}><span className="model-initial">{row.name[0]}</span><span><strong>{row.name}</strong><small>{row.vendor}{row.isEnabled ? "" : " · archive"}</small></span><ArrowRight size={14} /></Link></td><td className="mention-count">{row.counts.total || "—"}</td><td><Link prefetch={false} href={modelUrl(row.slug, "all")} onClick={() => trackUsage("model_opened", { model: row.slug, category: "all", range: q.range })}><SentimentCell counts={q.category === "all" ? row.counts : row.overall} /></Link></td>{categoryKeys.map(key => <td key={key}><Link prefetch={false} aria-label={`${row.name}: ${categories[key]}`} href={modelUrl(row.slug, key)} onClick={() => trackUsage("category_selected", { model: row.slug, category: key, range: q.range })}><SentimentCell counts={row.categories[key]} /></Link></td>)}</tr>)}</tbody></table></div>{!data.rows.length && <p className="empty-inline">No models match these filters.</p>}<p className="table-note">Each cell shows positive / negative share. “—” means no classified evidence. Small samples are marked.</p></section> : <>
+      <section className="category-section" aria-label="Category breakdown"><div className="category-tabs">{(["all", ...categoryKeys] as const).map(key => <button key={key} aria-pressed={q.category === key} onClick={() => change("category", key)}>{key === "all" ? "Overall" : categories[key]}{key !== "all" && <span>{data.rows[0]?.categories[key].total ?? 0}</span>}</button>)}</div></section>
+      <section className="evidence-section"><div className="section-heading"><div><div className="eyebrow">READ THE EVIDENCE</div><h2>{q.category === "all" ? "In their own words" : `What people say about ${categories[q.category].toLowerCase()}`}</h2></div><label className="sentiment-filter"><span>Opinion</span><select aria-label="Opinion" value={q.sentiment} onChange={event => change("sentiment", event.target.value)}><option value="all">All opinions</option>{["POSITIVE", "NEGATIVE", "NEUTRAL", "MIXED"].map(item => <option key={item} value={item}>{label(item)}</option>)}</select></label></div>
+      {evidence?.items.length ? <div className="post-list">{evidence.items.map(item => <article className="source-post" key={item.id}><div className="post-top"><span className={`opinion-label ${item.sentiment.toLowerCase()}`}>{label(item.sentiment)}</span><time dateTime={item.post.publishedAt}>{date(item.post.publishedAt)}</time></div><p>{item.post.text}</p><div className="post-categories">{item.categories.map(topic => <button key={topic.category} className={`topic-chip ${topic.sentiment.toLowerCase()}`} onClick={() => change("category", topic.category)}>{topic.name}<span>{label(topic.sentiment)}</span></button>)}</div><footer><span>{item.post.authorName} <small>@{item.post.authorUsername}</small></span><a href={`https://x.com/i/status/${encodeURIComponent(item.post.xPostId)}`} target="_blank" rel="noreferrer" onClick={() => trackUsage("source_post_opened", { model: q.model, category: q.category, sentiment: item.sentiment })}>Original post <ExternalLink size={13} /></a></footer></article>)}</div> : <div className="empty-inline">No source posts match this view. Try another period, category, or opinion.</div>}
+      {evidence && evidence.pages > 1 && <div className="pagination"><button disabled={q.page <= 1 || pending} onClick={() => startTransition(() => router.push(url({ page: q.page - 1 }), { scroll: false }))}>Previous</button><span>Page {evidence.page} of {evidence.pages} · {evidence.total} mentions</span><button disabled={q.page >= evidence.pages || pending} onClick={() => startTransition(() => router.push(url({ page: q.page + 1 }), { scroll: false }))}>Next</button></div>}
+      </section></>}
+    <div className="collection-status"><RefreshCw size={13} /><span>{data.pipeline ? `Last collection attempt ${date(data.pipeline.startedAt)} · ${label(data.pipeline.status)}` : "No collections yet"}</span><span>New analyses use TypeSafe Jev</span></div>
   </div>;
 }
-
-function ChartCard({ title, subtitle, children, wide = false }: { title: string; subtitle: string; children: React.ReactNode; wide?: boolean }) { return <article className={`chart-card panel ${wide ? "wide" : ""}`}><header><div><h3>{title}</h3><p>{subtitle}</p></div><button aria-label={`More options for ${title}`}>•••</button></header>{children}</article>; }
+function SentimentCell({ counts }: { counts: Counts }) {
+  if (!counts.total) return <span className="no-evidence">—</span>;
+  return <span className="sentiment-cell"><span><b className="positive-text">{percent(counts.positivePercent)}</b><span className="cell-divider">/</span><b className="negative-text">{percent(counts.negativePercent)}</b></span><span className="mini-bar"><i style={{ width: `${counts.positivePercent}%` }} /><i style={{ width: `${counts.negativePercent}%` }} /></span>{counts.total < MIN_SAMPLE && <small>small sample</small>}</span>;
+}
+function Change({ value }: { value: number }) { return <span className={value >= 0 ? "positive-text change" : "negative-text change"}>{value >= 0 ? <ArrowUp size={12} /> : <ArrowDown size={12} />}{Math.abs(value).toFixed(1)} pp</span>; }

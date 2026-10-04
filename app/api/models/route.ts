@@ -1,4 +1,7 @@
-import { apiOk } from "@/lib/api";
-import { models } from "@/lib/demo-data";
-export async function GET() { return apiOk({ items: models, demo: true }); }
-
+import { apiError, apiOk } from "@/lib/api";
+import { db } from "@/lib/server/db";
+export const dynamic = "force-dynamic";
+export async function GET() {
+  try { return apiOk({ items: await db.model.findMany({ where: { isEnabled: true }, select: { name: true, slug: true, vendor: true, description: true }, orderBy: { displayOrder: "asc" } }) }); }
+  catch { return apiError("DATA_UNAVAILABLE", "Data is temporarily unavailable.", 503); }
+}

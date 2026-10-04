@@ -1,5 +1,9 @@
 import { apiError, apiOk } from "@/lib/api";
-import { posts } from "@/lib/demo-data";
-import { postQuerySchema } from "@/lib/validation";
-export async function GET(request: Request) { const params = Object.fromEntries(new URL(request.url).searchParams); const result = postQuerySchema.safeParse(params); if (!result.success) return apiError("INVALID_QUERY", "One or more post filters are invalid."); const q = result.data; const filtered = posts.filter((post) => (!q.model || post.modelSlug === q.model) && (!q.sentiment || post.sentiment === q.sentiment) && (!q.q || post.text.toLowerCase().includes(q.q.toLowerCase())) && (!q.author || post.username.toLowerCase().includes(q.author.toLowerCase())) && (post.likes + post.replies + post.reposts + post.quotes >= q.minEngagement)); const start = (q.page - 1) * q.pageSize; return apiOk({ items: filtered.slice(start, start + q.pageSize), pagination: { page: q.page, pageSize: q.pageSize, total: filtered.length, pages: Math.ceil(filtered.length / q.pageSize) }, demo: true }); }
-
+import { getPosts } from "@/lib/analytics/data";
+import { dashboardQuerySchema } from "@/lib/analytics/query";
+export const dynamic = "force-dynamic";
+export async function GET(request: Request) {
+  const query = dashboardQuerySchema.safeParse(Object.fromEntries(new URL(request.url).searchParams));
+  if (!query.success) return apiError("INVALID_QUERY", "Invalid post filters.");
+  try { return apiOk(await getPosts(query.data)); } catch { return apiError("DATA_UNAVAILABLE", "Data is temporarily unavailable.", 503); }
+}

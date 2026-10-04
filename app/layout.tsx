@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Manrope } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/app-shell";
+import { site } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,11 +17,11 @@ const geistMono = Geist_Mono({
 const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://codex-signalist.example"),
-  title: { default: "Codex Signalist — LLM sentiment intelligence", template: "%s · Codex Signalist" },
-  description: "Track how developers on X perceive frontier AI models through explainable sentiment, topic, and engagement signals.",
-  openGraph: { title: "Codex Signalist", description: "Read the room before it shifts.", type: "website", images: [{ url: "/og.png", width: 1731, height: 909, alt: "Codex Signalist — Read the room before it shifts" }] },
-  twitter: { card: "summary_large_image", title: "Codex Signalist", description: "Real-time model perception signals from X.", images: ["/og.png"] },
+  metadataBase: new URL(site.url),
+  title: { default: `${site.name} — The conversation around AI`, template: `%s · ${site.name}` },
+  description: "Explore positive and negative opinions about AI models, with reasoning, speed, cost and code quality breakdowns.",
+  openGraph: { title: site.name, siteName: site.name, description: "AI model opinions, with the evidence.", type: "website", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${site.name} — ${site.tagline}` }] },
+  twitter: { card: "summary_large_image", title: site.name, description: "AI model opinions, with the evidence.", images: ["/opengraph-image"] },
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
@@ -33,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} antialiased`}
       >

@@ -1,7 +1,9 @@
+import { analyzeWithJev } from "./jev";
+import type { StructuredAnalysis } from "../analysis";
 export type SentimentResult = {
-  label: "POSITIVE" | "NEGATIVE" | "NEUTRAL"; score: number; confidence: number;
+  label: "POSITIVE" | "NEGATIVE" | "NEUTRAL" | "MIXED" | "NOT_DISCUSSED"; score: number; confidence: number;
   explanation: string; strengths: string[]; weaknesses: string[]; topics: string[];
-  provider: string; version: string;
+  provider: string; version: string; structured?: StructuredAnalysis;
 };
 
 export interface SentimentProvider { analyze(text: string, modelName: string): Promise<SentimentResult>; }
@@ -30,5 +32,16 @@ export class LocalSentimentProvider implements SentimentProvider {
   }
 }
 
-export function createSentimentProvider(): SentimentProvider { return new LocalSentimentProvider(); }
+export class JevSentimentProvider implements SentimentProvider {
+  async analyze(text: string, modelName: string): Promise<SentimentResult> {
+    const structured = await analyzeWithJev(text, modelName);
+    const { choice: label, confidence, probabilities } = structured.overall;
+    return { label, confidence, score: probabilities.POSITIVE - probabilities.NEGATIVE,
+      explanation: "", strengths: [], weaknesses: [], topics: [], provider: "typesafe", version: structured.model, structured };
+  }
+}
+export function createSentimentProvider(): SentimentProvider {
+  if (process.env.SENTIMENT_PROVIDER === "local") return new LocalSentimentProvider();
+  return new JevSentimentProvider();
+}
 

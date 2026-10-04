@@ -11,6 +11,8 @@ enum Sentiment {
   POSITIVE
   NEGATIVE
   NEUTRAL
+  MIXED
+  NOT_DISCUSSED
 }
 
 enum RunStatus {
@@ -35,6 +37,8 @@ model Model {
   displayOrder  Int                    @default(0)
   createdAt     DateTime               @default(now())
   updatedAt     DateTime               @updatedAt
+  lastCollectionAttemptAt DateTime?
+  collectionCheckpoint Json?
   mentions      ModelMention[]
   ingestionRuns IngestionModelResult[]
 }
@@ -79,6 +83,13 @@ model ModelMention {
   weaknesses       String[]
   analysisProvider String
   analysisVersion  String
+  analysisStatus   String         @default("LEGACY")
+  collectionCycleId String?
+  analysisError    String?
+  probabilities    Json?
+  relevance        Json?
+  inputTokens      Int            @default(0)
+  outputTokens     Int            @default(0)
   analyzedAt       DateTime       @default(now())
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
@@ -90,6 +101,8 @@ model ModelMention {
   @@index([modelId])
   @@index([sentiment])
   @@index([modelId, sentiment])
+  @@index([analysisStatus])
+  @@index([collectionCycleId, analysisStatus])
 }
 
 model Topic {
@@ -103,6 +116,9 @@ model MentionTopic {
   mentionId      String
   topicId        String
   sentimentScore Float
+  sentiment      Sentiment    @default(NEUTRAL)
+  confidence     Float        @default(0)
+  probabilities  Json?
   mention        ModelMention @relation(fields: [mentionId], references: [id], onDelete: Cascade)
   topic          Topic        @relation(fields: [topicId], references: [id], onDelete: Cascade)
 
