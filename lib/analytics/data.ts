@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { db } from "../server/db";
+import { describeCoverage } from "../services/collection-coverage";
 import { MIN_CONFIDENCE } from "../analysis";
 import { aggregate } from "./aggregate";
 import { rangeDates, type DashboardQuery } from "./query";
@@ -11,15 +12,20 @@ export async function getDashboard(query: DashboardQuery) {
   const models = catalog.filter(model => (!query.vendor || model.vendor === query.vendor) && (!query.model || model.slug === query.model));
   const modelIds = models.map(model => model.id);
   const where = { modelId: { in: modelIds }, post: { isDemo: false, publishedAt: { ...(dates.previous ? { gte: dates.previous } : {}), lte: now } } } satisfies Prisma.ModelMentionWhereInput;
-  const [mentions, latestRun, latestCollected, storedMentions, pending] = await Promise.all([
+  const [mentions, latestRun, latestCollected, storedMentions, pending, collectionResults] = await Promise.all([
     db.modelMention.findMany({ where, select: { modelId: true, sentiment: true, confidence: true, analysisStatus: true, post: { select: { publishedAt: true } }, topics: { select: { sentiment: true, confidence: true, topic: { select: { slug: true } } } } } }),
     db.ingestionRun.findFirst({ where: { NOT: { id: { startsWith: "run-" } } }, orderBy: { startedAt: "desc" }, select: { startedAt: true, completedAt: true, status: true } }),
     db.xPost.findFirst({ where: { isDemo: false, mentions: { some: { modelId: { in: modelIds } } } }, orderBy: { publishedAt: "desc" }, select: { publishedAt: true } }),
     db.modelMention.count({ where: { modelId: { in: modelIds }, post: { isDemo: false } } }),
     db.modelMention.count({ where: { modelId: { in: modelIds }, post: { isDemo: false }, analysisStatus: { in: ["PENDING", "FAILED", "LEGACY"] } } }),
+    db.ingestionModelResult.findMany({ where: { modelId: { in: modelIds }, ingestionRun: { NOT: { id: { startsWith: "run-" } } } }, orderBy: { startedAt: "desc" }, select: { modelId: true, status: true, targetCount: true, targetReached: true, acceptedInCycle: true, newAssociationsInserted: true, stopReason: true, startedAt: true, completedAt: true } }),
   ]);
   const metrics = aggregate(models, mentions.map(mention => ({ ...mention, publishedAt: mention.post.publishedAt, topics: mention.topics.map(topic => ({ ...topic, slug: topic.topic.slug })) })), query, now);
-  return { ...metrics, catalog, query, storedMentions, pending, asOf: now.toISOString(), latestPostAt: latestCollected?.publishedAt.toISOString() ?? null,
+  const target = Number(process.env.TARGET_UNIQUE_POSTS_PER_MODEL ?? 100);
+  const since = new Date(+now - 7 * 86400000);
+  const rows = metrics.rows.map(row => ({ ...row, coverage: describeCoverage(collectionResults.filter(result => result.modelId === row.id), target, since) }));
+  const enabled = rows.filter(row => row.isEnabled);
+  return { ...metrics, rows, coverage: { evaluated: enabled.filter(row => row.coverage.covered).length, enabled: enabled.length, target }, catalog, query, storedMentions, pending, asOf: now.toISOString(), latestPostAt: latestCollected?.publishedAt.toISOString() ?? null,
     pipeline: latestRun ? { status: latestRun.status, startedAt: latestRun.startedAt.toISOString(), completedAt: latestRun.completedAt?.toISOString() ?? null } : null };
 }
 export type DashboardData = Awaited<ReturnType<typeof getDashboard>>;

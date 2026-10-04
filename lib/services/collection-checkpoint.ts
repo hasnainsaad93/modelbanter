@@ -25,6 +25,6 @@ export function checkpointMatches(checkpoint: CollectionCheckpoint, query: strin
   // Recent-search cursors cannot safely be kept beyond the recent-search window.
   return checkpoint.query === query && checkpoint.target === target && checkpoint.maxPages === maxPages && checkpoint.resultsPerPage === resultsPerPage && Date.now() - Date.parse(checkpoint.endTime) < 6 * 86400000;
 }
-export function selectCollectionBatch<T extends { id: string; displayOrder: number; lastCollectionAttemptAt: Date | null }>(models: T[], count: number): T[] {
-  return [...models].sort((a, b) => (a.lastCollectionAttemptAt?.getTime() ?? 0) - (b.lastCollectionAttemptAt?.getTime() ?? 0) || a.displayOrder - b.displayOrder || a.id.localeCompare(b.id)).slice(0, count);
+export function selectCollectionBatch<T extends { id: string; displayOrder: number; lastCollectionAttemptAt: Date | null }>(models: T[], count: number, covered: ReadonlySet<string> = new Set()): T[] {
+  return [...models].sort((a, b) => Number(covered.has(a.id)) - Number(covered.has(b.id)) || (a.lastCollectionAttemptAt?.getTime() ?? 0) - (b.lastCollectionAttemptAt?.getTime() ?? 0) || a.displayOrder - b.displayOrder || a.id.localeCompare(b.id)).slice(0, count);
 }

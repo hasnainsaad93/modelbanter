@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { Prisma } from "@prisma/client";
 import { MIN_CONFIDENCE } from "../analysis";
+import { collectionStart } from "./collection-window";
+import { hasCoverage, type StopReason } from "./collection-coverage";
 import { type RegistryModel } from "../model-registry";
 import { detectModels } from "./model-detection";
 import { createSentimentProvider, type SentimentProvider } from "./sentiment";
@@ -9,22 +11,23 @@ import { checkpointMatches, freshCheckpoint, readCheckpoint, selectCollectionBat
 
 async function getDb() { return (await import("../server/db")).db; }
 
-export type IngestionCounters = { pagesRequested: number; postsFetched: number; postsExamined: number; existingPosts: number; existingAssociations: number; newPostsInserted: number; newAssociationsInserted: number; rejectedPosts: number; analysesCompleted: number; targetReached: boolean; status: "COMPLETED" | "PARTIALLY_COMPLETED" | "RATE_LIMITED" | "USAGE_LIMIT_REACHED" | "FAILED"; errorMessage?: string; rateLimitStatus?: string };
-export type IngestionOptions = { target?: number; maxPages?: number; resultsPerPage?: number; deadline?: number; modelsPerRun?: number };
+export type IngestionCounters = { pagesRequested: number; postsFetched: number; postsExamined: number; existingPosts: number; existingAssociations: number; newPostsInserted: number; newAssociationsInserted: number; rejectedPosts: number; analysesCompleted: number; targetReached: boolean; acceptedInCycle: number; pagesInCycle: number; stopReason: StopReason | null; status: "COMPLETED" | "PARTIALLY_COMPLETED" | "RATE_LIMITED" | "USAGE_LIMIT_REACHED" | "FAILED"; errorMessage?: string; rateLimitStatus?: string };
+export type IngestionOptions = { target?: number; maxPages?: number; resultsPerPage?: number; deadline?: number; modelsPerRun?: number; modelSlugs?: string[] };
 type ModelOptions = IngestionOptions & { checkpoint?: CollectionCheckpoint; saveCheckpoint?: (value: CollectionCheckpoint | null) => Promise<void> };
 export interface SearchClient { search(query: string, nextToken?: string, maxResults?: number, endTime?: string): Promise<XPage>; }
 export interface MentionStore { stage?(post: XPostResponse, user: { id: string; name: string; username: string } | undefined, model: RegistryModel, cycleId?: string): Promise<boolean>; retryable?(xPostId: string, modelId: string): Promise<boolean>; fail?(xPostId: string, modelId: string, error: unknown): Promise<void>; hasPost(xPostId: string): Promise<boolean>; hasAssociation(xPostId: string, modelId: string): Promise<boolean>; save(post: XPostResponse, user: { id: string; name: string; username: string } | undefined, model: RegistryModel, analysis: Awaited<ReturnType<SentimentProvider["analyze"]>>): Promise<{ newPost: boolean; newAssociation: boolean }>; }
 
 export async function ingestModel(model: RegistryModel, client: SearchClient, store: MentionStore, sentiment: SentimentProvider, options: ModelOptions = {}): Promise<IngestionCounters> {
   const target = options.target ?? 100; const maxPages = options.maxPages ?? 20; const resultsPerPage = options.resultsPerPage ?? 100;
-  const counters: IngestionCounters = { pagesRequested: 0, postsFetched: 0, postsExamined: 0, existingPosts: 0, existingAssociations: 0, newPostsInserted: 0, newAssociationsInserted: 0, rejectedPosts: 0, analysesCompleted: 0, targetReached: false, status: "COMPLETED" };
+  const counters: IngestionCounters = { pagesRequested: 0, postsFetched: 0, postsExamined: 0, existingPosts: 0, existingAssociations: 0, newPostsInserted: 0, newAssociationsInserted: 0, rejectedPosts: 0, analysesCompleted: 0, targetReached: false, acceptedInCycle: 0, pagesInCycle: 0, stopReason: null, status: "COMPLETED" };
+  const start = collectionStart();
   const checkpoint = options.checkpoint ?? freshCheckpoint(model.searchQuery, target, maxPages, resultsPerPage);
   const persist = () => options.saveCheckpoint?.(checkpoint);
   const outOfTime = () => options.deadline !== undefined && Date.now() >= options.deadline;
   try {
     await persist();
     while (checkpoint.accepted < target) {
-      if (outOfTime()) { counters.status = "PARTIALLY_COMPLETED"; counters.errorMessage = "Collection time budget reached; saved posts and cursor are preserved."; return counters; }
+      if (outOfTime()) { counters.status = "PARTIALLY_COMPLETED"; counters.stopReason = "TIME_BUDGET"; counters.errorMessage = "Collection time budget reached; saved posts and cursor are preserved."; return counters; }
       if (!checkpoint.pending) {
         if (checkpoint.pages >= maxPages || (checkpoint.pages > 0 && !checkpoint.nextToken)) break;
         counters.pagesRequested++;
@@ -38,10 +41,10 @@ export async function ingestModel(model: RegistryModel, client: SearchClient, st
       }
       const users = new Map(checkpoint.pending.users.map(user => [user.id, user]));
       while (checkpoint.pending.posts.length && checkpoint.accepted < target) {
-        if (outOfTime()) { counters.status = "PARTIALLY_COMPLETED"; counters.errorMessage = "Collection time budget reached; saved posts and cursor are preserved."; return counters; }
+        if (outOfTime()) { counters.status = "PARTIALLY_COMPLETED"; counters.stopReason = "TIME_BUDGET"; counters.errorMessage = "Collection time budget reached; saved posts and cursor are preserved."; return counters; }
         const post = checkpoint.pending.posts[0];
         counters.postsExamined++;
-        if (!detectModels(post.text, [model]).length) counters.rejectedPosts++;
+        if ((start && +new Date(post.created_at) < +start) || !detectModels(post.text, [model]).length) counters.rejectedPosts++;
         else {
           if (await store.hasPost(post.id)) counters.existingPosts++;
           const exists = await store.hasAssociation(post.id, model.id);
@@ -69,22 +72,29 @@ export async function ingestModel(model: RegistryModel, client: SearchClient, st
       await persist();
     }
     counters.targetReached = checkpoint.accepted >= target;
+    counters.stopReason = counters.targetReached ? "TARGET_REACHED" : !checkpoint.nextToken ? "SEARCH_EXHAUSTED" : "PAGE_CAP";
     counters.status = counters.targetReached || !checkpoint.nextToken ? "COMPLETED" : "PARTIALLY_COMPLETED";
     // A completed target, exhausted search, or page cap ends this collection cycle.
     await options.saveCheckpoint?.(null);
   } catch (error) {
     if (error instanceof XApiError) {
+      counters.stopReason = error.kind === "rate_limit" ? "RATE_LIMIT" : error.kind === "usage_limit" ? "USAGE_LIMIT" : "UPSTREAM_ERROR";
       counters.status = error.kind === "rate_limit" ? "RATE_LIMITED" : error.kind === "usage_limit" ? "USAGE_LIMIT_REACHED" : counters.newAssociationsInserted ? "PARTIALLY_COMPLETED" : "FAILED";
       counters.errorMessage = error.message;
       if (error.kind === "rate_limit" || error.kind === "usage_limit") counters.rateLimitStatus = error.rateLimitSummary;
       if (error.status === 400 && checkpoint.nextToken && /next.?token|pagination|invalid.*token|expired.*token/i.test(error.message)) {
         await options.saveCheckpoint?.(null);
+        counters.stopReason = "CURSOR_INVALID";
         counters.errorMessage = "X rejected the saved cursor; stored analyses are preserved and the next rotation starts a fresh search.";
       }
     } else {
+      counters.stopReason = "UPSTREAM_ERROR";
       counters.status = counters.newAssociationsInserted ? "PARTIALLY_COMPLETED" : "FAILED";
       counters.errorMessage = error instanceof Error ? error.message : "Unknown ingestion error";
     }
+  } finally {
+    counters.acceptedInCycle = checkpoint.accepted;
+    counters.pagesInCycle = checkpoint.pages;
   }
   return counters;
 }
@@ -123,7 +133,7 @@ class PrismaMentionStore implements MentionStore {
 }
 
 export async function runIngestion(options: IngestionOptions = {}) {
-  const settings = z.object({ target: z.number().int().min(1).max(1000).default(100), maxPages: z.number().int().min(1).max(100).default(20), resultsPerPage: z.number().int().min(10).max(100).default(100), modelsPerRun: z.number().int().min(1).max(100).default(3), deadline: z.number().optional() }).parse(options);
+  const settings = z.object({ target: z.number().int().min(1).max(1000).default(100), maxPages: z.number().int().min(1).max(100).default(20), resultsPerPage: z.number().int().min(10).max(100).default(100), modelsPerRun: z.number().int().min(1).max(100).default(3), deadline: z.number().optional(), modelSlugs: z.array(z.string().min(1)).min(1).optional() }).parse(options);
   const deadline = settings.deadline ?? Date.now() + 210000;
   try {
     const db = await getDb();
@@ -132,7 +142,13 @@ export async function runIngestion(options: IngestionOptions = {}) {
     if (!ownerId) return { status: "skipped", reason: "An ingestion run is already active." };
     let runId: string | undefined;
     try {
-      const records = selectCollectionBatch(await db.model.findMany({ where: { isEnabled: true } }), settings.modelsPerRun);
+      const enabled = await db.model.findMany({ where: { isEnabled: true } });
+      if (settings.modelSlugs?.some(slug => !enabled.some(model => model.slug === slug))) throw new Error("Requested collection model is unknown or disabled.");
+      const candidates = settings.modelSlugs ? enabled.filter(model => settings.modelSlugs!.includes(model.slug)) : enabled;
+      const since = new Date(Date.now() - 7 * 86400000);
+      const outcomes = await db.ingestionModelResult.findMany({ where: { modelId: { in: candidates.map(model => model.id) }, targetCount: { gte: settings.target }, startedAt: { gte: since } } });
+      const covered = new Set(outcomes.filter(result => hasCoverage(result, settings.target, since)).map(result => result.modelId));
+      const records = selectCollectionBatch(candidates, settings.modelsPerRun, covered);
       const run = await db.ingestionRun.create({ data: { status: "RUNNING", metadata: { target: settings.target, maxPages: settings.maxPages, resultsPerPage: settings.resultsPerPage, modelsPerRun: settings.modelsPerRun, selectedModels: records.map(record => record.slug) } } });
       runId = run.id;
       const started = Date.now(); const results = [];
@@ -155,8 +171,8 @@ export async function runIngestion(options: IngestionOptions = {}) {
         const result = await ingestModel(registryModel, client, store, sentiment, { ...settings, deadline, checkpoint: activeCheckpoint,
           saveCheckpoint: async value => { await db.model.update({ where: { id: record.id }, data: { collectionCheckpoint: value ? JSON.parse(JSON.stringify(value)) as Prisma.InputJsonValue : Prisma.DbNull } }); },
         });
-        results.push({ modelId: record.id, modelName: record.name, resumed, acceptedInCycle: activeCheckpoint.accepted, pagesInCycle: activeCheckpoint.pages, ...result });
-        await db.ingestionModelResult.update({ where: { id: modelResult.id }, data: { ...result, completedAt: new Date(), durationMs: Date.now() - +modelStartedAt } });
+        results.push({ modelId: record.id, modelName: record.name, resumed, ...result });
+        await db.ingestionModelResult.update({ where: { id: modelResult.id }, data: { ...result, collectionCycleId: activeCheckpoint.cycleId, completedAt: new Date(), durationMs: Date.now() - +modelStartedAt } });
         console.log(JSON.stringify({ event: "ingestion.model.finished", model: record.name, status: result.status, newAccepted: result.newAssociationsInserted, acceptedInCycle: activeCheckpoint.accepted, pagesInCycle: activeCheckpoint.pages }));
         if (result.status === "RATE_LIMITED" || result.status === "USAGE_LIMIT_REACHED" || result.errorMessage?.startsWith("TypeSafe") || result.errorMessage?.includes("HTTP 401") || result.errorMessage?.includes("HTTP 403")) endpointBlock = result;
       }
@@ -167,7 +183,7 @@ export async function runIngestion(options: IngestionOptions = {}) {
       return { runId: run.id, status, results };
     } catch (error) {
       if (runId) {
-        await db.ingestionModelResult.updateMany({ where: { ingestionRunId: runId, status: "RUNNING" }, data: { status: "FAILED", completedAt: new Date(), errorMessage: "Collection interrupted; saved cursor is available for retry." } });
+        await db.ingestionModelResult.updateMany({ where: { ingestionRunId: runId, status: "RUNNING" }, data: { status: "FAILED", completedAt: new Date(), stopReason: "UPSTREAM_ERROR", errorMessage: "Collection interrupted; saved cursor is available for retry." } });
         await db.ingestionRun.update({ where: { id: runId }, data: { status: "FAILED", completedAt: new Date(), errorMessage: "Collection could not finish. Check server logs and retry." } });
       }
       throw error;

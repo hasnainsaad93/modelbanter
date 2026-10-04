@@ -155,6 +155,10 @@ model IngestionModelResult {
   analysesCompleted       Int          @default(0)
   targetCount             Int          @default(25)
   targetReached           Boolean      @default(false)
+  collectionCycleId       String?
+  acceptedInCycle         Int?
+  pagesInCycle            Int?
+  stopReason              String?
   rateLimitStatus         String?
   errorMessage            String?
   startedAt               DateTime     @default(now())

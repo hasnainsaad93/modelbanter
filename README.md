@@ -33,7 +33,7 @@ Catalog sources checked October 4, 2026:
 
 ## DigitalOcean managed database
 
-The existing installation uses the managed PostgreSQL database `modelbanterdb`. Its schema, data, and Prisma migration history were copied from the original local database. The local `.env` points to this managed database, so collection and analysis commands now write to the shared database. Credentials and migration backups remain outside Git.
+The deployed installation uses the managed PostgreSQL database `modelbanterdb`. Its schema, data, and Prisma migration history were copied from the original local database. Local development currently uses `codex_signalist` on localhost. Every collection, analysis, and maintenance command writes to the database selected by its `DATABASE_URL`; check that destination before running it. Credentials and migration backups remain outside Git.
 
 For App Platform, set `DATABASE_URL` as a secret environment variable using the database's connection URL, selecting `modelbanterdb` and retaining `sslmode=require` (and `schema=public`). The local `.env` is not uploaded with the repository. Run `npx prisma migrate deploy` against this connection for subsequent schema updates; do not use `migrate dev` or `migrate reset` against the managed database. The health endpoint `/api/health` checks connectivity.
 
@@ -58,7 +58,7 @@ Configure these app-level environment variables so all three components inherit 
 | `DATABASE_URL`, `CRON_SECRET`, `X_BEARER_TOKEN`, `TYPESAFE_JEV` | Run time | Encrypt; copy from the local `.env` |
 | `NODE_ENV=production` | Build and run time | Plain text |
 | `NEXT_PUBLIC_SITE_URL=https://modelbanter.com`, `NEXT_PUBLIC_POSTHOG_KEY`, `NEXT_PUBLIC_POSTHOG_HOST` | Build and run time | Plain text; the PostHog project token is public |
-| `SENTIMENT_PROVIDER=typesafe`, `TARGET_UNIQUE_POSTS_PER_MODEL=100`, `MODELS_PER_RUN=3`, `X_MAX_PAGES_PER_MODEL=20`, `X_RESULTS_PER_PAGE=100` | Run time | Plain text |
+| `SENTIMENT_PROVIDER=typesafe`, `TARGET_UNIQUE_POSTS_PER_MODEL=100`, `MODELS_PER_RUN=3`, `X_MAX_PAGES_PER_MODEL=20`, `X_RESULTS_PER_PAGE=100`, `COLLECTION_START_AT=2026-10-01T00:00:00Z` | Run time | Plain text |
 
 For the deployed `DATABASE_URL`, keep `sslmode=require`, add `connect_timeout=20` and `connection_limit=5`, and select `/modelbanterdb`. If the managed database restricts trusted sources, add the app through the database's DigitalOcean settings. Credentials remain in private environment settings, not GitHub. `npm run deploy:prepare` optionally produces a private, Git-ignored spec at `work/digitalocean/app.secret.json` from `.env`; it does not access DigitalOcean or deploy anything. This file contains secrets and must never be committed.
 
@@ -85,9 +85,29 @@ TARGET_UNIQUE_POSTS_PER_MODEL=1 X_RESULTS_PER_PAGE=10 X_MAX_PAGES_PER_MODEL=1 np
 
 These commands use real API quota. `REANALYZE_LIMIT` caps each analysis batch (default 100, maximum 1000). A separate live regression check with four synthetic examples is available via `npm run test:jev:live`; it is intentionally excluded from normal tests.
 
-Raw posts and pending mentions are saved before Jev is called. Failed analyses are retained and retried using `analyze:pending` or when their buffered collection resumes; no neutral result is fabricated on failure. Low-confidence relevance becomes UNCERTAIN, irrelevant matches become REJECTED, and successful decisions become COMPLETED. Legacy keyword results are excluded until reanalyzed. Duplicate post IDs and model associations are unique. Database leases prevent overlapping jobs, and a bounded collection run preserves partial progress on time limits or upstream quota errors. An external scheduler must invoke the collection route; running the local app does not schedule jobs.
+Raw posts and pending mentions are saved before Jev is called. Failed analyses are retained and retried using `analyze:pending` or when their buffered collection resumes; no neutral result is fabricated on failure. Low-confidence relevance becomes UNCERTAIN, irrelevant matches become REJECTED, and successful decisions become COMPLETED. Legacy keyword results are excluded until reanalyzed. Duplicate post IDs and model associations are unique. Database leases prevent overlapping jobs, and a bounded collection run preserves partial progress on time limits or upstream quota errors. A scheduler must invoke the collection CLI or route; running the local app does not schedule jobs.
 
-Collection now defaults to `MODELS_PER_RUN=3`, `TARGET_UNIQUE_POSTS_PER_MODEL=100`, `X_MAX_PAGES_PER_MODEL=20`, and `X_RESULTS_PER_PAGE=100`. Each run chooses up to three enabled models with the oldest attempt times; models that never started retain their place. Attempts are timestamped individually, not when a batch is merely selected. Approximately five successful batches cover 13 models, but reaching all targets may require further rotations.
+Collection defaults to `MODELS_PER_RUN=3`, `TARGET_UNIQUE_POSTS_PER_MODEL=100`, `X_MAX_PAGES_PER_MODEL=20`, and `X_RESULTS_PER_PAGE=100`. Each run prioritizes models without a terminal collection outcome at the configured target in the last seven days, then sorts by oldest attempt within each group. A one-post credential check does not count as full collection coverage. Attempts are timestamped individually, not when a batch is merely selected. Approximately five successful batches cover 13 models, but reaching all targets may require further rotations.
+
+The dashboard reports collection coverage separately from sentiment counts, including cumulative accepted progress, latest attempt, and stop reason. Targets reached, exhausted searches, and page limits are terminal outcomes; time budgets and upstream failures remain incomplete. CLI jobs signal upstream failures even after useful partial progress. Accepted relevance decisions can still lack a confident overall sentiment, so 100 accepted mentions does not promise 100 visible overall opinions.
+
+For an initial pass across missing models, preview before applying:
+
+```sh
+npm run collect:coverage -- --since 2026-10-01T00:00:00Z
+npm run collect:coverage -- --since 2026-10-01T00:00:00Z --apply
+```
+
+This command runs bounded batches until each enabled model has a terminal outcome, stops on upstream failure or an active collector, and defaults to at most 30 invocations. Resuming preserves checkpoints and skips covered models. Without `--since`, it evaluates the last seven days. Apply mode consumes real API quota. `COLLECTION_START_AT` is an optional UTC publication-date floor, enforced in X searches and buffered-post processing; it prevents deleted older evidence from being collected again.
+
+Date cleanup is a separate manual command, never an automatic migration or startup task:
+
+```sh
+npm run data:cleanup -- --before 2026-10-01T00:00:00Z --include-history
+npm run data:cleanup -- --before 2026-10-01T00:00:00Z --include-history --apply
+```
+
+Preview performs no deletion. Apply acquires job leases, exports affected records privately, and deletes them transactionally with count and catalog checks. `--include-history` also removes older collection runs; omit it to preserve those logs. The full execution record and production procedure are in [the coverage and cleanup runbook](docs/collection-coverage-and-october-cleanup.md).
 
 Each model has a durable collection checkpoint: fixed search end time, next-page cursor, fetched-but-unprocessed posts and authors, pages fetched, and cycle ID. The 100-post target and 20-page cap apply to the complete collection cycle across resumes. Accepted counts are recovered from committed model mentions tagged with that cycle, avoiding double analysis after an interrupted checkpoint write. Finished targets, exhausted searches and page caps close the cycle; a later rotation starts a fresh search. Time and service failures retain the unfinished cycle. Changed search/settings, checkpoints older than six days, or rejected API cursors start fresh; stored evidence remains intact. A completed search can have fewer than 100 available matches. X's [recent-search API](https://docs.x.com/x-api/posts/search-recent-posts) supplies the time boundary and pagination cursor.
 

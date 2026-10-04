@@ -5,7 +5,7 @@ import { XApiError, type XPage, type XPostResponse } from "../lib/services/x-cli
 import { modelRegistry } from "../lib/model-registry";
 import { freshCheckpoint, type CollectionCheckpoint } from "../lib/services/collection-checkpoint";
 
-afterEach(() => vi.useRealTimers());
+afterEach(() => { vi.useRealTimers(); vi.unstubAllEnvs(); });
 
 const model = modelRegistry.find(model => model.slug === "kimi-k3")!;
 function post(id: number): XPostResponse { return { id: String(id), author_id: "a", created_at: new Date().toISOString(), text: `Kimi K3 is fast and reliable post ${id}`, public_metrics: { like_count: 1, reply_count: 0, retweet_count: 0, quote_count: 0 } }; }
@@ -54,6 +54,18 @@ describe("recoverable analysis failures", () => {
 });
 
 describe("checkpointed collection", () => {
+  it("excludes older evidence in a saved page after the publication floor is introduced", async () => {
+    vi.stubEnv("COLLECTION_START_AT", "2026-10-01T00:00:00Z");
+    const checkpoint = freshCheckpoint(model.searchQuery, 1, 20, 100);
+    checkpoint.pages = 1;
+    checkpoint.pending = { posts: [{ ...post(1), created_at: "2026-09-30T23:59:59Z" }, { ...post(2), created_at: "2026-10-01T00:00:00Z" }], users: [] };
+    const store = new MemoryStore();
+    const result = await ingestModel(model, new Pages([]), store, new LocalSentimentProvider(), { target: 1, checkpoint });
+    expect(store.posts.has("1")).toBe(false);
+    expect(store.posts.has("2")).toBe(true);
+    expect(result.rejectedPosts).toBe(1);
+    expect(result.stopReason).toBe("TARGET_REACHED");
+  });
   it("resumes a partly analyzed page without fetching it again and counts toward the original target", async () => {
     vi.useFakeTimers();
     const start = Date.now();
@@ -71,6 +83,8 @@ describe("checkpointed collection", () => {
     const second = await ingestModel(model, client, store, provider, { target: 2, checkpoint: saved!, saveCheckpoint });
     expect(client.calls).toBe(1);
     expect(second.newAssociationsInserted).toBe(1);
+    expect(second.acceptedInCycle).toBe(2);
+    expect(second.stopReason).toBe("TARGET_REACHED");
     expect(second.targetReached).toBe(true);
     expect(saved).toBeNull();
   });
@@ -119,6 +133,7 @@ describe("checkpointed collection", () => {
     expect(search).toHaveBeenCalledWith(model.searchQuery, "page-20", 100, checkpoint.endTime);
     expect(result.targetReached).toBe(false);
     expect(result.status).toBe("PARTIALLY_COMPLETED");
+    expect(result.stopReason).toBe("PAGE_CAP");
     expect(saved).toBeNull();
   });
   it("clears an expired API cursor without deleting stored evidence", async () => {

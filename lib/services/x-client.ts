@@ -1,3 +1,4 @@
+import { collectionStart, recentSearchStart } from "./collection-window";
 export type XPostResponse = { id: string; text: string; created_at: string; author_id: string; lang?: string; conversation_id?: string; public_metrics?: { like_count: number; reply_count: number; retweet_count: number; quote_count: number; impression_count?: number } };
 export type XPage = { posts: XPostResponse[]; users: Map<string, { id: string; name: string; username: string }>; nextToken?: string };
 
@@ -22,6 +23,8 @@ export class XRecentSearchClient {
   async search(query: string, nextToken?: string, maxResults = 100, endTime?: string): Promise<XPage> {
     if (!this.token) throw new XApiError("X_BEARER_TOKEN is not configured", 401, "auth");
     const params = new URLSearchParams({ query: `${query} lang:en -is:retweet`, max_results: String(Math.min(100, Math.max(10, maxResults))), "tweet.fields": "id,text,author_id,created_at,lang,conversation_id,public_metrics,referenced_tweets", expansions: "author_id", "user.fields": "id,name,username" });
+    const start = collectionStart();
+    if (start) params.set("start_time", recentSearchStart(start));
     if (nextToken) params.set("next_token", nextToken);
     if (endTime) params.set("end_time", endTime);
     for (let attempt = 0; attempt < 3; attempt++) {

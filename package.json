@@ -23,7 +23,9 @@
     "analyze:pending": "tsx scripts/reanalyze.ts",
     "catalog:sync": "tsx scripts/sync-catalog.ts",
     "test:jev:live": "tsx scripts/evaluate-jev.ts",
-    "deploy:prepare": "node scripts/prepare-digitalocean.mjs"
+    "deploy:prepare": "node scripts/prepare-digitalocean.mjs",
+    "collect:coverage": "tsx scripts/collect-coverage.ts",
+    "data:cleanup": "tsx scripts/cleanup-before.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
