@@ -1,9 +1,10 @@
 import { Prisma } from "@prisma/client";
 import { db } from "../server/db";
 import { describeCoverage } from "../services/collection-coverage";
-import { ANALYSIS_VERSION, categories, countedSentiments, isCountedOpinion, type Category, MIN_CONFIDENCE } from "../analysis";
+import { ANALYSIS_VERSION, categories, categoryKeys, countedSentiments, isCountedOpinion, type Category, MIN_CONFIDENCE } from "../analysis";
 import { aggregate } from "./aggregate";
 import { rangeDates, type DashboardQuery } from "./query";
+import { modelRelevance, sentimentProbabilities } from "./post-analysis";
 
 export async function getDashboard(query: DashboardQuery) {
   const now = new Date();
@@ -47,15 +48,28 @@ export async function getPosts(query: DashboardQuery) {
   const [total, records] = await Promise.all([
     db.modelMention.count({ where }),
     db.modelMention.findMany({ where, orderBy: [{ post: { publishedAt: "desc" } }, { id: "asc" }], skip: (query.page - 1) * pageSize, take: pageSize,
-      select: { id: true, sentiment: true, confidence: true, analysisVersion: true, model: { select: { name: true, slug: true } }, topics: { select: { sentiment: true, confidence: true, topic: { select: { slug: true, name: true } } } },
+      select: { id: true, sentiment: true, confidence: true, probabilities: true, relevance: true, analyzedAt: true, analysisVersion: true, model: { select: { name: true, slug: true } }, topics: { select: { sentiment: true, confidence: true, probabilities: true, topic: { select: { slug: true, name: true } } } },
         post: { select: { xPostId: true, authorName: true, authorUsername: true, text: true, publishedAt: true, likeCount: true, replyCount: true, repostCount: true } } },
     }),
   ]);
   return { total, page: query.page, pages: Math.ceil(total / pageSize), items: records.map(record => {
     const selected = query.category === "all" ? record : record.topics.find(topic => topic.topic.slug === query.category)!;
     return { id: record.id, model: record.model, sentiment: selected.sentiment, confidence: selected.confidence, analysisVersion: record.analysisVersion,
+      classification: {
+        focus: query.category === "all" ? "Overall" : categories[query.category],
+        probabilities: sentimentProbabilities(selected.probabilities),
+        relevance: modelRelevance(record.relevance),
+        analyzedAt: record.analyzedAt.toISOString(),
+        decisions: [
+          { category: "all", name: "Overall", sentiment: record.sentiment, confidence: record.confidence },
+          ...categoryKeys.map(key => {
+            const topic = record.topics.find(topic => topic.topic.slug === key);
+            return { category: key, name: categories[key], sentiment: topic?.sentiment ?? null, confidence: topic?.confidence ?? null };
+          }),
+        ],
+      },
       post: { ...record.post, publishedAt: record.post.publishedAt.toISOString() },
-      categories: record.topics.filter(topic => isCountedOpinion(topic.sentiment) && topic.confidence >= MIN_CONFIDENCE).map(topic => ({ category: topic.topic.slug, name: categories[topic.topic.slug as Category] ?? topic.topic.name, sentiment: topic.sentiment })) };
+      categories: record.topics.filter(topic => isCountedOpinion(topic.sentiment) && topic.confidence >= MIN_CONFIDENCE).map(topic => ({ category: topic.topic.slug, name: categories[topic.topic.slug as Category] ?? topic.topic.name, sentiment: topic.sentiment, confidence: topic.confidence })) };
   }) };
 }
 export type PostData = Awaited<ReturnType<typeof getPosts>>;

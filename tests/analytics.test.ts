@@ -10,7 +10,7 @@ describe("database analytics aggregation", () => {
     const current = Array.from({ length: 5 }, () => mention({ analysisVersion: "jev-sentiment-v4/jev-1.13.0" }));
     const prior = Array.from({ length: 5 }, () => mention({ analysisVersion: "jev-sentiment-v2/jev-1.13.0", publishedAt: new Date("2026-09-26T12:00:00Z") }));
     const report = aggregate(models, [...current, ...prior], query, now);
-    expect(report.mixedAnalysisVersions).toBe(true); expect(report.change).toBeNull(); expect(report.rows[0].change).toBeNull();
+    expect(report.mixedAnalysisVersions).toBe(true); expect(report.change).toBeNull(); expect(report.rows[0].change).toBeNull(); expect(report.rows[0].overallChange).toBeNull();
     expect(report.analysisVersions).toEqual(["jev-sentiment-v4/jev-1.13.0"]);
   });
   it("excludes cannot-determine from percentages but preserves other independently clear categories", () => {
@@ -43,8 +43,16 @@ describe("database analytics aggregation", () => {
     const result = aggregate(models, [...current, ...prior], query, now);
     expect(result.summary.total).toBe(5);
     expect(result.change).toBe(200);
+    expect(result.rows[0].overallChange).toBe(200);
     expect(aggregate(models, [mention(), ...prior], query, now).change).toBeNull();
     expect(aggregate(models, [...current, ...prior], { ...query, range: "all" }, now).change).toBeNull();
+  });
+  it("keeps model trends overall when the selected focus is category-specific", () => {
+    const current = Array.from({ length: 5 }, () => mention({ sentiment: "POSITIVE", topics: [{ slug: "speed", sentiment: "NEGATIVE", confidence: .9 }] }));
+    const prior = Array.from({ length: 5 }, () => mention({ sentiment: "NEGATIVE", publishedAt: new Date("2026-09-26T12:00:00Z"), topics: [{ slug: "speed", sentiment: "POSITIVE", confidence: .9 }] }));
+    const result = aggregate(models, [...current, ...prior], { ...query, category: "speed" }, now);
+    expect(result.rows[0].change).toBe(-200);
+    expect(result.rows[0].overallChange).toBe(200);
   });
   it("keeps empty chart buckets null instead of treating them as neutral or negative", () => {
     const result = aggregate(models, [], query, now);

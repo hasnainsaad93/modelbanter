@@ -1,26 +1,58 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useTransition } from "react";
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, ExternalLink, MessageSquare, RefreshCw } from "lucide-react";
-import { categories, categoryKeys, MIN_SAMPLE } from "@/lib/analysis";
+import { useMemo, useState, useTransition } from "react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, ArrowUpDown, ExternalLink, MessageSquare, Minus, RefreshCw } from "lucide-react";
+import { categories, categoryKeys, MIN_SAMPLE, type Category } from "@/lib/analysis";
 import type { DashboardData, PostData } from "@/lib/analytics/data";
 import type { Counts } from "@/lib/analytics/aggregate";
 import type { DashboardQuery } from "@/lib/analytics/query";
 import { trackUsage } from "@/lib/analytics/client";
 import { SentimentTrend } from "./charts";
+import { PostClassification } from "./post-classification";
 
 const ranges = [{ value: "24h", label: "24 hours" }, { value: "7d", label: "7 days" }, { value: "30d", label: "30 days" }, { value: "all", label: "All time" }];
 const date = (value: string) => new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
 const percent = (value: number | null) => value === null ? "—" : `${Math.round(value)}%`;
 const label = (value: string) => value.toLowerCase().replaceAll("_", " ");
+type SortKey = "model" | "mentions" | "collection" | "overall" | Category;
+type SortDirection = "asc" | "desc";
+type DashboardRow = DashboardData["rows"][number];
+
+function sortValue(row: DashboardRow, key: SortKey) {
+  if (key === "model") return row.name;
+  if (key === "mentions") return row.counts.total;
+  if (key === "collection") return row.coverage.accepted === null ? null : row.coverage.target ? row.coverage.accepted / row.coverage.target : row.coverage.accepted;
+  return (key === "overall" ? row.overall : row.categories[key]).positivePercent;
+}
+
+export function sortDashboardRows(rows: DashboardRow[], key: SortKey, direction: SortDirection) {
+  return [...rows].sort((a, b) => {
+    const first = sortValue(a, key);
+    const second = sortValue(b, key);
+    if (first === null) return second === null ? a.name.localeCompare(b.name) : 1;
+    if (second === null) return -1;
+    const comparison = typeof first === "string" ? first.localeCompare(String(second)) : first - Number(second);
+    if (comparison) return direction === "asc" ? comparison : -comparison;
+    const totalA = key === "overall" ? a.overall.total : categoryKeys.includes(key as Category) ? a.categories[key as Category].total : a.counts.total;
+    const totalB = key === "overall" ? b.overall.total : categoryKeys.includes(key as Category) ? b.categories[key as Category].total : b.counts.total;
+    return totalB - totalA || a.name.localeCompare(b.name);
+  });
+}
 
 export function Dashboard({ data, evidence, detail = false }: { data: DashboardData; evidence?: PostData; detail?: boolean }) {
   const router = useRouter();
   const pathname = usePathname();
   const [pending, startTransition] = useTransition();
+  const [sort, setSort] = useState<{ key: SortKey; direction: SortDirection }>({ key: "overall", direction: "desc" });
   const q = data.query;
   const model = data.catalog.find(item => item.slug === q.model);
+  const sortedRows = useMemo(() => sortDashboardRows(data.rows, sort.key, sort.direction), [data.rows, sort]);
+  function chooseSort(key: SortKey) {
+    setSort(current => current.key === key
+      ? { key, direction: current.direction === "desc" ? "asc" : "desc" }
+      : { key, direction: key === "model" ? "asc" : "desc" });
+  }
   function url(changes: Partial<DashboardQuery>, path = pathname) {
     const next = { ...q, ...changes };
     const params = new URLSearchParams();
@@ -30,9 +62,10 @@ export function Dashboard({ data, evidence, detail = false }: { data: DashboardD
   function change(key: keyof DashboardQuery, value: string) {
     const changes: Partial<DashboardQuery> = { [key]: value, page: 1 };
     if (key === "vendor") changes.model = "";
+    if (key === "model" && value) changes.vendor = "";
     if (key === "category") changes.sentiment = "all";
     trackUsage(key === "category" ? "category_selected" : "filter_changed", { filter: key, model: q.model, vendor: q.vendor, category: key === "category" ? value : q.category, range: key === "range" ? value : q.range, sentiment: key === "sentiment" ? value : q.sentiment });
-    startTransition(() => router.push(url(changes), { scroll: false }));
+    startTransition(() => router.push(url(changes, key === "model" && value ? `/models/${encodeURIComponent(value)}` : pathname), { scroll: false }));
   }
   function modelUrl(slug: string, category: DashboardQuery["category"] = q.category) { return url({ model: slug, vendor: "", category, sentiment: "all", page: 1 }, `/models/${slug}`); }
   const isStale = data.latestPostAt && +new Date(data.asOf) - +new Date(data.latestPostAt) > 48 * 3600000;
@@ -46,10 +79,10 @@ export function Dashboard({ data, evidence, detail = false }: { data: DashboardD
       {data.summary.total ? <><div className="sentiment-summary"><div><strong className="positive-text">{percent(data.summary.positivePercent)}</strong><span>positive <small>({data.summary.positive})</small></span></div><div><strong className="negative-text">{percent(data.summary.negativePercent)}</strong><span>negative <small>({data.summary.negative})</small></span></div><div className="summary-rest"><span>{data.summary.neutral} neutral · {data.summary.mixed} mixed</span><span>{data.summary.total < MIN_SAMPLE ? "Small sample · interpret with care" : data.change === null ? "No comparable previous period" : <><Change value={data.change} /> net sentiment vs previous period</>}</span></div></div><SentimentTrend data={data.trend} range={q.range} /></> : <div className="empty-chart"><MessageSquare size={25} strokeWidth={1.3} /><h3>No classified mentions in this view</h3><p>{data.storedMentions ? "Stored posts may be outside this period, lack evidence for this category, or need more context or analysis." : "This model is ready to track. Its first collected posts will appear here."}</p>{q.range !== "all" && data.storedMentions > 0 && <button className="text-button" onClick={() => change("range", "all")}>Explore all time <ArrowRight size={15} /></button>}{data.pending > 0 && <span className="muted">{data.pending} stored mentions awaiting analysis</span>}</div>}
       <div className="chart-caption"><span>Share of classified mentions · UTC</span><span>Collected opinions, unweighted by likes or reposts</span></div>
     </section>
-    {!detail ? <section className="models-section"><div className="section-heading"><div><div className="eyebrow">FOLLOW THE SIGNAL</div><h2>Model by model</h2></div><span className="section-hint">Select a model or category to explore <ArrowRight size={14} /></span></div><div className="table-scroll"><table className="model-table"><thead><tr><th>Model</th><th>Mentions</th><th>Collection</th><th>Overall</th>{categoryKeys.map(key => <th key={key}>{categories[key]}</th>)}</tr></thead><tbody>{data.rows.map(row => <tr key={row.id}><td><Link prefetch={false} className="model-name" href={modelUrl(row.slug)} onClick={() => trackUsage("model_opened", { model: row.slug, range: q.range, category: q.category })}><span className="model-initial">{row.name[0]}</span><span><strong>{row.name}</strong><small>{row.vendor}{row.isEnabled ? "" : " · archive"}</small></span><ArrowRight size={14} /></Link></td><td className="mention-count">{row.counts.total || "—"}</td><td className="coverage-cell"><strong>{row.coverage.state}</strong><span>{row.coverage.accepted === null ? `Target ${row.coverage.target}` : `${row.coverage.accepted} / ${row.coverage.target} accepted`}</span><span>{row.coverage.attemptedAt ? `Attempted ${date(row.coverage.attemptedAt)}` : "No attempt yet"}</span>{row.coverage.stopReason && !["TARGET_REACHED", "SEARCH_EXHAUSTED", "PAGE_CAP"].includes(row.coverage.stopReason) && <span>Latest: {label(row.coverage.stopReason)}</span>}</td><td><Link prefetch={false} href={modelUrl(row.slug, "all")} onClick={() => trackUsage("model_opened", { model: row.slug, category: "all", range: q.range })}><SentimentCell counts={q.category === "all" ? row.counts : row.overall} /></Link></td>{categoryKeys.map(key => <td key={key}><Link prefetch={false} aria-label={`${row.name}: ${categories[key]}`} href={modelUrl(row.slug, key)} onClick={() => trackUsage("category_selected", { model: row.slug, category: key, range: q.range })}><SentimentCell counts={row.categories[key]} /></Link></td>)}</tr>)}</tbody></table></div>{!data.rows.length && <p className="empty-inline">No models match these filters.</p>}<p className="table-note">Collection shows the latest attempt and seven-day collection coverage, independently of the selected sentiment period. Accepted mentions can be excluded by sentiment confidence. Each sentiment cell shows positive / negative share. “—” means no classified evidence. Small samples are marked.</p></section> : <>
+    {!detail ? <section className="models-section"><div className="section-heading"><div><div className="eyebrow">FOLLOW THE SIGNAL</div><h2>Model by model</h2></div><span className="section-hint">Select a heading to sort · select a model or category to explore <ArrowRight size={14} /></span></div><div className="table-scroll"><table className="model-table"><thead><tr><SortHeader label="Model" column="model" sort={sort} onSort={chooseSort} /><SortHeader label="Mentions" column="mentions" sort={sort} onSort={chooseSort} /><SortHeader label="Collection" column="collection" sort={sort} onSort={chooseSort} /><SortHeader label="Overall" column="overall" sort={sort} onSort={chooseSort} />{categoryKeys.map(key => <SortHeader key={key} label={categories[key]} column={key} sort={sort} onSort={chooseSort} />)}</tr></thead><tbody>{sortedRows.map(row => <tr key={row.id}><td><Link prefetch={false} className="model-name" href={modelUrl(row.slug)} onClick={() => trackUsage("model_opened", { model: row.slug, range: q.range, category: q.category })}><ModelTrend value={row.overallChange} /><span className="model-initial">{row.name[0]}</span><span><strong>{row.name}</strong><small>{row.vendor}{row.isEnabled ? "" : " · archive"}</small></span><ArrowRight className="model-open-arrow" size={14} /></Link></td><td className="mention-count">{row.counts.total || "—"}</td><td className="coverage-cell"><strong>{row.coverage.state}</strong><span>{row.coverage.accepted === null ? `Target ${row.coverage.target}` : `${row.coverage.accepted} / ${row.coverage.target} accepted`}</span><span>{row.coverage.attemptedAt ? `Attempted ${date(row.coverage.attemptedAt)}` : "No attempt yet"}</span>{row.coverage.stopReason && !["TARGET_REACHED", "SEARCH_EXHAUSTED", "PAGE_CAP"].includes(row.coverage.stopReason) && <span>Latest: {label(row.coverage.stopReason)}</span>}</td><td><Link prefetch={false} href={modelUrl(row.slug, "all")} onClick={() => trackUsage("model_opened", { model: row.slug, category: "all", range: q.range })}><SentimentCell counts={row.overall} /></Link></td>{categoryKeys.map(key => <td key={key}><Link prefetch={false} aria-label={`${row.name}: ${categories[key]}`} href={modelUrl(row.slug, key)} onClick={() => trackUsage("category_selected", { model: row.slug, category: key, range: q.range })}><SentimentCell counts={row.categories[key]} /></Link></td>)}</tr>)}</tbody></table></div>{!data.rows.length && <p className="empty-inline">No models match these filters.</p>}<p className="table-note">The table starts with the highest positive Overall share. Select any heading to sort; sentiment headings rank by positive share. Trend arrows compare overall net sentiment with the previous equivalent period. Collection shows the latest attempt and seven-day coverage. “—” means no classified evidence or comparable period. Small samples are marked.</p></section> : <>
       <section className="category-section" aria-label="Category breakdown"><div className="category-tabs">{(["all", ...categoryKeys] as const).map(key => <button key={key} aria-pressed={q.category === key} onClick={() => change("category", key)}>{key === "all" ? "Overall" : categories[key]}{key !== "all" && <span>{data.rows[0]?.categories[key].total ?? 0}</span>}</button>)}</div></section>
       <section className="evidence-section"><div className="section-heading"><div><div className="eyebrow">READ THE EVIDENCE</div><h2>{q.category === "all" ? "In their own words" : `What people say about ${categories[q.category].toLowerCase()}`}</h2></div><label className="sentiment-filter"><span>Opinion</span><select aria-label="Opinion" value={q.sentiment} onChange={event => change("sentiment", event.target.value)}><option value="all">All opinions</option>{["POSITIVE", "NEGATIVE", "NEUTRAL", "MIXED"].map(item => <option key={item} value={item}>{label(item)}</option>)}</select></label></div>
-      {evidence?.items.length ? <div className="post-list">{evidence.items.map(item => <article className="source-post" key={item.id}><div className="post-top"><span className={`opinion-label ${item.sentiment.toLowerCase()}`}>{label(item.sentiment)}</span><time dateTime={item.post.publishedAt}>{date(item.post.publishedAt)}</time></div><p>{item.post.text}</p><div className="post-categories">{item.categories.map(topic => <button key={topic.category} className={`topic-chip ${topic.sentiment.toLowerCase()}`} onClick={() => change("category", topic.category)}>{topic.name}<span>{label(topic.sentiment)}</span></button>)}</div><footer><span>{item.post.authorName} <small>@{item.post.authorUsername}</small></span><a href={`https://x.com/i/status/${encodeURIComponent(item.post.xPostId)}`} target="_blank" rel="noreferrer" onClick={() => trackUsage("source_post_opened", { model: q.model, category: q.category, sentiment: item.sentiment })}>Original post <ExternalLink size={13} /></a></footer></article>)}</div> : <div className="empty-inline">No source posts match this view. Try another period, category, or opinion.</div>}
+      {evidence?.items.length ? <div className="post-list">{evidence.items.map(item => <article className="source-post" key={item.id}><div className="post-top"><div className="post-decision"><span className={`opinion-label ${item.sentiment.toLowerCase()}`}>{label(item.sentiment)}</span><span className="post-confidence" title={`${item.classification.focus} sentiment confidence reported by Jev`}>Jev confidence {(item.confidence * 100).toFixed(1)}%</span></div><time dateTime={item.post.publishedAt}>{date(item.post.publishedAt)}</time></div><p>{item.post.text}</p><div className="post-categories">{item.categories.map(topic => <button key={topic.category} className={`topic-chip ${topic.sentiment.toLowerCase()}`} onClick={() => change("category", topic.category)}>{topic.name}<span>{label(topic.sentiment)}</span></button>)}</div><PostClassification item={item} /><footer><span>{item.post.authorName} <small>@{item.post.authorUsername}</small></span><a href={`https://x.com/i/status/${encodeURIComponent(item.post.xPostId)}`} target="_blank" rel="noreferrer" onClick={() => trackUsage("source_post_opened", { model: q.model, category: q.category, sentiment: item.sentiment })}>Original post <ExternalLink size={13} /></a></footer></article>)}</div> : <div className="empty-inline">No source posts match this view. Try another period, category, or opinion.</div>}
       {evidence && evidence.pages > 1 && <div className="pagination"><button disabled={q.page <= 1 || pending} onClick={() => startTransition(() => router.push(url({ page: q.page - 1 }), { scroll: false }))}>Previous</button><span>Page {evidence.page} of {evidence.pages} · {evidence.total} mentions</span><button disabled={q.page >= evidence.pages || pending} onClick={() => startTransition(() => router.push(url({ page: q.page + 1 }), { scroll: false }))}>Next</button></div>}
       </section></>}
     <div className="coverage-notice" role="status">{data.coverage.evaluated} of {data.coverage.enabled} enabled models have a recorded collection outcome with target {data.coverage.target} in the last 7 days. Search exhaustion and page limits can produce fewer records.{data.coverage.evaluated < data.coverage.enabled && " Coverage is incomplete; mention counts reflect uneven collection."}{detail && data.rows[0] && <span>{data.rows[0].coverage.state} · {data.rows[0].coverage.accepted ?? "—"} / {data.coverage.target} accepted · {data.rows[0].coverage.stopReason ? label(data.rows[0].coverage.stopReason) : "Awaiting a full collection"}{data.rows[0].coverage.successfulAt && ` · Last successful collection ${date(data.rows[0].coverage.successfulAt)}`}</span>}</div><div className="collection-status"><RefreshCw size={13} /><span>{data.pipeline ? `Last collection attempt ${date(data.pipeline.startedAt)} · ${label(data.pipeline.status)}` : "No collections yet"}</span><span>New analyses use TypeSafe Jev</span></div>
@@ -58,5 +91,14 @@ export function Dashboard({ data, evidence, detail = false }: { data: DashboardD
 function SentimentCell({ counts }: { counts: Counts }) {
   if (!counts.total) return <span className="no-evidence">—</span>;
   return <span className="sentiment-cell"><span><b className="positive-text">{percent(counts.positivePercent)}</b><span className="cell-divider">/</span><b className="negative-text">{percent(counts.negativePercent)}</b></span><span className="mini-bar"><i style={{ width: `${counts.positivePercent}%` }} /><i style={{ width: `${counts.negativePercent}%` }} /></span>{counts.total < MIN_SAMPLE && <small>small sample</small>}</span>;
+}
+function SortHeader({ label: text, column, sort, onSort }: { label: string; column: SortKey; sort: { key: SortKey; direction: SortDirection }; onSort: (key: SortKey) => void }) {
+  const active = sort.key === column;
+  return <th aria-sort={active ? (sort.direction === "asc" ? "ascending" : "descending") : "none"}><button className={active ? "sort-button active" : "sort-button"} onClick={() => onSort(column)}>{text}{active ? (sort.direction === "asc" ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={11} />}</button></th>;
+}
+function ModelTrend({ value }: { value: number | null }) {
+  if (value === null) return <span className="model-trend unavailable" role="img" aria-label="Trend unavailable: not enough comparable data in the previous period" title="Not enough comparable data in the previous period. Try a shorter time period."><Minus size={14} /></span>;
+  const description = value === 0 ? "Overall sentiment unchanged" : `Overall sentiment ${value > 0 ? "up" : "down"} ${Math.abs(value).toFixed(1)} percentage points`;
+  return <span className={`model-trend ${value > 0 ? "up" : value < 0 ? "down" : "flat"}`} role="img" aria-label={description} title={`${description} vs previous period`}>{value > 0 ? <ArrowUp size={14} /> : value < 0 ? <ArrowDown size={14} /> : <Minus size={14} />}</span>;
 }
 function Change({ value }: { value: number }) { return <span className={value >= 0 ? "positive-text change" : "negative-text change"}>{value >= 0 ? <ArrowUp size={12} /> : <ArrowDown size={12} />}{Math.abs(value).toFixed(1)} pp</span>; }

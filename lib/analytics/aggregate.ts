@@ -4,7 +4,7 @@ import { rangeDates, type DashboardQuery } from "./query";
 export type Counts = { total: number; positive: number; negative: number; neutral: number; mixed: number; positivePercent: number | null; negativePercent: number | null; net: number | null };
 export type MetricMention = { modelId: string; sentiment: Opinion; confidence: number; analysisStatus: string; analysisVersion?: string; publishedAt: Date; topics: { slug: string; sentiment: Opinion; confidence: number }[] };
 export type CatalogModel = { id: string; name: string; slug: string; vendor: string; isEnabled: boolean };
-export type ModelRow = CatalogModel & { counts: Counts; overall: Counts; change: number | null; categories: Record<Category, Counts> };
+export type ModelRow = CatalogModel & { counts: Counts; overall: Counts; change: number | null; overallChange: number | null; categories: Record<Category, Counts> };
 export function emptyCounts(): Counts { return { total: 0, positive: 0, negative: 0, neutral: 0, mixed: 0, positivePercent: null, negativePercent: null, net: null }; }
 function count(counts: Counts, opinion: Opinion) {
   if (!isCountedOpinion(opinion)) return;
@@ -36,9 +36,14 @@ export function aggregate(models: CatalogModel[], mentions: MetricMention[], que
   const comparable = (items: MetricMention[], category = query.category) => methods(items, category).size <= 1;
   const rows: ModelRow[] = models.map(model => {
     const selected = current.filter(m => m.modelId === model.id);
+    const selectedPrior = prior.filter(m => m.modelId === model.id);
     const counts = summarize(selected);
-    const previous = summarize(prior.filter(m => m.modelId === model.id));
-    return { ...model, counts, overall: summarize(selected, "all"), change: comparable([...selected, ...prior.filter(m => m.modelId === model.id)]) && counts.total >= MIN_SAMPLE && previous.total >= MIN_SAMPLE ? counts.net! - previous.net! : null,
+    const previous = summarize(selectedPrior);
+    const overall = summarize(selected, "all");
+    const previousOverall = summarize(selectedPrior, "all");
+    return { ...model, counts, overall,
+      change: comparable([...selected, ...selectedPrior]) && counts.total >= MIN_SAMPLE && previous.total >= MIN_SAMPLE ? counts.net! - previous.net! : null,
+      overallChange: comparable([...selected, ...selectedPrior], "all") && overall.total >= MIN_SAMPLE && previousOverall.total >= MIN_SAMPLE ? overall.net! - previousOverall.net! : null,
       categories: Object.fromEntries(categoryKeys.map(key => [key, summarize(selected, key)])) as Record<Category, Counts> };
   }).sort((a, b) => b.counts.total - a.counts.total || Number(b.isEnabled) - Number(a.isEnabled) || a.name.localeCompare(b.name));
   const summary = summarize(current);
