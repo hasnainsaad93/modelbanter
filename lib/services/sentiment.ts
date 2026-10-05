@@ -1,12 +1,15 @@
 import { analyzeWithJev } from "./jev";
+import { analyzePostWithJev } from "./jev-context";
+import type { ContextSource } from "./post-context";
+import type { ModelIdentity } from "./jev-prompts";
 import type { StructuredAnalysis } from "../analysis";
 export type SentimentResult = {
-  label: "POSITIVE" | "NEGATIVE" | "NEUTRAL" | "MIXED" | "NOT_DISCUSSED"; score: number; confidence: number;
+  label: "POSITIVE" | "NEGATIVE" | "NEUTRAL" | "MIXED" | "NOT_DISCUSSED" | "CANNOT_DETERMINE"; score: number; confidence: number;
   explanation: string; strengths: string[]; weaknesses: string[]; topics: string[];
   provider: string; version: string; structured?: StructuredAnalysis;
 };
 
-export interface SentimentProvider { analyze(text: string, modelName: string): Promise<SentimentResult>; }
+export interface SentimentProvider { analyze(text: string, modelName: string, identity?: ModelIdentity, source?: ContextSource): Promise<SentimentResult>; }
 
 const positive = ["fast", "faster", "great", "excellent", "clean", "dependable", "impressive", "good", "love", "best", "capable", "accurate", "cheap", "clear", "reliable"];
 const negative = ["slow", "expensive", "bad", "failed", "failure", "bug", "hallucinated", "unreliable", "worse", "quota", "limit", "latency", "retry", "refusal", "gap"];
@@ -33,8 +36,8 @@ export class LocalSentimentProvider implements SentimentProvider {
 }
 
 export class JevSentimentProvider implements SentimentProvider {
-  async analyze(text: string, modelName: string): Promise<SentimentResult> {
-    const structured = await analyzeWithJev(text, modelName);
+  async analyze(text: string, modelName: string, identity?: ModelIdentity, source?: ContextSource): Promise<SentimentResult> {
+    const structured = source ? await analyzePostWithJev(text, modelName, identity, source) : await analyzeWithJev(text, modelName, identity);
     const { choice: label, confidence, probabilities } = structured.overall;
     return { label, confidence, score: probabilities.POSITIVE - probabilities.NEGATIVE,
       explanation: "", strengths: [], weaknesses: [], topics: [], provider: "typesafe", version: structured.model, structured };

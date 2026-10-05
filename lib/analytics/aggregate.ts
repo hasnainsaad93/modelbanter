@@ -1,13 +1,13 @@
-import { categoryKeys, MIN_CONFIDENCE, MIN_SAMPLE, type Category, type Opinion } from "../analysis";
+import { categoryKeys, isCountedOpinion, MIN_CONFIDENCE, MIN_SAMPLE, type Category, type Opinion } from "../analysis";
 import { rangeDates, type DashboardQuery } from "./query";
 
 export type Counts = { total: number; positive: number; negative: number; neutral: number; mixed: number; positivePercent: number | null; negativePercent: number | null; net: number | null };
-export type MetricMention = { modelId: string; sentiment: Opinion; confidence: number; analysisStatus: string; publishedAt: Date; topics: { slug: string; sentiment: Opinion; confidence: number }[] };
+export type MetricMention = { modelId: string; sentiment: Opinion; confidence: number; analysisStatus: string; analysisVersion?: string; publishedAt: Date; topics: { slug: string; sentiment: Opinion; confidence: number }[] };
 export type CatalogModel = { id: string; name: string; slug: string; vendor: string; isEnabled: boolean };
 export type ModelRow = CatalogModel & { counts: Counts; overall: Counts; change: number | null; categories: Record<Category, Counts> };
 export function emptyCounts(): Counts { return { total: 0, positive: 0, negative: 0, neutral: 0, mixed: 0, positivePercent: null, negativePercent: null, net: null }; }
 function count(counts: Counts, opinion: Opinion) {
-  if (opinion === "NOT_DISCUSSED") return;
+  if (!isCountedOpinion(opinion)) return;
   counts.total++;
   if (opinion === "POSITIVE") counts.positive++;
   if (opinion === "NEGATIVE") counts.negative++;
@@ -25,18 +25,20 @@ function finish(counts: Counts): Counts {
 function decision(mention: MetricMention, category: DashboardQuery["category"]) {
   if (mention.analysisStatus !== "COMPLETED") return null;
   const chosen = category === "all" ? mention : mention.topics.find(topic => topic.slug === category);
-  return chosen && chosen.confidence >= MIN_CONFIDENCE && chosen.sentiment !== "NOT_DISCUSSED" ? chosen.sentiment : null;
+  return chosen && chosen.confidence >= MIN_CONFIDENCE && isCountedOpinion(chosen.sentiment) ? chosen.sentiment : null;
 }
 export function aggregate(models: CatalogModel[], mentions: MetricMention[], query: DashboardQuery, now = new Date()) {
   const dates = rangeDates(query.range, now);
   const current = mentions.filter(m => +m.publishedAt <= +now && (!dates.start || +m.publishedAt >= +dates.start));
   const prior = dates.start && dates.previous ? mentions.filter(m => +m.publishedAt >= +dates.previous! && +m.publishedAt < +dates.start!) : [];
   const summarize = (items: MetricMention[], category = query.category) => finish(items.reduce((counts, mention) => { const opinion = decision(mention, category); if (opinion) count(counts, opinion); return counts; }, emptyCounts()));
+  const methods = (items: MetricMention[], category = query.category) => new Set(items.filter(item => decision(item, category)).map(item => item.analysisVersion ?? "unspecified"));
+  const comparable = (items: MetricMention[], category = query.category) => methods(items, category).size <= 1;
   const rows: ModelRow[] = models.map(model => {
     const selected = current.filter(m => m.modelId === model.id);
     const counts = summarize(selected);
     const previous = summarize(prior.filter(m => m.modelId === model.id));
-    return { ...model, counts, overall: summarize(selected, "all"), change: counts.total >= MIN_SAMPLE && previous.total >= MIN_SAMPLE ? counts.net! - previous.net! : null,
+    return { ...model, counts, overall: summarize(selected, "all"), change: comparable([...selected, ...prior.filter(m => m.modelId === model.id)]) && counts.total >= MIN_SAMPLE && previous.total >= MIN_SAMPLE ? counts.net! - previous.net! : null,
       categories: Object.fromEntries(categoryKeys.map(key => [key, summarize(selected, key)])) as Record<Category, Counts> };
   }).sort((a, b) => b.counts.total - a.counts.total || Number(b.isEnabled) - Number(a.isEnabled) || a.name.localeCompare(b.name));
   const summary = summarize(current);
@@ -52,8 +54,11 @@ export function aggregate(models: CatalogModel[], mentions: MetricMention[], que
     const opinion = decision(mention, query.category);
     if (opinion) count(buckets.get(Math.floor(+mention.publishedAt / bucketMs) * bucketMs)!, opinion);
   }
-  return { rows, summary, change: summary.total >= MIN_SAMPLE && previous.total >= MIN_SAMPLE ? summary.net! - previous.net! : null,
+  return { rows, summary, change: comparable([...current, ...prior]) && summary.total >= MIN_SAMPLE && previous.total >= MIN_SAMPLE ? summary.net! - previous.net! : null,
     trend: [...buckets.entries()].map(([time, counts]) => ({ date: new Date(time).toISOString(), ...finish(counts) })),
+    analysisVersions: [...methods(current)].sort(),
+    mixedAnalysisVersions: !comparable([...current, ...prior]),
     excluded: current.length - summary.total,
+    cannotDetermine: current.filter(mention => mention.analysisStatus === "COMPLETED" && (query.category === "all" ? mention.sentiment : mention.topics.find(topic => topic.slug === query.category)?.sentiment) === "CANNOT_DETERMINE").length,
   };
 }

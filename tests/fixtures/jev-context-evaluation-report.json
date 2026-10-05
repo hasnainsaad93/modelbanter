@@ -1,0 +1,228 @@
+{
+  "ruleVersion": "jev-sentiment-v4",
+  "completedAt": "2026-10-05T04:34:29.030Z",
+  "cases": 12,
+  "passed": 12,
+  "usage": {
+    "input_tokens": 62712,
+    "output_tokens": 5037
+  },
+  "results": [
+    {
+      "id": "agreement",
+      "requestHash": "dc01622f1d538f4bb1c6c3ad9f887b86025c40395458ee5994a9d9dc63e8c109",
+      "failures": [],
+      "actual": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "POSITIVE"
+      },
+      "usage": {
+        "input_tokens": 5243,
+        "output_tokens": 418
+      },
+      "model": "jev-1.13.0"
+    },
+    {
+      "id": "disagreement",
+      "requestHash": "f2cd64c027b336bc9ba13f3df3a371f19d6417f63c9c21c25135c7a2c1a602c3",
+      "failures": [],
+      "actual": {
+        "relevance": "YES",
+        "overall": "NEGATIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NEGATIVE"
+      },
+      "usage": {
+        "input_tokens": 5246,
+        "output_tokens": 418
+      },
+      "model": "jev-1.13.0"
+    },
+    {
+      "id": "partial-endorsement",
+      "requestHash": "5fbe5b21623aff6cc424f4c127bf67ccf7ef93d7d129c3d913daf24c85638a1c",
+      "failures": [],
+      "actual": {
+        "relevance": "YES",
+        "overall": "MIXED",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NEGATIVE",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "POSITIVE"
+      },
+      "usage": {
+        "input_tokens": 5257,
+        "output_tokens": 417
+      },
+      "model": "jev-1.13.0"
+    },
+    {
+      "id": "missing-reference",
+      "requestHash": "888a77653db416b7533bec46eba9f97aa30215d04ed54e88e79146233d5c25d8",
+      "failures": [],
+      "actual": {
+        "relevance": "YES",
+        "overall": "CANNOT_DETERMINE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "CANNOT_DETERMINE"
+      },
+      "usage": {
+        "input_tokens": 5225,
+        "output_tokens": 424
+      },
+      "model": "jev-1.13.0"
+    },
+    {
+      "id": "standalone-with-missing-parent",
+      "requestHash": "2a79e2306597c8422df81f546d6fe2205fc07cf538b12e9248f6993ee507b029",
+      "failures": [],
+      "actual": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "POSITIVE"
+      },
+      "usage": {
+        "input_tokens": 5221,
+        "output_tokens": 418
+      },
+      "model": "jev-1.13.0"
+    },
+    {
+      "id": "unrelated-parent",
+      "requestHash": "0192d6430c50fdd50e74536641bfeea1cad2ba1ee6d9ac50a1d92c099f04343e",
+      "failures": [],
+      "actual": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "usage": {
+        "input_tokens": 5248,
+        "output_tokens": 419
+      },
+      "model": "jev-1.13.0"
+    },
+    {
+      "id": "missing-image",
+      "requestHash": "159b234bfd4942cb27c806a4cd20de5d9748c2d1e6f75ffa39598ec7d35d1f85",
+      "failures": [],
+      "actual": {
+        "relevance": "YES",
+        "overall": "CANNOT_DETERMINE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "CANNOT_DETERMINE"
+      },
+      "usage": {
+        "input_tokens": 5188,
+        "output_tokens": 424
+      },
+      "model": "jev-1.13.0"
+    },
+    {
+      "id": "independent-dimensions",
+      "requestHash": "c7e4709773aa66590323bba92e3f5d85bda122044935dbb6c7b0aefcd2397f11",
+      "failures": [],
+      "actual": {
+        "relevance": "YES",
+        "overall": "MIXED",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "CANNOT_DETERMINE",
+        "code_quality": "POSITIVE"
+      },
+      "usage": {
+        "input_tokens": 5177,
+        "output_tokens": 420
+      },
+      "model": "jev-1.13.0"
+    },
+    {
+      "id": "parent-instruction",
+      "requestHash": "6389efb82744cec43404f04b69827f38fb4a3f32093f32fbc157336a45d68ca1",
+      "failures": [],
+      "actual": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "POSITIVE"
+      },
+      "usage": {
+        "input_tokens": 5252,
+        "output_tokens": 418
+      },
+      "model": "jev-1.13.0"
+    },
+    {
+      "id": "neutral-quote",
+      "requestHash": "169d1832ba93117d893a1101a91ba78ddf62ea25bdb7676eca42e3a8b97a9645",
+      "failures": [],
+      "actual": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "usage": {
+        "input_tokens": 5258,
+        "output_tokens": 419
+      },
+      "model": "jev-1.13.0"
+    },
+    {
+      "id": "budget-missing",
+      "requestHash": "4977ef8bf76881bce834f92d356e7f232578390ff732af7307be3451f51ab789",
+      "failures": [],
+      "actual": {
+        "relevance": "YES",
+        "overall": "CANNOT_DETERMINE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "CANNOT_DETERMINE",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "usage": {
+        "input_tokens": 5225,
+        "output_tokens": 424
+      },
+      "model": "jev-1.13.0"
+    },
+    {
+      "id": "clear-absence",
+      "requestHash": "bf0c8c73d612473f20a8f5ca0533d142e5070cc9b4968ac05a040f3913efb3c3",
+      "failures": [],
+      "actual": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "POSITIVE",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "usage": {
+        "input_tokens": 5172,
+        "output_tokens": 418
+      },
+      "model": "jev-1.13.0"
+    }
+  ]
+}

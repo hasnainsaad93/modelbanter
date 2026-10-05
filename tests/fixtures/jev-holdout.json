@@ -1,0 +1,1655 @@
+{
+  "schemaVersion": 1,
+  "rubricVersion": "jev-sentiment-v3",
+  "annotationStatus": "assistant-draft-not-human-verified",
+  "cases": [
+    {
+      "id": "real-003",
+      "source": "stored_post",
+      "xPostId": "2106748957523165484",
+      "conversationId": "2106748957523165484",
+      "text": "Claude Code tip: once Opus 5.5 is your main model, don't let Fable 5.1 sit unused.\n\nKeep it on call through /advisor.\n\nRun /advisor fable.\n\nOpus 5.5 keeps writing the code. Fable 5.1 sees the full session, including every tool call, and weighs in at three points:\n\n→ before a https://t.co/lJMdV18Rwo https://t.co/PwVxucPMDd",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfy000313j2ttjkb92i",
+        "name": "Claude Fable 5.1",
+        "slug": "claude-fable-5-1",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Fable 5.1",
+          "Fable 5.1",
+          "claude-fable-5-1"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "POSITIVE"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Recommends using target as advisor within explicit coding workflow."
+      }
+    },
+    {
+      "id": "real-006",
+      "source": "stored_post",
+      "xPostId": "2106766345404924006",
+      "conversationId": "2106756509380333790",
+      "text": "@haider1 still waiting Fable 5.1 for cooking something",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfy000313j2ttjkb92i",
+        "name": "Claude Fable 5.1",
+        "slug": "claude-fable-5-1",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Fable 5.1",
+          "Fable 5.1",
+          "claude-fable-5-1"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": null,
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Waiting for cooking something is ambiguous without reply context; not clear model latency."
+      }
+    },
+    {
+      "id": "real-009",
+      "source": "stored_post",
+      "xPostId": "2106838701603246170",
+      "conversationId": "2106768373736493399",
+      "text": "@emollick A year's difference between GPT-5 and Fable 5.1 says a lot about where product development is heading. I think founders who can describe a clear vision now have leverage that used to require an engineering team.",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfy000313j2ttjkb92i",
+        "name": "Claude Fable 5.1",
+        "slug": "claude-fable-5-1",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Fable 5.1",
+          "Fable 5.1",
+          "claude-fable-5-1"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": null
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Favorable capability framing; whether engineering-team replacement specifically means coding needs review."
+      }
+    },
+    {
+      "id": "real-012",
+      "source": "stored_post",
+      "xPostId": "2106852012558266388",
+      "conversationId": "2106852012558266388",
+      "text": "Claude Code tip: once Opus 5.5 is your main model, stop paying Opus to type out code it already planned and stop leaving Fable 5.1 sitting idle\n\nsplit the brain in two with /model opusplan\n\nrun /model opusplan\n\nOpus 5.5 plans in plan mode and edits nothing\nSonnet 5.5 takes over https://t.co/asJ6asGksG https://t.co/1nq7WfQFm3",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfy000313j2ttjkb92i",
+        "name": "Claude Fable 5.1",
+        "slug": "claude-fable-5-1",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Fable 5.1",
+          "Fable 5.1",
+          "claude-fable-5-1"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NEUTRAL"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Recommendation to stop leaving target unused in coding workflow; concrete coding praise belongs to other models."
+      }
+    },
+    {
+      "id": "real-015",
+      "source": "stored_post",
+      "xPostId": "2105714769026277449",
+      "conversationId": "2105311143707435236",
+      "text": "@ahall_research I rebuilt your board setup from your post and ran it on Haiku 4.5 and Sonnet 4.6, with 12 agents, the first four signals planted wrong, and 40 seeds. Scored against the truth, Sonnet's swarm ended up more wrong than Haiku's. Scored against what the evidence on the board actually",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg2000613j2w589itxn",
+        "name": "Claude Haiku 4.5",
+        "slug": "claude-haiku-4-5",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Haiku 4.5",
+          "Haiku 4.5",
+          "claude-haiku-4-5"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Explicit less-wrong comparison in agent game; does not by itself describe reasoning process."
+      }
+    },
+    {
+      "id": "real-018",
+      "source": "stored_post",
+      "xPostId": "2106463063536976188",
+      "conversationId": "2105398512527560840",
+      "text": "@nisigrit Disagree on this one, a dumb person with Fable 5.1 is more capable than smart person with Haiku 4.5",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg2000613j2w589itxn",
+        "name": "Claude Haiku 4.5",
+        "slug": "claude-haiku-4-5",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Haiku 4.5",
+          "Haiku 4.5",
+          "claude-haiku-4-5"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEGATIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Explicit unfavorable capability comparison for target."
+      }
+    },
+    {
+      "id": "real-021",
+      "source": "stored_post",
+      "xPostId": "2106781420978926037",
+      "conversationId": "2106781420978926037",
+      "text": "official Anthropic tip, straight from the Claude Code docs: stop running Opus 5.5 on every turn\n\nSonnet runs. Opus advises. here's my trading desk on it:\n\n→ Sonnet 5.5 runs the desk\n→ Haiku 4.5 subagents scan, execute, journal\n→ Opus 5.5 on call via /advisor opus\n\nOpus only https://t.co/pYIkzwLYiV https://t.co/WdCwB0Ombj",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg2000613j2w589itxn",
+        "name": "Claude Haiku 4.5",
+        "slug": "claude-haiku-4-5",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Haiku 4.5",
+          "Haiku 4.5",
+          "claude-haiku-4-5"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Recommends target for trading-desk roles; agent tool use does not prove coding."
+      }
+    },
+    {
+      "id": "real-024",
+      "source": "stored_post",
+      "xPostId": "2105747905034289634",
+      "conversationId": "2105747905034289634",
+      "text": "Here they come!\n\n@Self_Manager99 now lets you choose the AI that answers.\n\nUntil today every AI feature ran on Google's Gemini. Gemini stays the default, but next to Fast and Thinking there's now a model menu:\n\n⚡ Fast: Gemini 3 Flash, Claude Haiku 4.5, Claude Sonnet 5.5, GPT-6 https://t.co/CVNB9TNyE3",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg2000613j2w589itxn",
+        "name": "Claude Haiku 4.5",
+        "slug": "claude-haiku-4-5",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Haiku 4.5",
+          "Haiku 4.5",
+          "claude-haiku-4-5"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NEUTRAL",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Product menu categorizes target under Fast without appraisal."
+      }
+    },
+    {
+      "id": "real-027",
+      "source": "stored_post",
+      "xPostId": "2106866046225338759",
+      "conversationId": "2106863330920972495",
+      "text": "@taobanker Yes between Opus 5.5 and Sol 6.1 both on their maxmax plans, I find myself having some tokens left over most weeks now.\nI asked Fable for advice on cooking meat, is how comfortable Im getting",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg0000413j2lpesx7bp",
+        "name": "Claude Opus 5.5",
+        "slug": "claude-opus-5-5",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Opus 5.5",
+          "Opus 5.5",
+          "claude-opus-5-5"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "POSITIVE",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Positive paid-plan usage experience jointly attributed to target and Sol."
+      }
+    },
+    {
+      "id": "real-030",
+      "source": "stored_post",
+      "xPostId": "2106860105493021178",
+      "conversationId": "2106854594416718133",
+      "text": "@ajambrosino Make sure the first thing on the agenda is beating opus 5.5 second optimizing usage rest can be trial and error but these two is where you all gotta start with",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg0000413j2lpesx7bp",
+        "name": "Claude Opus 5.5",
+        "slug": "claude-opus-5-5",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Opus 5.5",
+          "Opus 5.5",
+          "claude-opus-5-5"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Request for a competitor to beat target is not itself target praise."
+      }
+    },
+    {
+      "id": "real-033",
+      "source": "stored_post",
+      "xPostId": "2106864188312174822",
+      "conversationId": "2106864188312174822",
+      "text": "100% bang on.\n\nI think it’s because openai focus way to much on efficency i’ve noticed the only times i use sol or astra is when i have a carefully crafted plan. because there is no model like it when you get it rolling\n\n6.1 sol i think improved on this a lot but i think opus 5.5 https://t.co/gUmBezNxip",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg0000413j2lpesx7bp",
+        "name": "Claude Opus 5.5",
+        "slug": "claude-opus-5-5",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Opus 5.5",
+          "Opus 5.5",
+          "claude-opus-5-5"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": null,
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Text cuts off before target-specific judgment."
+      }
+    },
+    {
+      "id": "real-036",
+      "source": "stored_post",
+      "xPostId": "2106859862525174107",
+      "conversationId": "2106845241357824205",
+      "text": "@LasoorGaming @JamesNguyen868 @thsottiaux @reach_vb who cares? opus 5.5 can be used 100x more than astra and is faster.",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg0000413j2lpesx7bp",
+        "name": "Claude Opus 5.5",
+        "slug": "claude-opus-5-5",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Opus 5.5",
+          "Opus 5.5",
+          "claude-opus-5-5"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "POSITIVE",
+        "cost": null,
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Direct faster comparison; whether usage allowance comparison expresses paid value is unclear."
+      }
+    },
+    {
+      "id": "real-039",
+      "source": "stored_post",
+      "xPostId": "2106832595308917117",
+      "conversationId": "2106832595308917117",
+      "text": "I have genuinely had respect for google but rn after hearing they will remove all flash and pro models from app on free tier  only give flash lite which bad\nEven anthropic giving free sonnet 5.5 which better thall gemini model combined including pro and argon \nHuge L",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg1000513j29xvux3sg",
+        "name": "Claude Sonnet 5.5",
+        "slug": "claude-sonnet-5-5",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Sonnet 5.5",
+          "Sonnet 5.5",
+          "claude-sonnet-5-5"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "POSITIVE",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Explicit better model and favorable free-access comparison."
+      }
+    },
+    {
+      "id": "real-042",
+      "source": "stored_post",
+      "xPostId": "2106821513588654137",
+      "conversationId": "2106756511770804610",
+      "text": "@mhmazur Yeah, even Sonnet 5.5 is pretty good. Here's the disturbing music video my assistant wrote about all the CVEs. https://t.co/d33cOq1W6X",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg1000513j29xvux3sg",
+        "name": "Claude Sonnet 5.5",
+        "slug": "claude-sonnet-5-5",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Sonnet 5.5",
+          "Sonnet 5.5",
+          "claude-sonnet-5-5"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Pretty good is praise; music-video generation does not establish coding."
+      }
+    },
+    {
+      "id": "real-045",
+      "source": "stored_post",
+      "xPostId": "2106828583054557373",
+      "conversationId": "2106828583054557373",
+      "text": "Claude just got faster AND cheaper.\n\nAnthropic says Sonnet 5.5 is up to 30% faster and up to 30% cheaper.\n\nAI is becoming more affordable for freelancers and small businesses.\n\nThe barrier to using AI keeps dropping.",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg1000513j29xvux3sg",
+        "name": "Claude Sonnet 5.5",
+        "slug": "claude-sonnet-5-5",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Sonnet 5.5",
+          "Sonnet 5.5",
+          "claude-sonnet-5-5"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "POSITIVE",
+        "cost": "POSITIVE",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Author endorses faster and cheaper in headline and affordability conclusion."
+      }
+    },
+    {
+      "id": "real-048",
+      "source": "stored_post",
+      "xPostId": "2106828428972601653",
+      "conversationId": "2106807087586013282",
+      "text": "@RobdelmR @Da7_Tech Sonnet 5.5 is default on my OMP right now with other agents leaning on Opus.\n\nIt could easily be my default on Hermes but Deepseek is fine.\n\nThe distinction, I think, is Hermes is great for local and day to day things because it functions seamlessly at the shell. Easy to jump",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg1000513j29xvux3sg",
+        "name": "Claude Sonnet 5.5",
+        "slug": "claude-sonnet-5-5",
+        "vendor": "Anthropic",
+        "aliases": [
+          "Claude Sonnet 5.5",
+          "Sonnet 5.5",
+          "claude-sonnet-5-5"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Target selected as default and endorsed; shell behavior belongs to a different agent/client."
+      }
+    },
+    {
+      "id": "real-051",
+      "source": "stored_post",
+      "xPostId": "2106751137563226309",
+      "conversationId": "2106329068597629195",
+      "text": "@voidcodead avg deepseek v4.1 flash experience",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg6000a13j2hdu50mps",
+        "name": "DeepSeek V4.1 Flash",
+        "slug": "deepseek-v4-1-flash",
+        "vendor": "DeepSeek",
+        "aliases": [
+          "DeepSeek V4.1 Flash",
+          "DeepSeek-V4.1-Flash",
+          "DeepSeek V4.1"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": null,
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Average experience reply requires context to determine sentiment."
+      }
+    },
+    {
+      "id": "real-054",
+      "source": "stored_post",
+      "xPostId": "2106773399335059965",
+      "conversationId": "2105915715241062644",
+      "text": "@deepseek_ai @DeepSeekHarness Also live on an OpenAI-compatible endpoint: open-weight models like DeepSeek V4.1-Flash ($0.001/req), served on green energy — and your inputs are never used for training.",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg6000a13j2hdu50mps",
+        "name": "DeepSeek V4.1 Flash",
+        "slug": "deepseek-v4-1-flash",
+        "vendor": "DeepSeek",
+        "aliases": [
+          "DeepSeek V4.1 Flash",
+          "DeepSeek-V4.1-Flash",
+          "DeepSeek V4.1"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NEUTRAL",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Factual price and provider availability statement."
+      }
+    },
+    {
+      "id": "real-057",
+      "source": "stored_post",
+      "xPostId": "2106676138399658219",
+      "conversationId": "2106676138399658219",
+      "text": "How to 10x the efficiency of DeepSeek V4.1 Flash for bug hunting:\n\nSet up an advisor agent that continuously reviews its work, catches weak reasoning, and directs what it should investigate next.",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg6000a13j2hdu50mps",
+        "name": "DeepSeek V4.1 Flash",
+        "slug": "deepseek-v4-1-flash",
+        "vendor": "DeepSeek",
+        "aliases": [
+          "DeepSeek V4.1 Flash",
+          "DeepSeek-V4.1-Flash",
+          "DeepSeek V4.1"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": null,
+        "reasoning": null,
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NEUTRAL"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Bug-hunting advice; whether weak reasoning asserts an actual failure is ambiguous."
+      }
+    },
+    {
+      "id": "real-060",
+      "source": "stored_post",
+      "xPostId": "2106651971633787216",
+      "conversationId": "2106651971633787216",
+      "text": "those who don't have a budget but still want to participate on the builder leaderboards of vibe/vibe\n\nmust check what Raven accomplished with a FREE deepseek v4.1 flash\n\n&gt; cook something dope\n&gt; create a testnet token for it\n&gt; and get rewarded in vibe/vibe mainnet token\n\nact fast https://t.co/Cz4oDmVNRt",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg6000a13j2hdu50mps",
+        "name": "DeepSeek V4.1 Flash",
+        "slug": "deepseek-v4-1-flash",
+        "vendor": "DeepSeek",
+        "aliases": [
+          "DeepSeek V4.1 Flash",
+          "DeepSeek-V4.1-Flash",
+          "DeepSeek V4.1"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "POSITIVE",
+        "code_quality": null
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Free model praised for builder outcome; exact nature of building unavailable."
+      }
+    },
+    {
+      "id": "real-063",
+      "source": "stored_post",
+      "xPostId": "2105777169372790996",
+      "conversationId": "2105777167963435336",
+      "text": "same prompt to all 5, one run each: anthropic/claude-fable-5.1, openai/gpt-6-astra, google/gemini-3.1-pro-preview, spacexai/grok-4.7, deepseek/deepseek-v4-pro-0813.\n\nno rules about claims or em dashes in the prompt, on purpose. i wanted the defaults.",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg7000b13j2y3ny6yaq",
+        "name": "DeepSeek V4 Pro",
+        "slug": "deepseek-v4-pro",
+        "vendor": "DeepSeek",
+        "aliases": [
+          "DeepSeek V4 Pro",
+          "DeepSeek-V4-Pro"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Models and experimental setup listed without results."
+      }
+    },
+    {
+      "id": "real-066",
+      "source": "stored_post",
+      "xPostId": "2106030116921069619",
+      "conversationId": "2106030116921069619",
+      "text": "DeepSeek v4 Pro is a very affordable sidekick. I get features for 1/10th the cost of every American model. Just haven't tested it on a large, multi-hour feature yet, especially one which involves physics or aesthetics.",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg7000b13j2y3ny6yaq",
+        "name": "DeepSeek V4 Pro",
+        "slug": "deepseek-v4-pro",
+        "vendor": "DeepSeek",
+        "aliases": [
+          "DeepSeek V4 Pro",
+          "DeepSeek-V4-Pro"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "POSITIVE",
+        "code_quality": null
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Affordable sidekick praised; feature creation may be coding but context incomplete."
+      }
+    },
+    {
+      "id": "real-069",
+      "source": "stored_post",
+      "xPostId": "2105967166755672108",
+      "conversationId": "2105929896380023034",
+      "text": "@JohnSmith2gp9 🤖 deepseek-v4-pro\nProposition: U.S. spot Bitcoin ETFs will record negative net cumulative flows for Q4 2026 (Oct 1–Dec 31) · Deadline: 2026-12-31 · Probability: 30%.\n\nReasoning: The Sept. 30 outflow was 148.7 million — a rounding error against the 6.34 billion that poured in https://t.co/2FiDSGLyut",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg7000b13j2y3ny6yaq",
+        "name": "DeepSeek V4 Pro",
+        "slug": "deepseek-v4-pro",
+        "vendor": "DeepSeek",
+        "aliases": [
+          "DeepSeek V4 Pro",
+          "DeepSeek-V4-Pro"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NEUTRAL",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Generated forecast explicitly includes reasoning; no author appraisal of that reasoning."
+      }
+    },
+    {
+      "id": "real-072",
+      "source": "stored_post",
+      "xPostId": "2106025450187448589",
+      "conversationId": "2106025450187448589",
+      "text": "19 frontier models 1 API key no usage caps\n\n&gt; DeepSeek-V4-Pro · Qwen-3.8-Max · GLM-5.3\n&gt; MiMo-V2.5 · MiniMax-M3 · Kimi-K2.7 · Step-5\n&gt; claude-opus-5 · gpt-5.6-sol\n\n1M context vision tool calling deep thinking\n\nhttps://t.co/4KibcR85WB https://t.co/uM4xBdAbX8",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg7000b13j2y3ny6yaq",
+        "name": "DeepSeek V4 Pro",
+        "slug": "deepseek-v4-pro",
+        "vendor": "DeepSeek",
+        "aliases": [
+          "DeepSeek V4 Pro",
+          "DeepSeek-V4-Pro"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Provider advertisement; generic features not specifically attributed to the target."
+      }
+    },
+    {
+      "id": "real-075",
+      "source": "stored_post",
+      "xPostId": "2106597074653606320",
+      "conversationId": "2106585659011985909",
+      "text": "@hakmgpt I went ahead and asked Gemini 3.1 Pro, through the Gemini site, if it knew Tibo the reset guy. It didn't! 👍",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg4000813j221v1ehtb",
+        "name": "Gemini 3.1 Pro",
+        "slug": "gemini-3-1-pro",
+        "vendor": "Google",
+        "aliases": [
+          "Gemini 3.1 Pro",
+          "gemini-3.1-pro"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": null,
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Failure to know a person plus thumbs-up leaves sentiment ambiguous."
+      }
+    },
+    {
+      "id": "real-078",
+      "source": "stored_post",
+      "xPostId": "2105885617020162287",
+      "conversationId": "2105885617020162287",
+      "text": "Jev 1.13 closed 1 Oct at 63%: 5 of 8 correct, ROI +17.5%. Azerbaijan–Liechtenstein finished 0-0, landing Under 2.5 goals. Claude Opus 5.5 and Gemini 3.1 Pro led at 67%; Jev ranked 3rd of 4. #CapperWin #FootballAnalytics https://t.co/tLYRvhUIm6",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg4000813j221v1ehtb",
+        "name": "Gemini 3.1 Pro",
+        "slug": "gemini-3-1-pro",
+        "vendor": "Google",
+        "aliases": [
+          "Gemini 3.1 Pro",
+          "gemini-3.1-pro"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Numerical leaderboard without directional appraisal."
+      }
+    },
+    {
+      "id": "real-081",
+      "source": "stored_post",
+      "xPostId": "2106511131015549309",
+      "conversationId": "2106472695122788621",
+      "text": "@shulin_tian Notably, the three-question loop -- what do I need, what should I use, what next -- frames tool use as \"reasoning\" older than language. With 1,000 questions across 4 tracks and Gemini-3.1-Pro at 66.9% vs human experts, the identifying-to-reasoning gap is measurable.",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg4000813j221v1ehtb",
+        "name": "Gemini 3.1 Pro",
+        "slug": "gemini-3-1-pro",
+        "vendor": "Google",
+        "aliases": [
+          "Gemini 3.1 Pro",
+          "gemini-3.1-pro"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NEUTRAL",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Factual discussion of measured reasoning gap without clear appraisal."
+      }
+    },
+    {
+      "id": "real-087",
+      "source": "stored_post",
+      "xPostId": "2106619652348715382",
+      "conversationId": "2106370151495192951",
+      "text": "@CauseWhyNot_eh I agree, I use gemini 3.8 flash",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg5000913j2asrt7yts",
+        "name": "Gemini 3.8 Flash",
+        "slug": "gemini-3-8-flash",
+        "vendor": "Google",
+        "aliases": [
+          "Gemini 3.8 Flash",
+          "gemini-3.8-flash"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": null,
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Agreement refers to unavailable parent opinion."
+      }
+    },
+    {
+      "id": "real-090",
+      "source": "stored_post",
+      "xPostId": "2106703408946098363",
+      "conversationId": "2106703408946098363",
+      "text": "Google has introduced Gemini 3.8 Flash TTS for deep creative direction and character design, and Flash-Lite TTS for high-volume dubbing, audio content and expressive voice agents.\n\n1/8",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg5000913j2asrt7yts",
+        "name": "Gemini 3.8 Flash",
+        "slug": "gemini-3-8-flash",
+        "vendor": "Google",
+        "aliases": [
+          "Gemini 3.8 Flash",
+          "gemini-3.8-flash"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "NO",
+        "overall": "NOT_DISCUSSED",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Explicit TTS variant is distinct from catalog base model; needs identity policy review."
+      }
+    },
+    {
+      "id": "real-093",
+      "source": "stored_post",
+      "xPostId": "2106604159990448564",
+      "conversationId": "2106604159990448564",
+      "text": "- Claude Code (Sonnet 5.5, max mode) — 68.4%\n- Claude Code (Opus 5.5, max) — 66.0%\n- Grok Build (Grok 4.7) — 56.3%\n- Codex (GPT-5.6 Sol) — 54.6%\n- Muse Code (Meta) — 54.3%\n- Kimi Code CLI — 51.9%\n- Antigravity SDK (Gemini 3.8 Flash) — 41.9%",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg5000913j2asrt7yts",
+        "name": "Gemini 3.8 Flash",
+        "slug": "gemini-3-8-flash",
+        "vendor": "Google",
+        "aliases": [
+          "Gemini 3.8 Flash",
+          "gemini-3.8-flash"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NEUTRAL"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Coding leaderboard numbers alone are factual."
+      }
+    },
+    {
+      "id": "real-096",
+      "source": "stored_post",
+      "xPostId": "2106490293612892223",
+      "conversationId": "2106490293612892223",
+      "text": "I tested which cheap models can read a photo of a receipt in Albanian and get every field right. Skipped the big expensive models on purpose.\n\nFor some reason the old Gemini 3 Flash is still really good at it. With one small trick it kept up with the new Gemini 3.8 Flash at half https://t.co/FwopH1dasU",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg5000913j2asrt7yts",
+        "name": "Gemini 3.8 Flash",
+        "slug": "gemini-3-8-flash",
+        "vendor": "Google",
+        "aliases": [
+          "Gemini 3.8 Flash",
+          "gemini-3.8-flash"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEGATIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NEGATIVE",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Old rival matches target at half price; unfavorable target value comparison."
+      }
+    },
+    {
+      "id": "real-099",
+      "source": "stored_post",
+      "xPostId": "2106819207040209284",
+      "conversationId": "2106819207040209284",
+      "text": "OpenAI used Astra to build GPT-6.1 Sol. AI building AI that was \"previously impossible\" is happening inside OpenAI right now. https://t.co/C0LNDdXYrX",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfv000113j2l4oj5x4p",
+        "name": "GPT-6.1 Sol",
+        "slug": "gpt-6-1-sol",
+        "vendor": "OpenAI",
+        "aliases": [
+          "GPT-6.1 Sol",
+          "GPT 6.1 Sol",
+          "gpt-6.1-sol"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Astra built target; claimed impossible capability belongs to Astra."
+      }
+    },
+    {
+      "id": "real-102",
+      "source": "stored_post",
+      "xPostId": "2106794877765980194",
+      "conversationId": "2106757718816014474",
+      "text": "@mrkrishsatya We actually went deeper on the competition between models like Opus 5.5 and GPT-6.1 Sol here: https://t.co/zpniF0kMIB",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfv000113j2l4oj5x4p",
+        "name": "GPT-6.1 Sol",
+        "slug": "gpt-6-1-sol",
+        "vendor": "OpenAI",
+        "aliases": [
+          "GPT-6.1 Sol",
+          "GPT 6.1 Sol",
+          "gpt-6.1-sol"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Links to comparison without stating its result."
+      }
+    },
+    {
+      "id": "real-105",
+      "source": "stored_post",
+      "xPostId": "2106792349842223163",
+      "conversationId": "2106649825735532760",
+      "text": "@kapilansh_twt if you use gpt 6.1 sol UNLIMITED will be the feeling because it could run for hours but why ? \nBECAUSE ITS SLOW 21TPS it sure feels unlimited but claude give you A TON of usage and EXTRAORDINARY limits so the winnnnner isssss obviously CLAUDE",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfv000113j2l4oj5x4p",
+        "name": "GPT-6.1 Sol",
+        "slug": "gpt-6-1-sol",
+        "vendor": "OpenAI",
+        "aliases": [
+          "GPT-6.1 Sol",
+          "GPT 6.1 Sol",
+          "gpt-6.1-sol"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEGATIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NEGATIVE",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Explicit slow model; unlimited feeling is sarcasm about waiting, not cost evidence."
+      }
+    },
+    {
+      "id": "real-108",
+      "source": "stored_post",
+      "xPostId": "2106796298196467870",
+      "conversationId": "2106787992673321026",
+      "text": "@EnvolDev Excellent. I like Opus as an architect and designer, a philosopher, and a Red Team. But for writing code for his project, he's more efficient. gpt 6.1 sol Waiting for Argon for creative writing, in tandem with Grok Bots for publications in. X just perfect. Agents - Claude too.",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfv000113j2l4oj5x4p",
+        "name": "GPT-6.1 Sol",
+        "slug": "gpt-6-1-sol",
+        "vendor": "OpenAI",
+        "aliases": [
+          "GPT-6.1 Sol",
+          "GPT 6.1 Sol",
+          "gpt-6.1-sol"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": null,
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": null
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Unclear pronoun and fragmented comparative coding sentence need review."
+      }
+    },
+    {
+      "id": "real-111",
+      "source": "stored_post",
+      "xPostId": "2106807731634024873",
+      "conversationId": "2106807531331076483",
+      "text": "@John82771 Top 5 LLMs for BTech CSE students in India (Oct 2026), ranked by coding strength, explanations, free access and value:\n\n1. Claude Opus 5.5 – Best overall for coding, debugging, projects and clear concept teaching.\n2. GPT-6 Astra / ChatGPT – Strong generalist, excellent for DSA,",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfd000013j2ma0im2xv",
+        "name": "GPT-6 Astra",
+        "slug": "gpt-6-astra",
+        "vendor": "OpenAI",
+        "aliases": [
+          "GPT-6 Astra",
+          "GPT 6 Astra",
+          "gpt-6-astra"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "POSITIVE"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Explicitly excellent for data structures and algorithms in coding recommendation."
+      }
+    },
+    {
+      "id": "real-114",
+      "source": "stored_post",
+      "xPostId": "2106777787117748396",
+      "conversationId": "2106777774920708311",
+      "text": "3/10\n\n𝗢𝗽𝗲𝗻𝗔𝗜 𝗮𝗹𝘀𝗼 𝗹𝗮𝘂𝗻𝗰𝗵𝗲𝗱 𝗗𝗼𝘁𝘀.\n\nDots is an always-on agents powered by GPT-6 Astra. Each gets its own cloud computer and browser, it can connect to 4,000+ apps, and can keep working in the background.\n\nthe rise of agents like dots is  a pretty big shift in",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfd000013j2ma0im2xv",
+        "name": "GPT-6 Astra",
+        "slug": "gpt-6-astra",
+        "vendor": "OpenAI",
+        "aliases": [
+          "GPT-6 Astra",
+          "GPT 6 Astra",
+          "gpt-6-astra"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Product introduction; incomplete big-shift conclusion does not clearly appraise target."
+      }
+    },
+    {
+      "id": "real-117",
+      "source": "stored_post",
+      "xPostId": "2106800998694162941",
+      "conversationId": "2106800998694162941",
+      "text": "There were a few little tiny mistakes on some of the previous preprints that GPT 6 Astra Ultra found. Next time before I publish a preprint, I'm going to have both that and Opus 5.5 check the written results and code to see if there are any mistakes that need to be fixed.",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfd000013j2ma0im2xv",
+        "name": "GPT-6 Astra",
+        "slug": "gpt-6-astra",
+        "vendor": "OpenAI",
+        "aliases": [
+          "GPT-6 Astra",
+          "GPT 6 Astra",
+          "gpt-6-astra"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "POSITIVE",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "POSITIVE"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Finds preprint mistakes and recommended for checking written results and code."
+      }
+    },
+    {
+      "id": "real-120",
+      "source": "stored_post",
+      "xPostId": "2106786119283089887",
+      "conversationId": "2106786119283089887",
+      "text": "GPT-6 Astra and Claude Opus 5.5 both lost to a human-made StarCraft bot, so GPT cheated. We keep calling this \"reasoning\" and it's really just goal-seeking by any means. If it can't win fair, it games the rules. That's not intelligence, that's ufala with extra steps.",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfd000013j2ma0im2xv",
+        "name": "GPT-6 Astra",
+        "slug": "gpt-6-astra",
+        "vendor": "OpenAI",
+        "aliases": [
+          "GPT-6 Astra",
+          "GPT 6 Astra",
+          "gpt-6-astra"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEGATIVE",
+        "reasoning": "NEGATIVE",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Explicit criticism of reasoning versus cheating/goal seeking."
+      }
+    },
+    {
+      "id": "real-123",
+      "source": "stored_post",
+      "xPostId": "2106759377411838371",
+      "conversationId": "2106759377411838371",
+      "text": "GPT 6 Luna xhigh is really bad at creating videos.\n\nSomeone sponsor my Claude Subscription😭\n\nfeat. https://t.co/KEPbYz7H2b\n\n#hiring #jobs #ats https://t.co/ZlFzQswFEg",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfw000213j20qor7id9",
+        "name": "GPT-6 Luna",
+        "slug": "gpt-6-luna",
+        "vendor": "OpenAI",
+        "aliases": [
+          "GPT-6 Luna",
+          "GPT 6 Luna",
+          "gpt-6-luna"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEGATIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Video-generation complaint without coding evidence."
+      }
+    },
+    {
+      "id": "real-129",
+      "source": "stored_post",
+      "xPostId": "2106722930210247150",
+      "conversationId": "2106722930210247150",
+      "text": "GPT-6 Luna really impressed me! My classifier ran on 4.1 mini, and no model had come close for my use case. Luna matched it with no prompt tuning.\n\nAfter some adjustments it hit 97.6% accuracy (vs. 96.5% before) at 1/10th the price!",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfw000213j20qor7id9",
+        "name": "GPT-6 Luna",
+        "slug": "gpt-6-luna",
+        "vendor": "OpenAI",
+        "aliases": [
+          "GPT-6 Luna",
+          "GPT 6 Luna",
+          "gpt-6-luna"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "POSITIVE",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Classification result praised at lower price; classification is not code generation."
+      }
+    },
+    {
+      "id": "real-132",
+      "source": "stored_post",
+      "xPostId": "2106491780531360149",
+      "conversationId": "2106491780531360149",
+      "text": "OpenAI retires gpt-5.1, gpt-5.3-codex and gpt-5.4-nano on April 1, 2027. Six months notice, published October 1. gpt-5.1 and 5.3-codex move to gpt-6-sol, 5.4-nano to gpt-6-luna. Compare with gpt-5.4-cyber, which got about 20 days. https://t.co/mtj0ZNU6j4",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wfw000213j20qor7id9",
+        "name": "GPT-6 Luna",
+        "slug": "gpt-6-luna",
+        "vendor": "OpenAI",
+        "aliases": [
+          "GPT-6 Luna",
+          "GPT 6 Luna",
+          "gpt-6-luna"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Model retirement and replacement announcement."
+      }
+    },
+    {
+      "id": "real-138",
+      "source": "stored_post",
+      "xPostId": "2106836936967229641",
+      "conversationId": "2106836936967229641",
+      "text": "Mammoth amount of things I got done with Grok 4.7 in Unreal engine this weekend.\n\nDownload it here for PCVR to try:\nhttps://t.co/W85IkS9M4a https://t.co/0uT30BGKKp",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg8000c13j21sqwobxi",
+        "name": "Grok 4.7",
+        "slug": "grok-4-7",
+        "vendor": "xAI",
+        "aliases": [
+          "Grok 4.7",
+          "Grok-4.7"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "POSITIVE"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Positive productivity in explicit Unreal game-development workflow."
+      }
+    },
+    {
+      "id": "real-141",
+      "source": "stored_post",
+      "xPostId": "2106864008687218969",
+      "conversationId": "2106848608620618219",
+      "text": "@TJeparskis The race for the best conversational model is getting intense. We actually went deeper on how Grok 4.7 is currently topping coding benchmarks here: https://t.co/gnnmlEsIRY",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg8000c13j21sqwobxi",
+        "name": "Grok 4.7",
+        "slug": "grok-4-7",
+        "vendor": "xAI",
+        "aliases": [
+          "Grok 4.7",
+          "Grok-4.7"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NEUTRAL"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Reports topping coding benchmark but no explicit evaluative comparison or endorsement."
+      }
+    },
+    {
+      "id": "real-144",
+      "source": "stored_post",
+      "xPostId": "2106867083036553635",
+      "conversationId": "2106867083036553635",
+      "text": "Using only one AI? You’re missing out.\n\nBest AI models by category:\n\nOverall: GPT-6 Astra\nCoding: Claude Opus 5.5\nWriting: Claude Opus 5.5\nReasoning: GPT-6 Astra\nImages: Nano Banana Pro\nVideo: Veo 3.1\nValue: Gemini Flash\nOpen-source: Qwen\nReal-time &amp; X: Grok 4.7\n\n#AI  #Tech https://t.co/M1OBOIgqTX",
+      "language": "en",
+      "target": {
+        "id": "cmuu52wg8000c13j21sqwobxi",
+        "name": "Grok 4.7",
+        "slug": "grok-4-7",
+        "vendor": "xAI",
+        "aliases": [
+          "Grok 4.7",
+          "Grok-4.7"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Recommends target for real-time information/X; this is not generation latency."
+      }
+    },
+    {
+      "id": "real-147",
+      "source": "stored_post",
+      "xPostId": "2106741752371580990",
+      "conversationId": "2106702976534376644",
+      "text": "@SkrOYC @ananayarora Elon means Kardashev Type III: a civilization that harnesses the energy of an entire galaxy. The post replies to talk of a \"star mind\" powered by the sun (starting at K2 stellar scale). Not a reference to the Kimi K3 AI model.",
+      "language": "en",
+      "target": {
+        "id": "cmrtvrzno0002sbaky2fjyz5d",
+        "name": "Kimi K3",
+        "slug": "kimi-k3",
+        "vendor": "Moonshot AI",
+        "aliases": [
+          "Kimi K3",
+          "Kimi-K3"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "NO",
+        "overall": "NOT_DISCUSSED",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Explicit disavowal of Kimi reference; unrelated Kardashev subject. Negated mention boundary needs review."
+      }
+    },
+    {
+      "id": "real-150",
+      "source": "stored_post",
+      "xPostId": "2106687616678535224",
+      "conversationId": "2106610099720720811",
+      "text": "@thsottiaux OpenAI should issue refunds if Astra does something unrequested or totally different to what was requested, that wastes a persons tokens, time and opportunity. \n\nThis is not due to lack of clarity on my behalf. I do not have this issue with Kimi K3 or Qwen 3.8 Max. \n\nFeedback ID: https://t.co/8T1j6pyMmB",
+      "language": "en",
+      "target": {
+        "id": "cmrtvrzno0002sbaky2fjyz5d",
+        "name": "Kimi K3",
+        "slug": "kimi-k3",
+        "vendor": "Moonshot AI",
+        "aliases": [
+          "Kimi K3",
+          "Kimi-K3"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "representative",
+      "expected": {
+        "relevance": "YES",
+        "overall": "POSITIVE",
+        "reasoning": "POSITIVE",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Target favorably contrasted on following requested task; wasted-token complaint belongs to Astra."
+      }
+    },
+    {
+      "id": "real-153",
+      "source": "stored_post",
+      "xPostId": "2106755003431997675",
+      "conversationId": "2106531272981930287",
+      "text": "@0xEronn I loved this, very interesting read. I see you profiled Kimi K3 here, I made a 3D visualization of how it works during inference, let me know what you think and what I could improve on future visualizations: https://t.co/66x06AQ6pi",
+      "language": "en",
+      "target": {
+        "id": "cmrtvrzno0002sbaky2fjyz5d",
+        "name": "Kimi K3",
+        "slug": "kimi-k3",
+        "vendor": "Moonshot AI",
+        "aliases": [
+          "Kimi K3",
+          "Kimi-K3"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Praise is for an article/visualization, not the model."
+      }
+    },
+    {
+      "id": "real-156",
+      "source": "stored_post",
+      "xPostId": "2106803619878338963",
+      "conversationId": "2106803619878338963",
+      "text": "kimik3\n\nkimik3 is an independent, unofficial guide and playground for the Kimi K3 model. It offers a free chat trial (first message, no signup), copy-ready Curl and SDK code examples, a prompt cheat sheet, and tutorials…\n\n#AI #AIChat\n\nhttps://t.co/GJ48Vg9cKC",
+      "language": "en",
+      "target": {
+        "id": "cmrtvrzno0002sbaky2fjyz5d",
+        "name": "Kimi K3",
+        "slug": "kimi-k3",
+        "vendor": "Moonshot AI",
+        "aliases": [
+          "Kimi K3",
+          "Kimi-K3"
+        ]
+      },
+      "split": "holdout",
+      "sampling": "challenge",
+      "expected": {
+        "relevance": "YES",
+        "overall": "NEUTRAL",
+        "reasoning": "NOT_DISCUSSED",
+        "speed": "NOT_DISCUSSED",
+        "cost": "NOT_DISCUSSED",
+        "code_quality": "NOT_DISCUSSED"
+      },
+      "annotation": {
+        "reviewer": "assistant",
+        "status": "provisional",
+        "note": "Guide/playground promotion; sample SDK code and free trial are provider features, not model capability/value judgments."
+      }
+    }
+  ]
+}

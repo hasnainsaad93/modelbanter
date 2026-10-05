@@ -16,7 +16,7 @@ export default function OpenGraphImage() {
       <div style={{ display: "flex", marginTop: 20, maxWidth: 980, fontSize: 68, lineHeight: 1.12, letterSpacing: -3, fontWeight: 700 }}>{site.tagline}</div>
       <div style={{ display: "flex", marginTop: 24, fontSize: 26, color: "#697466" }}>Praise. Criticism. The posts behind it.</div>
       <div style={{ display: "flex", gap: 16, marginTop: "auto" }}>
-        {["Reasoning", "Speed", "Cost", "Code quality"].map(label => <div key={label} style={{ display: "flex", padding: "12px 22px", background: "#edf2e8", border: "1px solid #dce3d8", borderRadius: 8, fontSize: 19, color: "#32815b" }}>{label}</div>)}
+        {["Reasoning", "Speed", "Cost", "Coding"].map(label => <div key={label} style={{ display: "flex", padding: "12px 22px", background: "#edf2e8", border: "1px solid #dce3d8", borderRadius: 8, fontSize: 19, color: "#32815b" }}>{label}</div>)}
       </div>
     </div>,
     size,

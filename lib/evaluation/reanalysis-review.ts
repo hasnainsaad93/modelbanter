@@ -1,0 +1,25 @@
+import type { getBatchReport } from "../services/reclassification";
+import { categories, categoryKeys } from "../analysis";
+import type { AnalysisSnapshot } from "../services/analysis-history";
+import type { StructuredAnalysis } from "../analysis";
+import type { ReclassificationInput } from "../services/reclassification";
+
+const escape = (value: unknown) => String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]!);
+export type ReviewReferences = Record<string, Record<string, string | null>>;
+export function renderBatchReview(report: Awaited<ReturnType<typeof getBatchReport>>, references: ReviewReferences = {}) {
+  const cards = report.items.map(item => {
+    const input = item.input as unknown as ReclassificationInput;
+    const before = item.before as unknown as AnalysisSnapshot;
+    const candidate = item.candidate as unknown as StructuredAnalysis | null;
+    const disagreements: string[] = [];
+    const rows = ["relevance", "overall", ...categoryKeys].map(key => {
+      const old = key === "relevance" ? (before.relevance as { choice?: string } | null)?.choice ?? before.analysisStatus : key === "overall" ? before.sentiment : before.topics.find(topic => topic.slug === key)?.sentiment ?? "—";
+      const proposed = candidate ? key === "relevance" ? candidate.relevance : key === "overall" ? candidate.overall : candidate.categories[key as keyof typeof categories] : undefined;
+      const expected = references[item.mentionId]?.[key];
+      if (expected && proposed && expected !== proposed.choice) disagreements.push(key);
+      return `<tr${proposed && proposed.choice !== old ? ' class="changed"' : ""}><th>${escape(key in categories ? categories[key as keyof typeof categories] : key)}</th><td>${escape(old)}</td><td>${escape(proposed?.choice ?? "Not analyzed")}</td><td>${proposed ? `${Math.round(proposed.confidence * 100)}%` : "—"}</td>${references[item.mentionId] ? `<td>${escape(expected ?? "Unjudged")}</td>` : ""}</tr>`;
+    }).join("");
+    return `<article><div class="heading"><h2>${escape(input.target.name)}</h2><span>${escape(item.status)}</span></div><p class="meta">Mention: ${escape(item.mentionId)} · ${escape(before.analysisVersion)} → ${escape(report.targetVersion)}</p>${disagreements.length ? `<p class="error">Review needed: candidate differs from the assistant’s draft on ${escape(disagreements.join(", "))}. The draft is not verified ground truth.</p>` : ""}<blockquote>${escape(input.text)}</blockquote><p><a href="https://x.com/i/status/${encodeURIComponent(input.xPostId)}" target="_blank" rel="noreferrer">Original post</a></p><table><thead><tr><th>Decision</th><th>Before</th><th>Candidate</th><th>Confidence</th>${references[item.mentionId] ? "<th>Assistant draft</th>" : ""}</tr></thead><tbody>${rows}</tbody></table>${item.error ? `<p class="error">${escape(item.error)}</p>` : ""}<details><summary>Context used by Jev</summary><pre>${escape(JSON.stringify({ input: candidate?.context, lookup: candidate?.contextLookup }, null, 2))}</pre></details></article>`;
+  }).join("");
+  return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>Jev batch review</title><style>body{font:16px/1.5 system-ui;background:#f3f5f7;color:#152331;max-width:1120px;margin:40px auto;padding:0 20px}h1{font-size:34px;margin-bottom:8px}article{background:white;border:1px solid #d5dfe5;border-radius:12px;padding:24px;margin:24px 0}.heading{display:flex;justify-content:space-between;align-items:center;gap:16px}h2{font-size:22px}.meta{font-size:12px;overflow-wrap:anywhere;color:#536776}blockquote{white-space:pre-wrap;border-left:3px solid #63858b;padding-left:16px;margin:20px 0}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px;border-bottom:1px solid #dde3e6}.changed{background:#fff2cc}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}.error{color:#aa2020}details{margin-top:18px}a{color:#175e72}@media(max-width:650px){article{padding:12px}table{font-size:11px}th,td{padding:5px}}</style><h1>Review the proposed classifications</h1><p>Batch ${escape(report.id)} · ${report.items.length} model mentions · ${escape(report.targetVersion)}</p><p>${report.counts.ROLLED_BACK ? "This verification batch was rolled back; its previous classifications are active again. Candidates remain below for review. " : ""}Yellow rows changed. Confidence is Jev’s reported confidence, not a measured accuracy percentage. Candidates stay separate until the batch is applied.</p><p>Status: ${escape(JSON.stringify(report.counts))}. Recorded candidate usage: ${report.recordedCandidateUsage.inputTokens.toLocaleString()} input tokens. Remote context fetching: ${report.fetchContext ? "enabled with the shared daily cap" : "disabled"}.</p>${cards}</html>`;
+}

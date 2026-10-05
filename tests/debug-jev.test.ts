@@ -4,11 +4,9 @@ import { JevError } from "../lib/services/jev";
 
 const mocks = vi.hoisted(() => ({ post: vi.fn(), model: vi.fn(), analyze: vi.fn() }));
 vi.mock("../lib/server/db", () => ({ db: { xPost: { findUnique: mocks.post }, model: { findUnique: mocks.model } } }));
-vi.mock("../lib/services/jev", async importOriginal => ({
-  ...await importOriginal<typeof import("../lib/services/jev")>(), analyzeWithJev: mocks.analyze,
-}));
+vi.mock("../lib/services/jev-context", () => ({ analyzePostWithJev: mocks.analyze }));
 
-const model = { id: "model-id", name: "Model A", slug: "model-a" };
+const model = { id: "model-id", name: "Model A", slug: "model-a", vendor: "Vendor", aliases: ["Model A"] };
 const post = { id: "cmstoredpost", xPostId: "2106864289352937900", text: "Model A writes good code", mentions: [{ model }] };
 function request(body: unknown = { postId: post.xPostId }, authorization?: string) {
   return new Request("http://localhost:3000/api/debug/jev", {
@@ -27,15 +25,22 @@ beforeEach(() => {
 afterEach(() => vi.unstubAllEnvs());
 
 describe("stored-post Jev debug endpoint", () => {
+  it("requires an explicit boolean opt-in for remote context fetching without saving classifications", async () => {
+    const response = await POST(request({ postId: post.xPostId, fetchContext: true }));
+    expect(response.status).toBe(200);
+    expect(mocks.analyze).toHaveBeenCalledExactlyOnceWith(post.text, model.name, model, post, { allowFetch: true });
+    expect((await response.json()).data).toMatchObject({ persisted: false, contextFetchAllowed: true });
+    expect((await POST(request({ postId: post.xPostId, fetchContext: "true" }))).status).toBe(400);
+  });
   it("looks up an X ID without numeric precision loss and returns the exact input, questions, and unsaved result", async () => {
     const response = await POST(request());
     expect(response.status).toBe(200);
     expect(response.headers.get("Cache-Control")).toBe("no-store");
     expect(mocks.post.mock.calls[0][0].where).toEqual({ xPostId: post.xPostId });
-    expect(mocks.analyze).toHaveBeenCalledExactlyOnceWith(post.text, model.name);
+    expect(mocks.analyze).toHaveBeenCalledExactlyOnceWith(post.text, model.name, model, post, { allowFetch: false });
     const { data } = await response.json();
     expect(data.persisted).toBe(false);
-    expect(data.request.state).toEqual({ target_model: model.name, post: post.text });
+    expect(data.request.state).toMatchObject({ target_model: model.name, post: post.text, model_identity: { name: model.name, vendor: model.vendor, aliases: model.aliases } });
     expect(Object.keys(data.request.questions)).toHaveLength(6);
     expect(data.analysis.model).toBe("jev-test");
     expect(mocks.model).not.toHaveBeenCalled();
@@ -91,7 +96,7 @@ describe("stored-post Jev debug endpoint", () => {
     mocks.model.mockResolvedValue({ ...model, name: "Model B", slug: "model-b" });
     expect((await POST(request({ postId: post.xPostId, modelSlug: "model-b" }))).status).toBe(200);
     expect(mocks.model.mock.calls[0][0].where).toEqual({ slug: "model-b" });
-    expect(mocks.analyze).toHaveBeenCalledExactlyOnceWith(post.text, "Model B");
+    expect(mocks.analyze).toHaveBeenCalledExactlyOnceWith(post.text, "Model B", { ...model, name: "Model B", slug: "model-b" }, { ...post, mentions: [] }, { allowFetch: false });
   });
 
   it("does not call Jev for an unknown target model", async () => {

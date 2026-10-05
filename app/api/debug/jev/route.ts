@@ -2,14 +2,18 @@ import { z } from "zod";
 import { apiError, apiOk } from "@/lib/api";
 import { db } from "@/lib/server/db";
 import { isCronAuthorized } from "@/lib/server/cron-auth";
-import { analyzeWithJev, buildJevQuestions, JevError } from "@/lib/services/jev";
+import { buildJevRequest, JevError } from "@/lib/services/jev";
+
+import { analyzePostWithJev } from "@/lib/services/jev-context";
+import { postText } from "@/lib/services/post-context";
 
 export const runtime = "nodejs";
-export const maxDuration = 90;
+export const maxDuration = 180;
 
 const inputSchema = z.object({
   // IDs must stay strings: X's numeric IDs exceed JavaScript's safe integer range.
   postId: z.string().trim().min(1).max(128),
+  fetchContext: z.boolean().default(false),
   modelSlug: z.string().trim().min(1).max(128).optional(),
 }).strict();
 
@@ -24,9 +28,9 @@ export async function POST(request: Request) {
 
   let body: unknown;
   try { body = await request.json(); }
-  catch { return error("INVALID_BODY", "Send a JSON body with postId as a string and optional modelSlug.", 400); }
+  catch { return error("INVALID_BODY", "Send a JSON body with postId as a string and optional modelSlug/fetchContext.", 400); }
   const input = inputSchema.safeParse(body);
-  if (!input.success) return error("INVALID_BODY", "Send postId as a nonempty string and optional modelSlug; no other fields are accepted.", 400);
+  if (!input.success) return error("INVALID_BODY", "Send postId as a nonempty string and optional modelSlug/fetchContext; no other fields are accepted.", 400);
 
   let post;
   let target;
@@ -34,11 +38,11 @@ export async function POST(request: Request) {
     const { postId, modelSlug } = input.data;
     post = await db.xPost.findUnique({
       where: /^\d+$/.test(postId) ? { xPostId: postId } : { id: postId },
-      select: { id: true, xPostId: true, text: true, mentions: { select: { model: { select: { id: true, name: true, slug: true } } } } },
+      select: { id: true, xPostId: true, text: true, rawPayload: true, authorXId: true, mentions: { select: { model: { select: { id: true, name: true, slug: true, vendor: true, aliases: true } } } } },
     });
     if (!post) return error("POST_NOT_FOUND", "No stored XPost matches this postId.", 404);
     if (modelSlug) {
-      target = await db.model.findUnique({ where: { slug: modelSlug }, select: { id: true, name: true, slug: true } });
+      target = await db.model.findUnique({ where: { slug: modelSlug }, select: { id: true, name: true, slug: true, vendor: true, aliases: true } });
       if (!target) return error("MODEL_NOT_FOUND", "No catalog model matches this modelSlug.", 404);
     } else {
       if (post.mentions.length !== 1) {
@@ -53,14 +57,16 @@ export async function POST(request: Request) {
 
   try {
     const started = Date.now();
-    const analysis = await analyzeWithJev(post.text, target.name);
+    const analysis = await analyzePostWithJev(post.text, target.name, target, post, { allowFetch: input.data.fetchContext });
     return apiOk({
       post: { id: post.id, xPostId: post.xPostId, text: post.text },
       targetModel: target,
-      request: { model: process.env.TYPESAFE_MODEL || "jev-latest", state: { target_model: target.name, post: post.text }, questions: buildJevQuestions(target.name) },
+      request: buildJevRequest(postText(post.text, post.rawPayload), target.name, target, undefined, analysis.context),
       analysis,
       durationMs: Date.now() - started,
       persisted: false,
+      contextFetchAllowed: input.data.fetchContext,
+      contextCacheMayBeUpdated: input.data.fetchContext,
     }, { headers: { "Cache-Control": "no-store" } });
   } catch (cause) {
     if (cause instanceof JevError) return error("JEV_FAILED", cause.message, cause.status === 429 ? 429 : 502);

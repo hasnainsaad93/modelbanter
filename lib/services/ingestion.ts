@@ -53,7 +53,7 @@ export async function ingestModel(model: RegistryModel, client: SearchClient, st
             const user = users.get(post.author_id);
             if (store.stage && await store.stage(post, user, model, checkpoint.cycleId)) counters.newPostsInserted++;
             try {
-              const analysis = await sentiment.analyze(post.text, model.name); counters.analysesCompleted++;
+              const analysis = await sentiment.analyze(post.text, model.name, model, { rawPayload: post, authorXId: post.author_id, deadline: options.deadline }); counters.analysesCompleted++;
               const saved = await store.save(post, user, model, analysis);
               if (!store.stage && saved.newPost) counters.newPostsInserted++;
               if (saved.newAssociation) { counters.newAssociationsInserted++; checkpoint.accepted++; }

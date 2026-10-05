@@ -1,0 +1,5323 @@
+{
+  "evaluatedAt": "2026-10-05T04:03:39.384542+00:00",
+  "classifier": "jev-1.13.0",
+  "ruleVersion": "jev-sentiment-v3",
+  "annotationStatus": "assistant-draft-not-human-verified",
+  "freeze": {
+    "frozenAt": "2026-10-05T03:58:44.332415+00:00",
+    "promptSha256": "cae1f21deff2543f8a260dc37cc40a54cb4f9ef1269ba162a7006806692da914",
+    "development": 107,
+    "holdout": 49,
+    "note": "Prompt frozen before inspecting the remaining 52 texts or their Jev outputs. Three reserved cases moved to development to group conversations."
+  },
+  "baselineSha256": "3cb2fa934cf705157aaaeb0fcf492b72691b4db64ca8960b3466612313c2bbce",
+  "totalRecordedCallsIncludingTuning": 616,
+  "totalRecordedInputTokensIncludingTuning": 2060493,
+  "estimatedTotalRecordedCostUsd": 0.08654070600000001,
+  "reportNote": "Provisional agreement with assistant labels. Not an invoice or independently measured accuracy. No database writes or X requests.",
+  "splits": {
+    "development": {
+      "datasetHash": "1bab0c0abf1f611fbb9f26fde6a4477d64de78d3bb7a714e789b339e43af1dd9",
+      "candidateRequestHash": "803df1642ac45952cc9d558e623de625d81ee3ed5c55b47f1342913b0db1d652",
+      "completed": 214,
+      "planned": 214,
+      "thresholds": {
+        "0.3": {
+          "baseline": {
+            "cases": 107,
+            "metrics": {
+              "relevance": {
+                "judged": 107,
+                "correct": 104,
+                "accuracy": 0.9719626168224299,
+                "accepted": 102,
+                "acceptedCorrect": 100,
+                "acceptedAccuracy": 0.9803921568627451,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 104,
+                  "UNCLEAR -> YES": 2,
+                  "YES -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 98,
+                "correct": 75,
+                "accuracy": 0.7653061224489796,
+                "accepted": 91,
+                "acceptedCorrect": 71,
+                "acceptedAccuracy": 0.7802197802197802,
+                "discussedReferences": 98,
+                "missedDiscussion": 7,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 6,
+                "confusion": {
+                  "NEGATIVE -> NEGATIVE": 20,
+                  "NEUTRAL -> NEUTRAL": 31,
+                  "MIXED -> MIXED": 6,
+                  "NEUTRAL -> POSITIVE": 3,
+                  "POSITIVE -> NEUTRAL": 5,
+                  "POSITIVE -> POSITIVE": 18,
+                  "NEUTRAL -> NEGATIVE": 5,
+                  "MIXED -> NEGATIVE": 3,
+                  "MIXED -> POSITIVE": 1,
+                  "NEGATIVE -> NEUTRAL": 4,
+                  "NEGATIVE -> MIXED": 2
+                }
+              },
+              "reasoning": {
+                "judged": 105,
+                "correct": 95,
+                "accuracy": 0.9047619047619048,
+                "accepted": 5,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.6,
+                "discussedReferences": 11,
+                "missedDiscussion": 8,
+                "inventedDiscussion": 2,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 92,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 2,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 3,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 105,
+                "correct": 101,
+                "accuracy": 0.9619047619047619,
+                "accepted": 7,
+                "acceptedCorrect": 6,
+                "acceptedAccuracy": 0.8571428571428571,
+                "discussedReferences": 9,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 95,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> NOT_DISCUSSED": 3,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 3
+                }
+              },
+              "cost": {
+                "judged": 103,
+                "correct": 86,
+                "accuracy": 0.8349514563106796,
+                "accepted": 25,
+                "acceptedCorrect": 14,
+                "acceptedAccuracy": 0.56,
+                "discussedReferences": 30,
+                "missedDiscussion": 6,
+                "inventedDiscussion": 1,
+                "ambiguous": 2,
+                "ambiguousAccepted": 1,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 72,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> POSITIVE": 7,
+                  "NEGATIVE -> MIXED": 1,
+                  "MIXED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> POSITIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 4,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2
+                }
+              },
+              "code_quality": {
+                "judged": 105,
+                "correct": 86,
+                "accuracy": 0.819047619047619,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 21,
+                "missedDiscussion": 18,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 84,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 7,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 9,
+                  "NEUTRAL -> NEGATIVE": 1
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 107,
+            "metrics": {
+              "relevance": {
+                "judged": 107,
+                "correct": 102,
+                "accuracy": 0.9532710280373832,
+                "accepted": 104,
+                "acceptedCorrect": 102,
+                "acceptedAccuracy": 0.9807692307692307,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 102,
+                  "UNCLEAR -> YES": 2,
+                  "YES -> UNCLEAR": 3
+                }
+              },
+              "overall": {
+                "judged": 98,
+                "correct": 81,
+                "accuracy": 0.826530612244898,
+                "accepted": 94,
+                "acceptedCorrect": 79,
+                "acceptedAccuracy": 0.8404255319148937,
+                "discussedReferences": 98,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 7,
+                "confusion": {
+                  "NEGATIVE -> NEGATIVE": 22,
+                  "NEUTRAL -> NEUTRAL": 33,
+                  "MIXED -> MIXED": 6,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "POSITIVE -> POSITIVE": 20,
+                  "MIXED -> POSITIVE": 2,
+                  "NEUTRAL -> NEGATIVE": 4,
+                  "MIXED -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEUTRAL": 3,
+                  "POSITIVE -> NEUTRAL": 3,
+                  "NEGATIVE -> MIXED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 105,
+                "correct": 97,
+                "accuracy": 0.9238095238095239,
+                "accepted": 6,
+                "acceptedCorrect": 4,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 11,
+                "missedDiscussion": 6,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 93,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 105,
+                "correct": 104,
+                "accuracy": 0.9904761904761905,
+                "accepted": 8,
+                "acceptedCorrect": 8,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 9,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 96,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEGATIVE": 3,
+                  "NEUTRAL -> NEUTRAL": 2
+                }
+              },
+              "cost": {
+                "judged": 103,
+                "correct": 93,
+                "accuracy": 0.9029126213592233,
+                "accepted": 24,
+                "acceptedCorrect": 20,
+                "acceptedAccuracy": 0.8333333333333334,
+                "discussedReferences": 30,
+                "missedDiscussion": 7,
+                "inventedDiscussion": 1,
+                "ambiguous": 2,
+                "ambiguousAccepted": 1,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 72,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEUTRAL": 1,
+                  "MIXED -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 11,
+                  "POSITIVE -> POSITIVE": 5,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 105,
+                "correct": 94,
+                "accuracy": 0.8952380952380953,
+                "accepted": 17,
+                "acceptedCorrect": 12,
+                "acceptedAccuracy": 0.7058823529411765,
+                "discussedReferences": 21,
+                "missedDiscussion": 6,
+                "inventedDiscussion": 2,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 82,
+                  "NEGATIVE -> NEGATIVE": 4,
+                  "NEUTRAL -> NOT_DISCUSSED": 3,
+                  "POSITIVE -> POSITIVE": 5,
+                  "POSITIVE -> NOT_DISCUSSED": 3,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 3,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "NOT_DISCUSSED -> NEGATIVE": 1
+                }
+              }
+            }
+          }
+        },
+        "0.4": {
+          "baseline": {
+            "cases": 107,
+            "metrics": {
+              "relevance": {
+                "judged": 107,
+                "correct": 104,
+                "accuracy": 0.9719626168224299,
+                "accepted": 101,
+                "acceptedCorrect": 99,
+                "acceptedAccuracy": 0.9801980198019802,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 104,
+                  "UNCLEAR -> YES": 2,
+                  "YES -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 98,
+                "correct": 75,
+                "accuracy": 0.7653061224489796,
+                "accepted": 82,
+                "acceptedCorrect": 69,
+                "acceptedAccuracy": 0.8414634146341463,
+                "discussedReferences": 98,
+                "missedDiscussion": 16,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 5,
+                "confusion": {
+                  "NEGATIVE -> NEGATIVE": 20,
+                  "NEUTRAL -> NEUTRAL": 31,
+                  "MIXED -> MIXED": 6,
+                  "NEUTRAL -> POSITIVE": 3,
+                  "POSITIVE -> NEUTRAL": 5,
+                  "POSITIVE -> POSITIVE": 18,
+                  "NEUTRAL -> NEGATIVE": 5,
+                  "MIXED -> NEGATIVE": 3,
+                  "MIXED -> POSITIVE": 1,
+                  "NEGATIVE -> NEUTRAL": 4,
+                  "NEGATIVE -> MIXED": 2
+                }
+              },
+              "reasoning": {
+                "judged": 105,
+                "correct": 95,
+                "accuracy": 0.9047619047619048,
+                "accepted": 4,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.75,
+                "discussedReferences": 11,
+                "missedDiscussion": 8,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 92,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 2,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 3,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 105,
+                "correct": 101,
+                "accuracy": 0.9619047619047619,
+                "accepted": 7,
+                "acceptedCorrect": 6,
+                "acceptedAccuracy": 0.8571428571428571,
+                "discussedReferences": 9,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 95,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> NOT_DISCUSSED": 3,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 3
+                }
+              },
+              "cost": {
+                "judged": 103,
+                "correct": 86,
+                "accuracy": 0.8349514563106796,
+                "accepted": 21,
+                "acceptedCorrect": 13,
+                "acceptedAccuracy": 0.6190476190476191,
+                "discussedReferences": 30,
+                "missedDiscussion": 10,
+                "inventedDiscussion": 1,
+                "ambiguous": 2,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 72,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> POSITIVE": 7,
+                  "NEGATIVE -> MIXED": 1,
+                  "MIXED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> POSITIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 4,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2
+                }
+              },
+              "code_quality": {
+                "judged": 105,
+                "correct": 86,
+                "accuracy": 0.819047619047619,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 21,
+                "missedDiscussion": 18,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 84,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 7,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 9,
+                  "NEUTRAL -> NEGATIVE": 1
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 107,
+            "metrics": {
+              "relevance": {
+                "judged": 107,
+                "correct": 102,
+                "accuracy": 0.9532710280373832,
+                "accepted": 104,
+                "acceptedCorrect": 102,
+                "acceptedAccuracy": 0.9807692307692307,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 102,
+                  "UNCLEAR -> YES": 2,
+                  "YES -> UNCLEAR": 3
+                }
+              },
+              "overall": {
+                "judged": 98,
+                "correct": 81,
+                "accuracy": 0.826530612244898,
+                "accepted": 91,
+                "acceptedCorrect": 77,
+                "acceptedAccuracy": 0.8461538461538461,
+                "discussedReferences": 98,
+                "missedDiscussion": 7,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 6,
+                "confusion": {
+                  "NEGATIVE -> NEGATIVE": 22,
+                  "NEUTRAL -> NEUTRAL": 33,
+                  "MIXED -> MIXED": 6,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "POSITIVE -> POSITIVE": 20,
+                  "MIXED -> POSITIVE": 2,
+                  "NEUTRAL -> NEGATIVE": 4,
+                  "MIXED -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEUTRAL": 3,
+                  "POSITIVE -> NEUTRAL": 3,
+                  "NEGATIVE -> MIXED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 105,
+                "correct": 97,
+                "accuracy": 0.9238095238095239,
+                "accepted": 4,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.75,
+                "discussedReferences": 11,
+                "missedDiscussion": 7,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 93,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 105,
+                "correct": 104,
+                "accuracy": 0.9904761904761905,
+                "accepted": 8,
+                "acceptedCorrect": 8,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 9,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 96,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEGATIVE": 3,
+                  "NEUTRAL -> NEUTRAL": 2
+                }
+              },
+              "cost": {
+                "judged": 103,
+                "correct": 93,
+                "accuracy": 0.9029126213592233,
+                "accepted": 22,
+                "acceptedCorrect": 20,
+                "acceptedAccuracy": 0.9090909090909091,
+                "discussedReferences": 30,
+                "missedDiscussion": 9,
+                "inventedDiscussion": 1,
+                "ambiguous": 2,
+                "ambiguousAccepted": 1,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 72,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEUTRAL": 1,
+                  "MIXED -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 11,
+                  "POSITIVE -> POSITIVE": 5,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 105,
+                "correct": 94,
+                "accuracy": 0.8952380952380953,
+                "accepted": 16,
+                "acceptedCorrect": 12,
+                "acceptedAccuracy": 0.75,
+                "discussedReferences": 21,
+                "missedDiscussion": 6,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 82,
+                  "NEGATIVE -> NEGATIVE": 4,
+                  "NEUTRAL -> NOT_DISCUSSED": 3,
+                  "POSITIVE -> POSITIVE": 5,
+                  "POSITIVE -> NOT_DISCUSSED": 3,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 3,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "NOT_DISCUSSED -> NEGATIVE": 1
+                }
+              }
+            }
+          }
+        },
+        "0.5": {
+          "baseline": {
+            "cases": 107,
+            "metrics": {
+              "relevance": {
+                "judged": 107,
+                "correct": 104,
+                "accuracy": 0.9719626168224299,
+                "accepted": 95,
+                "acceptedCorrect": 93,
+                "acceptedAccuracy": 0.9789473684210527,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 104,
+                  "UNCLEAR -> YES": 2,
+                  "YES -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 98,
+                "correct": 75,
+                "accuracy": 0.7653061224489796,
+                "accepted": 74,
+                "acceptedCorrect": 64,
+                "acceptedAccuracy": 0.8648648648648649,
+                "discussedReferences": 98,
+                "missedDiscussion": 24,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 5,
+                "confusion": {
+                  "NEGATIVE -> NEGATIVE": 20,
+                  "NEUTRAL -> NEUTRAL": 31,
+                  "MIXED -> MIXED": 6,
+                  "NEUTRAL -> POSITIVE": 3,
+                  "POSITIVE -> NEUTRAL": 5,
+                  "POSITIVE -> POSITIVE": 18,
+                  "NEUTRAL -> NEGATIVE": 5,
+                  "MIXED -> NEGATIVE": 3,
+                  "MIXED -> POSITIVE": 1,
+                  "NEGATIVE -> NEUTRAL": 4,
+                  "NEGATIVE -> MIXED": 2
+                }
+              },
+              "reasoning": {
+                "judged": 105,
+                "correct": 95,
+                "accuracy": 0.9047619047619048,
+                "accepted": 2,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 11,
+                "missedDiscussion": 9,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 92,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 2,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 3,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 105,
+                "correct": 101,
+                "accuracy": 0.9619047619047619,
+                "accepted": 7,
+                "acceptedCorrect": 6,
+                "acceptedAccuracy": 0.8571428571428571,
+                "discussedReferences": 9,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 95,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> NOT_DISCUSSED": 3,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 3
+                }
+              },
+              "cost": {
+                "judged": 103,
+                "correct": 86,
+                "accuracy": 0.8349514563106796,
+                "accepted": 18,
+                "acceptedCorrect": 12,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 30,
+                "missedDiscussion": 13,
+                "inventedDiscussion": 1,
+                "ambiguous": 2,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 72,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> POSITIVE": 7,
+                  "NEGATIVE -> MIXED": 1,
+                  "MIXED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> POSITIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 4,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2
+                }
+              },
+              "code_quality": {
+                "judged": 105,
+                "correct": 86,
+                "accuracy": 0.819047619047619,
+                "accepted": 2,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 0.5,
+                "discussedReferences": 21,
+                "missedDiscussion": 19,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 84,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 7,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 9,
+                  "NEUTRAL -> NEGATIVE": 1
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 107,
+            "metrics": {
+              "relevance": {
+                "judged": 107,
+                "correct": 102,
+                "accuracy": 0.9532710280373832,
+                "accepted": 103,
+                "acceptedCorrect": 101,
+                "acceptedAccuracy": 0.9805825242718447,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 102,
+                  "UNCLEAR -> YES": 2,
+                  "YES -> UNCLEAR": 3
+                }
+              },
+              "overall": {
+                "judged": 98,
+                "correct": 81,
+                "accuracy": 0.826530612244898,
+                "accepted": 86,
+                "acceptedCorrect": 74,
+                "acceptedAccuracy": 0.8604651162790697,
+                "discussedReferences": 98,
+                "missedDiscussion": 12,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 5,
+                "confusion": {
+                  "NEGATIVE -> NEGATIVE": 22,
+                  "NEUTRAL -> NEUTRAL": 33,
+                  "MIXED -> MIXED": 6,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "POSITIVE -> POSITIVE": 20,
+                  "MIXED -> POSITIVE": 2,
+                  "NEUTRAL -> NEGATIVE": 4,
+                  "MIXED -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEUTRAL": 3,
+                  "POSITIVE -> NEUTRAL": 3,
+                  "NEGATIVE -> MIXED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 105,
+                "correct": 97,
+                "accuracy": 0.9238095238095239,
+                "accepted": 4,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.75,
+                "discussedReferences": 11,
+                "missedDiscussion": 7,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 93,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 105,
+                "correct": 104,
+                "accuracy": 0.9904761904761905,
+                "accepted": 7,
+                "acceptedCorrect": 7,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 9,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 96,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEGATIVE": 3,
+                  "NEUTRAL -> NEUTRAL": 2
+                }
+              },
+              "cost": {
+                "judged": 103,
+                "correct": 93,
+                "accuracy": 0.9029126213592233,
+                "accepted": 22,
+                "acceptedCorrect": 20,
+                "acceptedAccuracy": 0.9090909090909091,
+                "discussedReferences": 30,
+                "missedDiscussion": 9,
+                "inventedDiscussion": 1,
+                "ambiguous": 2,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 72,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEUTRAL": 1,
+                  "MIXED -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 11,
+                  "POSITIVE -> POSITIVE": 5,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 105,
+                "correct": 94,
+                "accuracy": 0.8952380952380953,
+                "accepted": 14,
+                "acceptedCorrect": 10,
+                "acceptedAccuracy": 0.7142857142857143,
+                "discussedReferences": 21,
+                "missedDiscussion": 8,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 82,
+                  "NEGATIVE -> NEGATIVE": 4,
+                  "NEUTRAL -> NOT_DISCUSSED": 3,
+                  "POSITIVE -> POSITIVE": 5,
+                  "POSITIVE -> NOT_DISCUSSED": 3,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 3,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "NOT_DISCUSSED -> NEGATIVE": 1
+                }
+              }
+            }
+          }
+        },
+        "0.6": {
+          "baseline": {
+            "cases": 107,
+            "metrics": {
+              "relevance": {
+                "judged": 107,
+                "correct": 104,
+                "accuracy": 0.9719626168224299,
+                "accepted": 88,
+                "acceptedCorrect": 86,
+                "acceptedAccuracy": 0.9772727272727273,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 104,
+                  "UNCLEAR -> YES": 2,
+                  "YES -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 98,
+                "correct": 75,
+                "accuracy": 0.7653061224489796,
+                "accepted": 64,
+                "acceptedCorrect": 57,
+                "acceptedAccuracy": 0.890625,
+                "discussedReferences": 98,
+                "missedDiscussion": 34,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 4,
+                "confusion": {
+                  "NEGATIVE -> NEGATIVE": 20,
+                  "NEUTRAL -> NEUTRAL": 31,
+                  "MIXED -> MIXED": 6,
+                  "NEUTRAL -> POSITIVE": 3,
+                  "POSITIVE -> NEUTRAL": 5,
+                  "POSITIVE -> POSITIVE": 18,
+                  "NEUTRAL -> NEGATIVE": 5,
+                  "MIXED -> NEGATIVE": 3,
+                  "MIXED -> POSITIVE": 1,
+                  "NEGATIVE -> NEUTRAL": 4,
+                  "NEGATIVE -> MIXED": 2
+                }
+              },
+              "reasoning": {
+                "judged": 105,
+                "correct": 95,
+                "accuracy": 0.9047619047619048,
+                "accepted": 2,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 11,
+                "missedDiscussion": 9,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 92,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 2,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 3,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 105,
+                "correct": 101,
+                "accuracy": 0.9619047619047619,
+                "accepted": 6,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 0.8333333333333334,
+                "discussedReferences": 9,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 95,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> NOT_DISCUSSED": 3,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 3
+                }
+              },
+              "cost": {
+                "judged": 103,
+                "correct": 86,
+                "accuracy": 0.8349514563106796,
+                "accepted": 16,
+                "acceptedCorrect": 11,
+                "acceptedAccuracy": 0.6875,
+                "discussedReferences": 30,
+                "missedDiscussion": 15,
+                "inventedDiscussion": 1,
+                "ambiguous": 2,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 72,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> POSITIVE": 7,
+                  "NEGATIVE -> MIXED": 1,
+                  "MIXED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> POSITIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 4,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2
+                }
+              },
+              "code_quality": {
+                "judged": 105,
+                "correct": 86,
+                "accuracy": 0.819047619047619,
+                "accepted": 2,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 0.5,
+                "discussedReferences": 21,
+                "missedDiscussion": 19,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 84,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 7,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 9,
+                  "NEUTRAL -> NEGATIVE": 1
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 107,
+            "metrics": {
+              "relevance": {
+                "judged": 107,
+                "correct": 102,
+                "accuracy": 0.9532710280373832,
+                "accepted": 100,
+                "acceptedCorrect": 99,
+                "acceptedAccuracy": 0.99,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 102,
+                  "UNCLEAR -> YES": 2,
+                  "YES -> UNCLEAR": 3
+                }
+              },
+              "overall": {
+                "judged": 98,
+                "correct": 81,
+                "accuracy": 0.826530612244898,
+                "accepted": 78,
+                "acceptedCorrect": 69,
+                "acceptedAccuracy": 0.8846153846153846,
+                "discussedReferences": 98,
+                "missedDiscussion": 20,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 4,
+                "confusion": {
+                  "NEGATIVE -> NEGATIVE": 22,
+                  "NEUTRAL -> NEUTRAL": 33,
+                  "MIXED -> MIXED": 6,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "POSITIVE -> POSITIVE": 20,
+                  "MIXED -> POSITIVE": 2,
+                  "NEUTRAL -> NEGATIVE": 4,
+                  "MIXED -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEUTRAL": 3,
+                  "POSITIVE -> NEUTRAL": 3,
+                  "NEGATIVE -> MIXED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 105,
+                "correct": 97,
+                "accuracy": 0.9238095238095239,
+                "accepted": 4,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.75,
+                "discussedReferences": 11,
+                "missedDiscussion": 7,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 93,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 105,
+                "correct": 104,
+                "accuracy": 0.9904761904761905,
+                "accepted": 6,
+                "acceptedCorrect": 6,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 9,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 96,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEGATIVE": 3,
+                  "NEUTRAL -> NEUTRAL": 2
+                }
+              },
+              "cost": {
+                "judged": 103,
+                "correct": 93,
+                "accuracy": 0.9029126213592233,
+                "accepted": 21,
+                "acceptedCorrect": 19,
+                "acceptedAccuracy": 0.9047619047619048,
+                "discussedReferences": 30,
+                "missedDiscussion": 10,
+                "inventedDiscussion": 1,
+                "ambiguous": 2,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 72,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEUTRAL": 1,
+                  "MIXED -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 11,
+                  "POSITIVE -> POSITIVE": 5,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 105,
+                "correct": 94,
+                "accuracy": 0.8952380952380953,
+                "accepted": 12,
+                "acceptedCorrect": 10,
+                "acceptedAccuracy": 0.8333333333333334,
+                "discussedReferences": 21,
+                "missedDiscussion": 10,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 82,
+                  "NEGATIVE -> NEGATIVE": 4,
+                  "NEUTRAL -> NOT_DISCUSSED": 3,
+                  "POSITIVE -> POSITIVE": 5,
+                  "POSITIVE -> NOT_DISCUSSED": 3,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 3,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "NOT_DISCUSSED -> NEGATIVE": 1
+                }
+              }
+            }
+          }
+        },
+        "0.7": {
+          "baseline": {
+            "cases": 107,
+            "metrics": {
+              "relevance": {
+                "judged": 107,
+                "correct": 104,
+                "accuracy": 0.9719626168224299,
+                "accepted": 73,
+                "acceptedCorrect": 71,
+                "acceptedAccuracy": 0.9726027397260274,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 104,
+                  "UNCLEAR -> YES": 2,
+                  "YES -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 98,
+                "correct": 75,
+                "accuracy": 0.7653061224489796,
+                "accepted": 49,
+                "acceptedCorrect": 44,
+                "acceptedAccuracy": 0.8979591836734694,
+                "discussedReferences": 98,
+                "missedDiscussion": 49,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 2,
+                "confusion": {
+                  "NEGATIVE -> NEGATIVE": 20,
+                  "NEUTRAL -> NEUTRAL": 31,
+                  "MIXED -> MIXED": 6,
+                  "NEUTRAL -> POSITIVE": 3,
+                  "POSITIVE -> NEUTRAL": 5,
+                  "POSITIVE -> POSITIVE": 18,
+                  "NEUTRAL -> NEGATIVE": 5,
+                  "MIXED -> NEGATIVE": 3,
+                  "MIXED -> POSITIVE": 1,
+                  "NEGATIVE -> NEUTRAL": 4,
+                  "NEGATIVE -> MIXED": 2
+                }
+              },
+              "reasoning": {
+                "judged": 105,
+                "correct": 95,
+                "accuracy": 0.9047619047619048,
+                "accepted": 2,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 11,
+                "missedDiscussion": 9,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 92,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 2,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 3,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 105,
+                "correct": 101,
+                "accuracy": 0.9619047619047619,
+                "accepted": 6,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 0.8333333333333334,
+                "discussedReferences": 9,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 95,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> NOT_DISCUSSED": 3,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 3
+                }
+              },
+              "cost": {
+                "judged": 103,
+                "correct": 86,
+                "accuracy": 0.8349514563106796,
+                "accepted": 13,
+                "acceptedCorrect": 10,
+                "acceptedAccuracy": 0.7692307692307693,
+                "discussedReferences": 30,
+                "missedDiscussion": 18,
+                "inventedDiscussion": 1,
+                "ambiguous": 2,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 72,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> POSITIVE": 7,
+                  "NEGATIVE -> MIXED": 1,
+                  "MIXED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> POSITIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 4,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2
+                }
+              },
+              "code_quality": {
+                "judged": 105,
+                "correct": 86,
+                "accuracy": 0.819047619047619,
+                "accepted": 2,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 0.5,
+                "discussedReferences": 21,
+                "missedDiscussion": 19,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 84,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 7,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 9,
+                  "NEUTRAL -> NEGATIVE": 1
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 107,
+            "metrics": {
+              "relevance": {
+                "judged": 107,
+                "correct": 102,
+                "accuracy": 0.9532710280373832,
+                "accepted": 98,
+                "acceptedCorrect": 97,
+                "acceptedAccuracy": 0.9897959183673469,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 102,
+                  "UNCLEAR -> YES": 2,
+                  "YES -> UNCLEAR": 3
+                }
+              },
+              "overall": {
+                "judged": 98,
+                "correct": 81,
+                "accuracy": 0.826530612244898,
+                "accepted": 67,
+                "acceptedCorrect": 60,
+                "acceptedAccuracy": 0.8955223880597015,
+                "discussedReferences": 98,
+                "missedDiscussion": 31,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 3,
+                "confusion": {
+                  "NEGATIVE -> NEGATIVE": 22,
+                  "NEUTRAL -> NEUTRAL": 33,
+                  "MIXED -> MIXED": 6,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "POSITIVE -> POSITIVE": 20,
+                  "MIXED -> POSITIVE": 2,
+                  "NEUTRAL -> NEGATIVE": 4,
+                  "MIXED -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEUTRAL": 3,
+                  "POSITIVE -> NEUTRAL": 3,
+                  "NEGATIVE -> MIXED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 105,
+                "correct": 97,
+                "accuracy": 0.9238095238095239,
+                "accepted": 4,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.75,
+                "discussedReferences": 11,
+                "missedDiscussion": 7,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 93,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 105,
+                "correct": 104,
+                "accuracy": 0.9904761904761905,
+                "accepted": 4,
+                "acceptedCorrect": 4,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 9,
+                "missedDiscussion": 5,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 96,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEGATIVE": 3,
+                  "NEUTRAL -> NEUTRAL": 2
+                }
+              },
+              "cost": {
+                "judged": 103,
+                "correct": 93,
+                "accuracy": 0.9029126213592233,
+                "accepted": 19,
+                "acceptedCorrect": 18,
+                "acceptedAccuracy": 0.9473684210526315,
+                "discussedReferences": 30,
+                "missedDiscussion": 12,
+                "inventedDiscussion": 1,
+                "ambiguous": 2,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 72,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEUTRAL": 1,
+                  "MIXED -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 11,
+                  "POSITIVE -> POSITIVE": 5,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 105,
+                "correct": 94,
+                "accuracy": 0.8952380952380953,
+                "accepted": 7,
+                "acceptedCorrect": 7,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 21,
+                "missedDiscussion": 14,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 82,
+                  "NEGATIVE -> NEGATIVE": 4,
+                  "NEUTRAL -> NOT_DISCUSSED": 3,
+                  "POSITIVE -> POSITIVE": 5,
+                  "POSITIVE -> NOT_DISCUSSED": 3,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 3,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "NOT_DISCUSSED -> NEGATIVE": 1
+                }
+              }
+            }
+          }
+        }
+      },
+      "strata": {
+        "representative": {
+          "baseline": {
+            "cases": 80,
+            "metrics": {
+              "relevance": {
+                "judged": 80,
+                "correct": 78,
+                "accuracy": 0.975,
+                "accepted": 77,
+                "acceptedCorrect": 76,
+                "acceptedAccuracy": 0.987012987012987,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 78,
+                  "UNCLEAR -> YES": 1,
+                  "YES -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 73,
+                "correct": 60,
+                "accuracy": 0.821917808219178,
+                "accepted": 69,
+                "acceptedCorrect": 57,
+                "acceptedAccuracy": 0.8260869565217391,
+                "discussedReferences": 73,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 0,
+                "ambiguous": 6,
+                "ambiguousAccepted": 5,
+                "confusion": {
+                  "NEGATIVE -> NEGATIVE": 16,
+                  "NEUTRAL -> NEUTRAL": 26,
+                  "MIXED -> MIXED": 5,
+                  "NEUTRAL -> POSITIVE": 2,
+                  "POSITIVE -> NEUTRAL": 4,
+                  "POSITIVE -> POSITIVE": 13,
+                  "NEUTRAL -> NEGATIVE": 2,
+                  "MIXED -> POSITIVE": 1,
+                  "MIXED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEUTRAL": 2,
+                  "NEGATIVE -> MIXED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 79,
+                "correct": 72,
+                "accuracy": 0.9113924050632911,
+                "accepted": 5,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.6,
+                "discussedReferences": 8,
+                "missedDiscussion": 5,
+                "inventedDiscussion": 2,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 69,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 2,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 1
+                }
+              },
+              "speed": {
+                "judged": 79,
+                "correct": 76,
+                "accuracy": 0.9620253164556962,
+                "accepted": 5,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 8,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 71,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> NOT_DISCUSSED": 3,
+                  "NEGATIVE -> NEGATIVE": 2
+                }
+              },
+              "cost": {
+                "judged": 77,
+                "correct": 67,
+                "accuracy": 0.8701298701298701,
+                "accepted": 19,
+                "acceptedCorrect": 12,
+                "acceptedAccuracy": 0.631578947368421,
+                "discussedReferences": 22,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 2,
+                "ambiguousAccepted": 1,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 55,
+                  "NEUTRAL -> POSITIVE": 6,
+                  "NEGATIVE -> MIXED": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 4,
+                  "NEGATIVE -> NEGATIVE": 3,
+                  "NEGATIVE -> NOT_DISCUSSED": 2
+                }
+              },
+              "code_quality": {
+                "judged": 79,
+                "correct": 69,
+                "accuracy": 0.8734177215189873,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 12,
+                "missedDiscussion": 9,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 67,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 4,
+                  "POSITIVE -> NOT_DISCUSSED": 5,
+                  "NEUTRAL -> NEGATIVE": 1
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 80,
+            "metrics": {
+              "relevance": {
+                "judged": 80,
+                "correct": 76,
+                "accuracy": 0.95,
+                "accepted": 77,
+                "acceptedCorrect": 76,
+                "acceptedAccuracy": 0.987012987012987,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 76,
+                  "UNCLEAR -> YES": 1,
+                  "YES -> UNCLEAR": 3
+                }
+              },
+              "overall": {
+                "judged": 73,
+                "correct": 62,
+                "accuracy": 0.8493150684931506,
+                "accepted": 69,
+                "acceptedCorrect": 60,
+                "acceptedAccuracy": 0.8695652173913043,
+                "discussedReferences": 73,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 0,
+                "ambiguous": 6,
+                "ambiguousAccepted": 6,
+                "confusion": {
+                  "NEGATIVE -> NEGATIVE": 16,
+                  "NEUTRAL -> NEUTRAL": 26,
+                  "MIXED -> MIXED": 6,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "POSITIVE -> POSITIVE": 14,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> NEGATIVE": 2,
+                  "MIXED -> POSITIVE": 1,
+                  "POSITIVE -> NEUTRAL": 3,
+                  "NEGATIVE -> NEUTRAL": 2,
+                  "NEGATIVE -> MIXED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 79,
+                "correct": 74,
+                "accuracy": 0.9367088607594937,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 8,
+                "missedDiscussion": 5,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 71,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 1
+                }
+              },
+              "speed": {
+                "judged": 79,
+                "correct": 78,
+                "accuracy": 0.9873417721518988,
+                "accepted": 7,
+                "acceptedCorrect": 7,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 8,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 71,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEUTRAL -> NEUTRAL": 2
+                }
+              },
+              "cost": {
+                "judged": 77,
+                "correct": 72,
+                "accuracy": 0.935064935064935,
+                "accepted": 18,
+                "acceptedCorrect": 16,
+                "acceptedAccuracy": 0.8888888888888888,
+                "discussedReferences": 22,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 0,
+                "ambiguous": 2,
+                "ambiguousAccepted": 1,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 55,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEUTRAL": 1,
+                  "NEUTRAL -> NEUTRAL": 9,
+                  "POSITIVE -> POSITIVE": 5,
+                  "NEGATIVE -> NEGATIVE": 3,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 79,
+                "correct": 72,
+                "accuracy": 0.9113924050632911,
+                "accepted": 9,
+                "acceptedCorrect": 6,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 12,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 66,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> POSITIVE": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 2,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 2,
+                  "POSITIVE -> MIXED": 1,
+                  "NOT_DISCUSSED -> NEGATIVE": 1
+                }
+              }
+            }
+          }
+        },
+        "challenge": {
+          "baseline": {
+            "cases": 27,
+            "metrics": {
+              "relevance": {
+                "judged": 27,
+                "correct": 26,
+                "accuracy": 0.9629629629629629,
+                "accepted": 25,
+                "acceptedCorrect": 24,
+                "acceptedAccuracy": 0.96,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 26,
+                  "UNCLEAR -> YES": 1
+                }
+              },
+              "overall": {
+                "judged": 25,
+                "correct": 15,
+                "accuracy": 0.6,
+                "accepted": 22,
+                "acceptedCorrect": 14,
+                "acceptedAccuracy": 0.6363636363636364,
+                "discussedReferences": 25,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 1,
+                "confusion": {
+                  "NEUTRAL -> NEUTRAL": 5,
+                  "NEGATIVE -> NEGATIVE": 4,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEGATIVE": 3,
+                  "POSITIVE -> POSITIVE": 5,
+                  "MIXED -> NEGATIVE": 2,
+                  "NEGATIVE -> NEUTRAL": 2,
+                  "POSITIVE -> NEUTRAL": 1,
+                  "NEGATIVE -> MIXED": 1,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              },
+              "reasoning": {
+                "judged": 26,
+                "correct": 23,
+                "accuracy": 0.8846153846153846,
+                "accepted": 0,
+                "acceptedCorrect": 0,
+                "acceptedAccuracy": null,
+                "discussedReferences": 3,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 23,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 26,
+                "correct": 25,
+                "accuracy": 0.9615384615384616,
+                "accepted": 2,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 0.5,
+                "discussedReferences": 1,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 24,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 26,
+                "correct": 19,
+                "accuracy": 0.7307692307692307,
+                "accepted": 6,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.3333333333333333,
+                "discussedReferences": 8,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 17,
+                  "MIXED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1
+                }
+              },
+              "code_quality": {
+                "judged": 26,
+                "correct": 17,
+                "accuracy": 0.6538461538461539,
+                "accepted": 0,
+                "acceptedCorrect": 0,
+                "acceptedAccuracy": null,
+                "discussedReferences": 9,
+                "missedDiscussion": 9,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 17,
+                  "NEUTRAL -> NOT_DISCUSSED": 3,
+                  "NEGATIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 4
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 27,
+            "metrics": {
+              "relevance": {
+                "judged": 27,
+                "correct": 26,
+                "accuracy": 0.9629629629629629,
+                "accepted": 27,
+                "acceptedCorrect": 26,
+                "acceptedAccuracy": 0.9629629629629629,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 26,
+                  "UNCLEAR -> YES": 1
+                }
+              },
+              "overall": {
+                "judged": 25,
+                "correct": 19,
+                "accuracy": 0.76,
+                "accepted": 25,
+                "acceptedCorrect": 19,
+                "acceptedAccuracy": 0.76,
+                "discussedReferences": 25,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 1,
+                "confusion": {
+                  "NEUTRAL -> NEUTRAL": 7,
+                  "NEGATIVE -> NEGATIVE": 6,
+                  "MIXED -> POSITIVE": 1,
+                  "NEUTRAL -> NEGATIVE": 2,
+                  "POSITIVE -> POSITIVE": 6,
+                  "MIXED -> NEGATIVE": 2,
+                  "NEGATIVE -> NEUTRAL": 1
+                }
+              },
+              "reasoning": {
+                "judged": 26,
+                "correct": 23,
+                "accuracy": 0.8846153846153846,
+                "accepted": 3,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 0.3333333333333333,
+                "discussedReferences": 3,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 22,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NEUTRAL": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "speed": {
+                "judged": 26,
+                "correct": 26,
+                "accuracy": 1,
+                "accepted": 1,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 1,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 25,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 26,
+                "correct": 21,
+                "accuracy": 0.8076923076923077,
+                "accepted": 6,
+                "acceptedCorrect": 4,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 8,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 17,
+                  "MIXED -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "MIXED -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> NEUTRAL": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 1
+                }
+              },
+              "code_quality": {
+                "judged": 26,
+                "correct": 22,
+                "accuracy": 0.8461538461538461,
+                "accepted": 8,
+                "acceptedCorrect": 6,
+                "acceptedAccuracy": 0.75,
+                "discussedReferences": 9,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 16,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NOT_DISCUSSED -> POSITIVE": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "holdout": {
+      "datasetHash": "ba19212761a7ce420726d493b857769cfeb116d313be8264b905ed84aac43da5",
+      "candidateRequestHash": "c33790b37e31a4296cbd5c8cc4cf7cf600766cc0dd958b94acd2c4799119a143",
+      "completed": 98,
+      "planned": 98,
+      "thresholds": {
+        "0.3": {
+          "baseline": {
+            "cases": 49,
+            "metrics": {
+              "relevance": {
+                "judged": 49,
+                "correct": 47,
+                "accuracy": 0.9591836734693877,
+                "accepted": 46,
+                "acceptedCorrect": 45,
+                "acceptedAccuracy": 0.9782608695652174,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 46,
+                  "YES -> NO": 1,
+                  "NO -> YES": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 40,
+                "correct": 26,
+                "accuracy": 0.65,
+                "accepted": 33,
+                "acceptedCorrect": 24,
+                "acceptedAccuracy": 0.7272727272727273,
+                "discussedReferences": 40,
+                "missedDiscussion": 7,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 5,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 11,
+                  "POSITIVE -> NEUTRAL": 5,
+                  "POSITIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 10,
+                  "NEUTRAL -> POSITIVE": 3,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 2,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 0.5,
+                "discussedReferences": 5,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 41,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "speed": {
+                "judged": 47,
+                "correct": 45,
+                "accuracy": 0.9574468085106383,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 4,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 42,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 6,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 0.8333333333333334,
+                "discussedReferences": 8,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 37,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 5,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> POSITIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 43,
+                "correct": 35,
+                "accuracy": 0.813953488372093,
+                "accepted": 0,
+                "acceptedCorrect": 0,
+                "acceptedAccuracy": null,
+                "discussedReferences": 8,
+                "missedDiscussion": 8,
+                "inventedDiscussion": 0,
+                "ambiguous": 4,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 4,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 35,
+                  "NEUTRAL -> NOT_DISCUSSED": 4
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 49,
+            "metrics": {
+              "relevance": {
+                "judged": 49,
+                "correct": 47,
+                "accuracy": 0.9591836734693877,
+                "accepted": 46,
+                "acceptedCorrect": 45,
+                "acceptedAccuracy": 0.9782608695652174,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 46,
+                  "NO -> YES": 1,
+                  "YES -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 40,
+                "correct": 29,
+                "accuracy": 0.725,
+                "accepted": 33,
+                "acceptedCorrect": 26,
+                "acceptedAccuracy": 0.7878787878787878,
+                "discussedReferences": 40,
+                "missedDiscussion": 7,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 6,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 14,
+                  "POSITIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 4,
+                  "POSITIVE -> NEUTRAL": 2,
+                  "NEUTRAL -> NEUTRAL": 11,
+                  "NEUTRAL -> POSITIVE": 4,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEUTRAL": 1
+                }
+              },
+              "reasoning": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 5,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 1,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 40,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1
+                }
+              },
+              "speed": {
+                "judged": 47,
+                "correct": 45,
+                "accuracy": 0.9574468085106383,
+                "accepted": 4,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.75,
+                "discussedReferences": 4,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 42,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 46,
+                "correct": 43,
+                "accuracy": 0.9347826086956522,
+                "accepted": 5,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 8,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 38,
+                  "POSITIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> POSITIVE": 4,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 1
+                }
+              },
+              "code_quality": {
+                "judged": 43,
+                "correct": 38,
+                "accuracy": 0.8837209302325582,
+                "accepted": 5,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.6,
+                "discussedReferences": 8,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 1,
+                "ambiguous": 4,
+                "ambiguousAccepted": 1,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 34,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              }
+            }
+          }
+        },
+        "0.4": {
+          "baseline": {
+            "cases": 49,
+            "metrics": {
+              "relevance": {
+                "judged": 49,
+                "correct": 47,
+                "accuracy": 0.9591836734693877,
+                "accepted": 44,
+                "acceptedCorrect": 43,
+                "acceptedAccuracy": 0.9772727272727273,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 46,
+                  "YES -> NO": 1,
+                  "NO -> YES": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 40,
+                "correct": 26,
+                "accuracy": 0.65,
+                "accepted": 31,
+                "acceptedCorrect": 22,
+                "acceptedAccuracy": 0.7096774193548387,
+                "discussedReferences": 40,
+                "missedDiscussion": 9,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 3,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 11,
+                  "POSITIVE -> NEUTRAL": 5,
+                  "POSITIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 10,
+                  "NEUTRAL -> POSITIVE": 3,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 2,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 0.5,
+                "discussedReferences": 5,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 41,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "speed": {
+                "judged": 47,
+                "correct": 45,
+                "accuracy": 0.9574468085106383,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 4,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 42,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 6,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 0.8333333333333334,
+                "discussedReferences": 8,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 37,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 5,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> POSITIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 43,
+                "correct": 35,
+                "accuracy": 0.813953488372093,
+                "accepted": 0,
+                "acceptedCorrect": 0,
+                "acceptedAccuracy": null,
+                "discussedReferences": 8,
+                "missedDiscussion": 8,
+                "inventedDiscussion": 0,
+                "ambiguous": 4,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 4,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 35,
+                  "NEUTRAL -> NOT_DISCUSSED": 4
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 49,
+            "metrics": {
+              "relevance": {
+                "judged": 49,
+                "correct": 47,
+                "accuracy": 0.9591836734693877,
+                "accepted": 46,
+                "acceptedCorrect": 45,
+                "acceptedAccuracy": 0.9782608695652174,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 46,
+                  "NO -> YES": 1,
+                  "YES -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 40,
+                "correct": 29,
+                "accuracy": 0.725,
+                "accepted": 29,
+                "acceptedCorrect": 24,
+                "acceptedAccuracy": 0.8275862068965517,
+                "discussedReferences": 40,
+                "missedDiscussion": 11,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 6,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 14,
+                  "POSITIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 4,
+                  "POSITIVE -> NEUTRAL": 2,
+                  "NEUTRAL -> NEUTRAL": 11,
+                  "NEUTRAL -> POSITIVE": 4,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEUTRAL": 1
+                }
+              },
+              "reasoning": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 2,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 0.5,
+                "discussedReferences": 5,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 1,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 40,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1
+                }
+              },
+              "speed": {
+                "judged": 47,
+                "correct": 45,
+                "accuracy": 0.9574468085106383,
+                "accepted": 4,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.75,
+                "discussedReferences": 4,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 42,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 46,
+                "correct": 43,
+                "accuracy": 0.9347826086956522,
+                "accepted": 5,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 8,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 38,
+                  "POSITIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> POSITIVE": 4,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 1
+                }
+              },
+              "code_quality": {
+                "judged": 43,
+                "correct": 38,
+                "accuracy": 0.8837209302325582,
+                "accepted": 5,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.6,
+                "discussedReferences": 8,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 1,
+                "ambiguous": 4,
+                "ambiguousAccepted": 1,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 34,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              }
+            }
+          }
+        },
+        "0.5": {
+          "baseline": {
+            "cases": 49,
+            "metrics": {
+              "relevance": {
+                "judged": 49,
+                "correct": 47,
+                "accuracy": 0.9591836734693877,
+                "accepted": 43,
+                "acceptedCorrect": 42,
+                "acceptedAccuracy": 0.9767441860465116,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 46,
+                  "YES -> NO": 1,
+                  "NO -> YES": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 40,
+                "correct": 26,
+                "accuracy": 0.65,
+                "accepted": 28,
+                "acceptedCorrect": 20,
+                "acceptedAccuracy": 0.7142857142857143,
+                "discussedReferences": 40,
+                "missedDiscussion": 12,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 2,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 11,
+                  "POSITIVE -> NEUTRAL": 5,
+                  "POSITIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 10,
+                  "NEUTRAL -> POSITIVE": 3,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 1,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 5,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 41,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "speed": {
+                "judged": 47,
+                "correct": 45,
+                "accuracy": 0.9574468085106383,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 4,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 42,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 6,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 0.8333333333333334,
+                "discussedReferences": 8,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 37,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 5,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> POSITIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 43,
+                "correct": 35,
+                "accuracy": 0.813953488372093,
+                "accepted": 0,
+                "acceptedCorrect": 0,
+                "acceptedAccuracy": null,
+                "discussedReferences": 8,
+                "missedDiscussion": 8,
+                "inventedDiscussion": 0,
+                "ambiguous": 4,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 4,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 35,
+                  "NEUTRAL -> NOT_DISCUSSED": 4
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 49,
+            "metrics": {
+              "relevance": {
+                "judged": 49,
+                "correct": 47,
+                "accuracy": 0.9591836734693877,
+                "accepted": 46,
+                "acceptedCorrect": 45,
+                "acceptedAccuracy": 0.9782608695652174,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 46,
+                  "NO -> YES": 1,
+                  "YES -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 40,
+                "correct": 29,
+                "accuracy": 0.725,
+                "accepted": 27,
+                "acceptedCorrect": 23,
+                "acceptedAccuracy": 0.8518518518518519,
+                "discussedReferences": 40,
+                "missedDiscussion": 13,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 6,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 14,
+                  "POSITIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 4,
+                  "POSITIVE -> NEUTRAL": 2,
+                  "NEUTRAL -> NEUTRAL": 11,
+                  "NEUTRAL -> POSITIVE": 4,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEUTRAL": 1
+                }
+              },
+              "reasoning": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 1,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 5,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 40,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1
+                }
+              },
+              "speed": {
+                "judged": 47,
+                "correct": 45,
+                "accuracy": 0.9574468085106383,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 4,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 42,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 46,
+                "correct": 43,
+                "accuracy": 0.9347826086956522,
+                "accepted": 5,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 8,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 38,
+                  "POSITIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> POSITIVE": 4,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 1
+                }
+              },
+              "code_quality": {
+                "judged": 43,
+                "correct": 38,
+                "accuracy": 0.8837209302325582,
+                "accepted": 2,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 0.5,
+                "discussedReferences": 8,
+                "missedDiscussion": 6,
+                "inventedDiscussion": 0,
+                "ambiguous": 4,
+                "ambiguousAccepted": 1,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 34,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              }
+            }
+          }
+        },
+        "0.6": {
+          "baseline": {
+            "cases": 49,
+            "metrics": {
+              "relevance": {
+                "judged": 49,
+                "correct": 47,
+                "accuracy": 0.9591836734693877,
+                "accepted": 40,
+                "acceptedCorrect": 40,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 46,
+                  "YES -> NO": 1,
+                  "NO -> YES": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 40,
+                "correct": 26,
+                "accuracy": 0.65,
+                "accepted": 23,
+                "acceptedCorrect": 17,
+                "acceptedAccuracy": 0.7391304347826086,
+                "discussedReferences": 40,
+                "missedDiscussion": 17,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 2,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 11,
+                  "POSITIVE -> NEUTRAL": 5,
+                  "POSITIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 10,
+                  "NEUTRAL -> POSITIVE": 3,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 1,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 5,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 41,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "speed": {
+                "judged": 47,
+                "correct": 45,
+                "accuracy": 0.9574468085106383,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 4,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 42,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 5,
+                "acceptedCorrect": 4,
+                "acceptedAccuracy": 0.8,
+                "discussedReferences": 8,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 37,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 5,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> POSITIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 43,
+                "correct": 35,
+                "accuracy": 0.813953488372093,
+                "accepted": 0,
+                "acceptedCorrect": 0,
+                "acceptedAccuracy": null,
+                "discussedReferences": 8,
+                "missedDiscussion": 8,
+                "inventedDiscussion": 0,
+                "ambiguous": 4,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 4,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 35,
+                  "NEUTRAL -> NOT_DISCUSSED": 4
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 49,
+            "metrics": {
+              "relevance": {
+                "judged": 49,
+                "correct": 47,
+                "accuracy": 0.9591836734693877,
+                "accepted": 46,
+                "acceptedCorrect": 45,
+                "acceptedAccuracy": 0.9782608695652174,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 46,
+                  "NO -> YES": 1,
+                  "YES -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 40,
+                "correct": 29,
+                "accuracy": 0.725,
+                "accepted": 24,
+                "acceptedCorrect": 21,
+                "acceptedAccuracy": 0.875,
+                "discussedReferences": 40,
+                "missedDiscussion": 16,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 5,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 14,
+                  "POSITIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 4,
+                  "POSITIVE -> NEUTRAL": 2,
+                  "NEUTRAL -> NEUTRAL": 11,
+                  "NEUTRAL -> POSITIVE": 4,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEUTRAL": 1
+                }
+              },
+              "reasoning": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 1,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 5,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 40,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1
+                }
+              },
+              "speed": {
+                "judged": 47,
+                "correct": 45,
+                "accuracy": 0.9574468085106383,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 4,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 42,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 46,
+                "correct": 43,
+                "accuracy": 0.9347826086956522,
+                "accepted": 5,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 8,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 38,
+                  "POSITIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> POSITIVE": 4,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 1
+                }
+              },
+              "code_quality": {
+                "judged": 43,
+                "correct": 38,
+                "accuracy": 0.8837209302325582,
+                "accepted": 2,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 0.5,
+                "discussedReferences": 8,
+                "missedDiscussion": 6,
+                "inventedDiscussion": 0,
+                "ambiguous": 4,
+                "ambiguousAccepted": 1,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 34,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              }
+            }
+          }
+        },
+        "0.7": {
+          "baseline": {
+            "cases": 49,
+            "metrics": {
+              "relevance": {
+                "judged": 49,
+                "correct": 47,
+                "accuracy": 0.9591836734693877,
+                "accepted": 38,
+                "acceptedCorrect": 38,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 46,
+                  "YES -> NO": 1,
+                  "NO -> YES": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 40,
+                "correct": 26,
+                "accuracy": 0.65,
+                "accepted": 17,
+                "acceptedCorrect": 16,
+                "acceptedAccuracy": 0.9411764705882353,
+                "discussedReferences": 40,
+                "missedDiscussion": 23,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 1,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 11,
+                  "POSITIVE -> NEUTRAL": 5,
+                  "POSITIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 10,
+                  "NEUTRAL -> POSITIVE": 3,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> NEGATIVE": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 1,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 5,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 41,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "speed": {
+                "judged": 47,
+                "correct": 45,
+                "accuracy": 0.9574468085106383,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 4,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 42,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 5,
+                "acceptedCorrect": 4,
+                "acceptedAccuracy": 0.8,
+                "discussedReferences": 8,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 37,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 5,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> POSITIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 43,
+                "correct": 35,
+                "accuracy": 0.813953488372093,
+                "accepted": 0,
+                "acceptedCorrect": 0,
+                "acceptedAccuracy": null,
+                "discussedReferences": 8,
+                "missedDiscussion": 8,
+                "inventedDiscussion": 0,
+                "ambiguous": 4,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 4,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 35,
+                  "NEUTRAL -> NOT_DISCUSSED": 4
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 49,
+            "metrics": {
+              "relevance": {
+                "judged": 49,
+                "correct": 47,
+                "accuracy": 0.9591836734693877,
+                "accepted": 45,
+                "acceptedCorrect": 44,
+                "acceptedAccuracy": 0.9777777777777777,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 46,
+                  "NO -> YES": 1,
+                  "YES -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 40,
+                "correct": 29,
+                "accuracy": 0.725,
+                "accepted": 22,
+                "acceptedCorrect": 19,
+                "acceptedAccuracy": 0.8636363636363636,
+                "discussedReferences": 40,
+                "missedDiscussion": 18,
+                "inventedDiscussion": 0,
+                "ambiguous": 7,
+                "ambiguousAccepted": 5,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 14,
+                  "POSITIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 4,
+                  "POSITIVE -> NEUTRAL": 2,
+                  "NEUTRAL -> NEUTRAL": 11,
+                  "NEUTRAL -> POSITIVE": 4,
+                  "POSITIVE -> MIXED": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEUTRAL": 1
+                }
+              },
+              "reasoning": {
+                "judged": 46,
+                "correct": 42,
+                "accuracy": 0.9130434782608695,
+                "accepted": 1,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 5,
+                "missedDiscussion": 4,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 40,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1
+                }
+              },
+              "speed": {
+                "judged": 47,
+                "correct": 45,
+                "accuracy": 0.9574468085106383,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 4,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 42,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 46,
+                "correct": 43,
+                "accuracy": 0.9347826086956522,
+                "accepted": 5,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 8,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 38,
+                  "POSITIVE -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> POSITIVE": 4,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "NEGATIVE -> NOT_DISCUSSED": 1
+                }
+              },
+              "code_quality": {
+                "judged": 43,
+                "correct": 38,
+                "accuracy": 0.8837209302325582,
+                "accepted": 2,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 0.5,
+                "discussedReferences": 8,
+                "missedDiscussion": 6,
+                "inventedDiscussion": 0,
+                "ambiguous": 4,
+                "ambiguousAccepted": 1,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 34,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              }
+            }
+          }
+        }
+      },
+      "strata": {
+        "representative": {
+          "baseline": {
+            "cases": 24,
+            "metrics": {
+              "relevance": {
+                "judged": 24,
+                "correct": 23,
+                "accuracy": 0.9583333333333334,
+                "accepted": 22,
+                "acceptedCorrect": 21,
+                "acceptedAccuracy": 0.9545454545454546,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 22,
+                  "NO -> YES": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 18,
+                "correct": 14,
+                "accuracy": 0.7777777777777778,
+                "accepted": 17,
+                "acceptedCorrect": 13,
+                "acceptedAccuracy": 0.7647058823529411,
+                "discussedReferences": 18,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 4,
+                "ambiguousAccepted": 2,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 7,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "POSITIVE -> NEUTRAL": 1,
+                  "NEUTRAL -> NEUTRAL": 5,
+                  "NEUTRAL -> POSITIVE": 2,
+                  "POSITIVE -> MIXED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 22,
+                "correct": 21,
+                "accuracy": 0.9545454545454546,
+                "accepted": 0,
+                "acceptedCorrect": 0,
+                "acceptedAccuracy": null,
+                "discussedReferences": 1,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 21,
+                  "POSITIVE -> NOT_DISCUSSED": 1
+                }
+              },
+              "speed": {
+                "judged": 22,
+                "correct": 21,
+                "accuracy": 0.9545454545454546,
+                "accepted": 0,
+                "acceptedCorrect": 0,
+                "acceptedAccuracy": null,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 21,
+                  "NOT_DISCUSSED -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 22,
+                "correct": 20,
+                "accuracy": 0.9090909090909091,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 4,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 18,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 21,
+                "correct": 18,
+                "accuracy": 0.8571428571428571,
+                "accepted": 0,
+                "acceptedCorrect": 0,
+                "acceptedAccuracy": null,
+                "discussedReferences": 3,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 3,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 18
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 24,
+            "metrics": {
+              "relevance": {
+                "judged": 24,
+                "correct": 22,
+                "accuracy": 0.9166666666666666,
+                "accepted": 22,
+                "acceptedCorrect": 21,
+                "acceptedAccuracy": 0.9545454545454546,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 21,
+                  "NO -> YES": 1,
+                  "YES -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 18,
+                "correct": 13,
+                "accuracy": 0.7222222222222222,
+                "accepted": 16,
+                "acceptedCorrect": 11,
+                "acceptedAccuracy": 0.6875,
+                "discussedReferences": 18,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 0,
+                "ambiguous": 4,
+                "ambiguousAccepted": 3,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 7,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "POSITIVE -> NEUTRAL": 1,
+                  "NEUTRAL -> NEUTRAL": 4,
+                  "NEUTRAL -> POSITIVE": 3,
+                  "POSITIVE -> MIXED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 22,
+                "correct": 21,
+                "accuracy": 0.9545454545454546,
+                "accepted": 2,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 0.5,
+                "discussedReferences": 1,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 20,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1
+                }
+              },
+              "speed": {
+                "judged": 22,
+                "correct": 21,
+                "accuracy": 0.9545454545454546,
+                "accepted": 1,
+                "acceptedCorrect": 0,
+                "acceptedAccuracy": 0,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 21,
+                  "NOT_DISCUSSED -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 22,
+                "correct": 20,
+                "accuracy": 0.9090909090909091,
+                "accepted": 2,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 4,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 18,
+                  "POSITIVE -> NOT_DISCUSSED": 2,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "POSITIVE -> POSITIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 21,
+                "correct": 19,
+                "accuracy": 0.9047619047619048,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 3,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 1,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 17,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 2
+                }
+              }
+            }
+          }
+        },
+        "challenge": {
+          "baseline": {
+            "cases": 25,
+            "metrics": {
+              "relevance": {
+                "judged": 25,
+                "correct": 24,
+                "accuracy": 0.96,
+                "accepted": 24,
+                "acceptedCorrect": 24,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 24,
+                  "YES -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 22,
+                "correct": 12,
+                "accuracy": 0.5454545454545454,
+                "accepted": 16,
+                "acceptedCorrect": 11,
+                "acceptedAccuracy": 0.6875,
+                "discussedReferences": 22,
+                "missedDiscussion": 6,
+                "inventedDiscussion": 0,
+                "ambiguous": 3,
+                "ambiguousAccepted": 3,
+                "confusion": {
+                  "POSITIVE -> NEUTRAL": 4,
+                  "POSITIVE -> NEGATIVE": 2,
+                  "NEUTRAL -> NEUTRAL": 5,
+                  "POSITIVE -> POSITIVE": 4,
+                  "NEUTRAL -> NEGATIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 3,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1
+                }
+              },
+              "reasoning": {
+                "judged": 24,
+                "correct": 21,
+                "accuracy": 0.875,
+                "accepted": 2,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 0.5,
+                "discussedReferences": 4,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 20,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEUTRAL -> NEGATIVE": 1,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "speed": {
+                "judged": 25,
+                "correct": 24,
+                "accuracy": 0.96,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 4,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 21,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 24,
+                "correct": 22,
+                "accuracy": 0.9166666666666666,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 4,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 19,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEGATIVE -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> POSITIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 22,
+                "correct": 17,
+                "accuracy": 0.7727272727272727,
+                "accepted": 0,
+                "acceptedCorrect": 0,
+                "acceptedAccuracy": null,
+                "discussedReferences": 5,
+                "missedDiscussion": 5,
+                "inventedDiscussion": 0,
+                "ambiguous": 3,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NEUTRAL -> NOT_DISCUSSED": 4,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 17,
+                  "POSITIVE -> NOT_DISCUSSED": 1
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 25,
+            "metrics": {
+              "relevance": {
+                "judged": 25,
+                "correct": 25,
+                "accuracy": 1,
+                "accepted": 24,
+                "acceptedCorrect": 24,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 25
+                }
+              },
+              "overall": {
+                "judged": 22,
+                "correct": 16,
+                "accuracy": 0.7272727272727273,
+                "accepted": 17,
+                "acceptedCorrect": 15,
+                "acceptedAccuracy": 0.8823529411764706,
+                "discussedReferences": 22,
+                "missedDiscussion": 5,
+                "inventedDiscussion": 0,
+                "ambiguous": 3,
+                "ambiguousAccepted": 3,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 7,
+                  "POSITIVE -> NEGATIVE": 2,
+                  "POSITIVE -> NEUTRAL": 1,
+                  "NEUTRAL -> NEUTRAL": 7,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEUTRAL": 1,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              },
+              "reasoning": {
+                "judged": 24,
+                "correct": 21,
+                "accuracy": 0.875,
+                "accepted": 1,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 4,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 20,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "POSITIVE -> NOT_DISCUSSED": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "speed": {
+                "judged": 25,
+                "correct": 24,
+                "accuracy": 0.96,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 4,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 21,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "POSITIVE -> POSITIVE": 2,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 24,
+                "correct": 23,
+                "accuracy": 0.9583333333333334,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 4,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 1,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 20,
+                  "POSITIVE -> POSITIVE": 3,
+                  "NEGATIVE -> NOT_DISCUSSED": 1
+                }
+              },
+              "code_quality": {
+                "judged": 22,
+                "correct": 19,
+                "accuracy": 0.8636363636363636,
+                "accepted": 2,
+                "acceptedCorrect": 1,
+                "acceptedAccuracy": 0.5,
+                "discussedReferences": 5,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 3,
+                "ambiguousAccepted": 1,
+                "confusion": {
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 17,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> POSITIVE": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "behavioral": {
+      "datasetHash": "05bcb7cb269960e90ee24babd524bd0e9448f45c10d9fb89a4563910ad1d0c45",
+      "candidateRequestHash": "eefb791b0f3ee807d8259bf57c7f6b2bc84f9c95b03d1dc32d885cc96377278a",
+      "completed": 64,
+      "planned": 64,
+      "thresholds": {
+        "0.3": {
+          "baseline": {
+            "cases": 32,
+            "metrics": {
+              "relevance": {
+                "judged": 32,
+                "correct": 32,
+                "accuracy": 1,
+                "accepted": 30,
+                "acceptedCorrect": 30,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 30,
+                  "UNCLEAR -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 30,
+                "correct": 24,
+                "accuracy": 0.8,
+                "accepted": 28,
+                "acceptedCorrect": 24,
+                "acceptedAccuracy": 0.8571428571428571,
+                "discussedReferences": 30,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 11,
+                  "MIXED -> MIXED": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 6,
+                  "MIXED -> POSITIVE": 1,
+                  "POSITIVE -> NEGATIVE": 1,
+                  "NEGATIVE -> MIXED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "reasoning": {
+                "judged": 30,
+                "correct": 29,
+                "accuracy": 0.9666666666666667,
+                "accepted": 4,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.75,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 26,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 30,
+                "correct": 28,
+                "accuracy": 0.9333333333333333,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 3,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 26,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> POSITIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 30,
+                "correct": 29,
+                "accuracy": 0.9666666666666667,
+                "accepted": 5,
+                "acceptedCorrect": 4,
+                "acceptedAccuracy": 0.8,
+                "discussedReferences": 5,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 25,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 30,
+                "correct": 22,
+                "accuracy": 0.7333333333333333,
+                "accepted": 7,
+                "acceptedCorrect": 7,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 15,
+                "missedDiscussion": 8,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 5,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 15,
+                  "POSITIVE -> POSITIVE": 4,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NOT_DISCUSSED": 1
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 32,
+            "metrics": {
+              "relevance": {
+                "judged": 32,
+                "correct": 32,
+                "accuracy": 1,
+                "accepted": 30,
+                "acceptedCorrect": 30,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 30,
+                  "UNCLEAR -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 30,
+                "acceptedCorrect": 30,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 30,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 13,
+                  "MIXED -> MIXED": 3,
+                  "NEUTRAL -> NEUTRAL": 8,
+                  "NEGATIVE -> NEGATIVE": 6
+                }
+              },
+              "reasoning": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 27,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 27,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "cost": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 5,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 5,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 25,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 2,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 15,
+                "acceptedCorrect": 15,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 15,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 9,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 15,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 2,
+                  "NEGATIVE -> NEGATIVE": 3
+                }
+              }
+            }
+          }
+        },
+        "0.4": {
+          "baseline": {
+            "cases": 32,
+            "metrics": {
+              "relevance": {
+                "judged": 32,
+                "correct": 32,
+                "accuracy": 1,
+                "accepted": 30,
+                "acceptedCorrect": 30,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 30,
+                  "UNCLEAR -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 30,
+                "correct": 24,
+                "accuracy": 0.8,
+                "accepted": 27,
+                "acceptedCorrect": 24,
+                "acceptedAccuracy": 0.8888888888888888,
+                "discussedReferences": 30,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 11,
+                  "MIXED -> MIXED": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 6,
+                  "MIXED -> POSITIVE": 1,
+                  "POSITIVE -> NEGATIVE": 1,
+                  "NEGATIVE -> MIXED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "reasoning": {
+                "judged": 30,
+                "correct": 29,
+                "accuracy": 0.9666666666666667,
+                "accepted": 4,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.75,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 26,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 30,
+                "correct": 28,
+                "accuracy": 0.9333333333333333,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 3,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 26,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> POSITIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 30,
+                "correct": 29,
+                "accuracy": 0.9666666666666667,
+                "accepted": 5,
+                "acceptedCorrect": 4,
+                "acceptedAccuracy": 0.8,
+                "discussedReferences": 5,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 25,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 30,
+                "correct": 22,
+                "accuracy": 0.7333333333333333,
+                "accepted": 7,
+                "acceptedCorrect": 7,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 15,
+                "missedDiscussion": 8,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 5,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 15,
+                  "POSITIVE -> POSITIVE": 4,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NOT_DISCUSSED": 1
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 32,
+            "metrics": {
+              "relevance": {
+                "judged": 32,
+                "correct": 32,
+                "accuracy": 1,
+                "accepted": 30,
+                "acceptedCorrect": 30,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 30,
+                  "UNCLEAR -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 29,
+                "acceptedCorrect": 29,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 30,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 13,
+                  "MIXED -> MIXED": 3,
+                  "NEUTRAL -> NEUTRAL": 8,
+                  "NEGATIVE -> NEGATIVE": 6
+                }
+              },
+              "reasoning": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 27,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 27,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "cost": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 5,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 5,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 25,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 2,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 15,
+                "acceptedCorrect": 15,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 15,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 9,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 15,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 2,
+                  "NEGATIVE -> NEGATIVE": 3
+                }
+              }
+            }
+          }
+        },
+        "0.5": {
+          "baseline": {
+            "cases": 32,
+            "metrics": {
+              "relevance": {
+                "judged": 32,
+                "correct": 32,
+                "accuracy": 1,
+                "accepted": 30,
+                "acceptedCorrect": 30,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 30,
+                  "UNCLEAR -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 30,
+                "correct": 24,
+                "accuracy": 0.8,
+                "accepted": 24,
+                "acceptedCorrect": 22,
+                "acceptedAccuracy": 0.9166666666666666,
+                "discussedReferences": 30,
+                "missedDiscussion": 6,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 11,
+                  "MIXED -> MIXED": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 6,
+                  "MIXED -> POSITIVE": 1,
+                  "POSITIVE -> NEGATIVE": 1,
+                  "NEGATIVE -> MIXED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "reasoning": {
+                "judged": 30,
+                "correct": 29,
+                "accuracy": 0.9666666666666667,
+                "accepted": 4,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.75,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 26,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 30,
+                "correct": 28,
+                "accuracy": 0.9333333333333333,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 3,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 26,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> POSITIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 30,
+                "correct": 29,
+                "accuracy": 0.9666666666666667,
+                "accepted": 5,
+                "acceptedCorrect": 4,
+                "acceptedAccuracy": 0.8,
+                "discussedReferences": 5,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 25,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 30,
+                "correct": 22,
+                "accuracy": 0.7333333333333333,
+                "accepted": 7,
+                "acceptedCorrect": 7,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 15,
+                "missedDiscussion": 8,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 5,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 15,
+                  "POSITIVE -> POSITIVE": 4,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NOT_DISCUSSED": 1
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 32,
+            "metrics": {
+              "relevance": {
+                "judged": 32,
+                "correct": 32,
+                "accuracy": 1,
+                "accepted": 30,
+                "acceptedCorrect": 30,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 30,
+                  "UNCLEAR -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 29,
+                "acceptedCorrect": 29,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 30,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 13,
+                  "MIXED -> MIXED": 3,
+                  "NEUTRAL -> NEUTRAL": 8,
+                  "NEGATIVE -> NEGATIVE": 6
+                }
+              },
+              "reasoning": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 27,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 27,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "cost": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 5,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 5,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 25,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 2,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 15,
+                "acceptedCorrect": 15,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 15,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 9,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 15,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 2,
+                  "NEGATIVE -> NEGATIVE": 3
+                }
+              }
+            }
+          }
+        },
+        "0.6": {
+          "baseline": {
+            "cases": 32,
+            "metrics": {
+              "relevance": {
+                "judged": 32,
+                "correct": 32,
+                "accuracy": 1,
+                "accepted": 29,
+                "acceptedCorrect": 29,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 30,
+                  "UNCLEAR -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 30,
+                "correct": 24,
+                "accuracy": 0.8,
+                "accepted": 24,
+                "acceptedCorrect": 22,
+                "acceptedAccuracy": 0.9166666666666666,
+                "discussedReferences": 30,
+                "missedDiscussion": 6,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 11,
+                  "MIXED -> MIXED": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 6,
+                  "MIXED -> POSITIVE": 1,
+                  "POSITIVE -> NEGATIVE": 1,
+                  "NEGATIVE -> MIXED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "reasoning": {
+                "judged": 30,
+                "correct": 29,
+                "accuracy": 0.9666666666666667,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 26,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 30,
+                "correct": 28,
+                "accuracy": 0.9333333333333333,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 3,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 26,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> POSITIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 30,
+                "correct": 29,
+                "accuracy": 0.9666666666666667,
+                "accepted": 5,
+                "acceptedCorrect": 4,
+                "acceptedAccuracy": 0.8,
+                "discussedReferences": 5,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 25,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 30,
+                "correct": 22,
+                "accuracy": 0.7333333333333333,
+                "accepted": 5,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 15,
+                "missedDiscussion": 10,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 5,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 15,
+                  "POSITIVE -> POSITIVE": 4,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NOT_DISCUSSED": 1
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 32,
+            "metrics": {
+              "relevance": {
+                "judged": 32,
+                "correct": 32,
+                "accuracy": 1,
+                "accepted": 30,
+                "acceptedCorrect": 30,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 30,
+                  "UNCLEAR -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 28,
+                "acceptedCorrect": 28,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 30,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 13,
+                  "MIXED -> MIXED": 3,
+                  "NEUTRAL -> NEUTRAL": 8,
+                  "NEGATIVE -> NEGATIVE": 6
+                }
+              },
+              "reasoning": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 27,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 27,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "cost": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 5,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 5,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 25,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 2,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 15,
+                "acceptedCorrect": 15,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 15,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 9,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 15,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 2,
+                  "NEGATIVE -> NEGATIVE": 3
+                }
+              }
+            }
+          }
+        },
+        "0.7": {
+          "baseline": {
+            "cases": 32,
+            "metrics": {
+              "relevance": {
+                "judged": 32,
+                "correct": 32,
+                "accuracy": 1,
+                "accepted": 28,
+                "acceptedCorrect": 28,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 30,
+                  "UNCLEAR -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 30,
+                "correct": 24,
+                "accuracy": 0.8,
+                "accepted": 23,
+                "acceptedCorrect": 22,
+                "acceptedAccuracy": 0.9565217391304348,
+                "discussedReferences": 30,
+                "missedDiscussion": 7,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 11,
+                  "MIXED -> MIXED": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 6,
+                  "MIXED -> POSITIVE": 1,
+                  "POSITIVE -> NEGATIVE": 1,
+                  "NEGATIVE -> MIXED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "reasoning": {
+                "judged": 30,
+                "correct": 29,
+                "accuracy": 0.9666666666666667,
+                "accepted": 2,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 3,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 26,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 30,
+                "correct": 28,
+                "accuracy": 0.9333333333333333,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 3,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 26,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> POSITIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 30,
+                "correct": 29,
+                "accuracy": 0.9666666666666667,
+                "accepted": 4,
+                "acceptedCorrect": 4,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 5,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 25,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 30,
+                "correct": 22,
+                "accuracy": 0.7333333333333333,
+                "accepted": 5,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 15,
+                "missedDiscussion": 10,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 5,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 15,
+                  "POSITIVE -> POSITIVE": 4,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NOT_DISCUSSED": 1
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 32,
+            "metrics": {
+              "relevance": {
+                "judged": 32,
+                "correct": 32,
+                "accuracy": 1,
+                "accepted": 30,
+                "acceptedCorrect": 30,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 30,
+                  "UNCLEAR -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 27,
+                "acceptedCorrect": 27,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 30,
+                "missedDiscussion": 3,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 13,
+                  "MIXED -> MIXED": 3,
+                  "NEUTRAL -> NEUTRAL": 8,
+                  "NEGATIVE -> NEGATIVE": 6
+                }
+              },
+              "reasoning": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 27,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 27,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "cost": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 5,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 5,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 25,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 2,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 13,
+                "acceptedCorrect": 13,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 15,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 9,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 15,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 2,
+                  "NEGATIVE -> NEGATIVE": 3
+                }
+              }
+            }
+          }
+        }
+      },
+      "strata": {
+        "behavioral": {
+          "baseline": {
+            "cases": 32,
+            "metrics": {
+              "relevance": {
+                "judged": 32,
+                "correct": 32,
+                "accuracy": 1,
+                "accepted": 30,
+                "acceptedCorrect": 30,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 30,
+                  "UNCLEAR -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 30,
+                "correct": 24,
+                "accuracy": 0.8,
+                "accepted": 28,
+                "acceptedCorrect": 24,
+                "acceptedAccuracy": 0.8571428571428571,
+                "discussedReferences": 30,
+                "missedDiscussion": 2,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 11,
+                  "MIXED -> MIXED": 2,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 5,
+                  "NEUTRAL -> NEUTRAL": 6,
+                  "MIXED -> POSITIVE": 1,
+                  "POSITIVE -> NEGATIVE": 1,
+                  "NEGATIVE -> MIXED": 1,
+                  "POSITIVE -> NEUTRAL": 1
+                }
+              },
+              "reasoning": {
+                "judged": 30,
+                "correct": 29,
+                "accuracy": 0.9666666666666667,
+                "accepted": 4,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 0.75,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 26,
+                  "NOT_DISCUSSED -> NEGATIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 30,
+                "correct": 28,
+                "accuracy": 0.9333333333333333,
+                "accepted": 3,
+                "acceptedCorrect": 2,
+                "acceptedAccuracy": 0.6666666666666666,
+                "discussedReferences": 3,
+                "missedDiscussion": 1,
+                "inventedDiscussion": 1,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 26,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 1,
+                  "NOT_DISCUSSED -> POSITIVE": 1
+                }
+              },
+              "cost": {
+                "judged": 30,
+                "correct": 29,
+                "accuracy": 0.9666666666666667,
+                "accepted": 5,
+                "acceptedCorrect": 4,
+                "acceptedAccuracy": 0.8,
+                "discussedReferences": 5,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 25,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 1,
+                  "NEUTRAL -> POSITIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 30,
+                "correct": 22,
+                "accuracy": 0.7333333333333333,
+                "accepted": 7,
+                "acceptedCorrect": 7,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 15,
+                "missedDiscussion": 8,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> NOT_DISCUSSED": 5,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 15,
+                  "POSITIVE -> POSITIVE": 4,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NOT_DISCUSSED": 2,
+                  "NEGATIVE -> NEGATIVE": 2,
+                  "NEGATIVE -> NOT_DISCUSSED": 1
+                }
+              }
+            }
+          },
+          "candidate": {
+            "cases": 32,
+            "metrics": {
+              "relevance": {
+                "judged": 32,
+                "correct": 32,
+                "accuracy": 1,
+                "accepted": 30,
+                "acceptedCorrect": 30,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 0,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "YES -> YES": 30,
+                  "UNCLEAR -> UNCLEAR": 1,
+                  "NO -> NO": 1
+                }
+              },
+              "overall": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 30,
+                "acceptedCorrect": 30,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 30,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 13,
+                  "MIXED -> MIXED": 3,
+                  "NEUTRAL -> NEUTRAL": 8,
+                  "NEGATIVE -> NEGATIVE": 6
+                }
+              },
+              "reasoning": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 27,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "speed": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 3,
+                "acceptedCorrect": 3,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 3,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 27,
+                  "NEGATIVE -> NEGATIVE": 1,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEUTRAL -> NEUTRAL": 1
+                }
+              },
+              "cost": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 5,
+                "acceptedCorrect": 5,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 5,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 25,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 2,
+                  "POSITIVE -> POSITIVE": 1,
+                  "NEGATIVE -> NEGATIVE": 1
+                }
+              },
+              "code_quality": {
+                "judged": 30,
+                "correct": 30,
+                "accuracy": 1,
+                "accepted": 15,
+                "acceptedCorrect": 15,
+                "acceptedAccuracy": 1,
+                "discussedReferences": 15,
+                "missedDiscussion": 0,
+                "inventedDiscussion": 0,
+                "ambiguous": 0,
+                "ambiguousAccepted": 0,
+                "confusion": {
+                  "POSITIVE -> POSITIVE": 9,
+                  "NOT_DISCUSSED -> NOT_DISCUSSED": 15,
+                  "MIXED -> MIXED": 1,
+                  "NEUTRAL -> NEUTRAL": 2,
+                  "NEGATIVE -> NEGATIVE": 3
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -10,6 +10,7 @@
     { "key": "SENTIMENT_PROVIDER", "scope": "RUN_TIME", "type": "GENERAL", "value": "typesafe" },
     { "key": "TARGET_UNIQUE_POSTS_PER_MODEL", "scope": "RUN_TIME", "type": "GENERAL", "value": "100" },
     { "key": "X_MAX_PAGES_PER_MODEL", "scope": "RUN_TIME", "type": "GENERAL", "value": "20" },
+    { "key": "X_CONTEXT_MAX_POSTS_PER_DAY", "scope": "RUN_TIME", "type": "GENERAL", "value": "20" },
     { "key": "X_RESULTS_PER_PAGE", "scope": "RUN_TIME", "type": "GENERAL", "value": "100" },
     { "key": "COLLECTION_START_AT", "scope": "RUN_TIME", "type": "GENERAL", "value": "2026-10-01T00:00:00Z" },
     { "key": "MODELS_PER_RUN", "scope": "RUN_TIME", "type": "GENERAL", "value": "3" },

@@ -13,6 +13,7 @@ enum Sentiment {
   NEUTRAL
   MIXED
   NOT_DISCUSSED
+  CANNOT_DETERMINE
 }
 
 enum RunStatus {
@@ -88,6 +89,8 @@ model ModelMention {
   analysisError    String?
   probabilities    Json?
   relevance        Json?
+  analysisContext  Json?
+  analysisRevision Int            @default(0)
   inputTokens      Int            @default(0)
   outputTokens     Int            @default(0)
   analyzedAt       DateTime       @default(now())
@@ -96,6 +99,8 @@ model ModelMention {
   post             XPost          @relation(fields: [postId], references: [id], onDelete: Cascade)
   model            Model          @relation(fields: [modelId], references: [id], onDelete: Cascade)
   topics           MentionTopic[]
+  revisions        AnalysisRevision[]
+  reanalysisItems  ReanalysisItem[]
 
   @@unique([postId, modelId])
   @@index([modelId])
@@ -176,4 +181,69 @@ model JobLock {
   ownerId   String
   expiresAt DateTime
   updatedAt DateTime @updatedAt
+}
+
+// Context is separate from collected posts so lookups never inflate sample counts.
+model XPostContext {
+  xPostId     String   @id
+  text        String?
+  authorXId   String?
+  status      String
+  claimToken  String?
+  expiresAt   DateTime
+  fetchedAt   DateTime @default(now())
+}
+
+// Reservations count attempts, including failures, across all app/worker instances.
+model XContextBudget {
+  day          String   @id
+  reserved     Int      @default(0)
+  blockedUntil DateTime?
+}
+
+model AnalysisRevision {
+  id           String       @id @default(cuid())
+  mentionId    String
+  revision     Int
+  operationKey String       @unique
+  source       String
+  before       Json
+  after        Json
+  createdAt    DateTime     @default(now())
+  mention      ModelMention @relation(fields: [mentionId], references: [id], onDelete: Cascade)
+
+  @@unique([mentionId, revision])
+}
+
+model ReanalysisBatch {
+  id              String           @id @default(cuid())
+  targetVersion   String
+  classifier      String
+  ruleFingerprint String
+  fetchContext    Boolean          @default(false)
+  filters         Json
+  createdAt       DateTime         @default(now())
+  items           ReanalysisItem[]
+}
+
+model ReanalysisItem {
+  id            String         @id @default(cuid())
+  batchId       String
+  mentionId     String
+  baseRevision  Int
+  inputHash     String
+  input         Json
+  before        Json
+  status        String         @default("PENDING")
+  attempts      Int            @default(0)
+  attemptId     String?
+  candidate     Json?
+  error         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  batch         ReanalysisBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  mention       ModelMention    @relation(fields: [mentionId], references: [id], onDelete: Cascade)
+
+  @@unique([batchId, mentionId])
+  @@index([batchId, status])
 }

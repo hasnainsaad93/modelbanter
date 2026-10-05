@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { db } from "../server/db";
 import { describeCoverage } from "../services/collection-coverage";
-import { MIN_CONFIDENCE } from "../analysis";
+import { ANALYSIS_VERSION, categories, countedSentiments, isCountedOpinion, type Category, MIN_CONFIDENCE } from "../analysis";
 import { aggregate } from "./aggregate";
 import { rangeDates, type DashboardQuery } from "./query";
 
@@ -11,9 +11,9 @@ export async function getDashboard(query: DashboardQuery) {
   const catalog = await db.model.findMany({ where: { OR: [{ isEnabled: true }, { mentions: { some: { post: { isDemo: false } } } }] }, select: { id: true, name: true, slug: true, vendor: true, isEnabled: true }, orderBy: [{ displayOrder: "asc" }, { name: "asc" }] });
   const models = catalog.filter(model => (!query.vendor || model.vendor === query.vendor) && (!query.model || model.slug === query.model));
   const modelIds = models.map(model => model.id);
-  const where = { modelId: { in: modelIds }, post: { isDemo: false, publishedAt: { ...(dates.previous ? { gte: dates.previous } : {}), lte: now } } } satisfies Prisma.ModelMentionWhereInput;
+  const where = { ...(query.analysis === "current" ? { analysisVersion: { startsWith: `${ANALYSIS_VERSION}/` } } : {}), modelId: { in: modelIds }, post: { isDemo: false, publishedAt: { ...(dates.previous ? { gte: dates.previous } : {}), lte: now } } } satisfies Prisma.ModelMentionWhereInput;
   const [mentions, latestRun, latestCollected, storedMentions, pending, collectionResults] = await Promise.all([
-    db.modelMention.findMany({ where, select: { modelId: true, sentiment: true, confidence: true, analysisStatus: true, post: { select: { publishedAt: true } }, topics: { select: { sentiment: true, confidence: true, topic: { select: { slug: true } } } } } }),
+    db.modelMention.findMany({ where, select: { modelId: true, analysisVersion: true, sentiment: true, confidence: true, analysisStatus: true, post: { select: { publishedAt: true } }, topics: { select: { sentiment: true, confidence: true, topic: { select: { slug: true } } } } } }),
     db.ingestionRun.findFirst({ where: { NOT: { id: { startsWith: "run-" } } }, orderBy: { startedAt: "desc" }, select: { startedAt: true, completedAt: true, status: true } }),
     db.xPost.findFirst({ where: { isDemo: false, mentions: { some: { modelId: { in: modelIds } } } }, orderBy: { publishedAt: "desc" }, select: { publishedAt: true } }),
     db.modelMention.count({ where: { modelId: { in: modelIds }, post: { isDemo: false } } }),
@@ -33,8 +33,9 @@ export type DashboardData = Awaited<ReturnType<typeof getDashboard>>;
 export async function getPosts(query: DashboardQuery) {
   const now = new Date();
   const dates = rangeDates(query.range, now);
-  const opinion = query.sentiment === "all" ? { not: "NOT_DISCUSSED" as const } : query.sentiment;
+  const opinion = query.sentiment === "all" ? { in: [...countedSentiments] } : query.sentiment;
   const where: Prisma.ModelMentionWhereInput = {
+    ...(query.analysis === "current" ? { analysisVersion: { startsWith: `${ANALYSIS_VERSION}/` } } : {}),
     model: { ...(query.model ? { slug: query.model } : {}), ...(query.vendor ? { vendor: query.vendor } : {}) },
     post: { isDemo: false, publishedAt: { ...(dates.start ? { gte: dates.start } : {}), lte: now } },
     analysisStatus: "COMPLETED",
@@ -54,7 +55,7 @@ export async function getPosts(query: DashboardQuery) {
     const selected = query.category === "all" ? record : record.topics.find(topic => topic.topic.slug === query.category)!;
     return { id: record.id, model: record.model, sentiment: selected.sentiment, confidence: selected.confidence, analysisVersion: record.analysisVersion,
       post: { ...record.post, publishedAt: record.post.publishedAt.toISOString() },
-      categories: record.topics.filter(topic => topic.sentiment !== "NOT_DISCUSSED" && topic.confidence >= MIN_CONFIDENCE).map(topic => ({ category: topic.topic.slug, name: topic.topic.name, sentiment: topic.sentiment })) };
+      categories: record.topics.filter(topic => isCountedOpinion(topic.sentiment) && topic.confidence >= MIN_CONFIDENCE).map(topic => ({ category: topic.topic.slug, name: categories[topic.topic.slug as Category] ?? topic.topic.name, sentiment: topic.sentiment })) };
   }) };
 }
 export type PostData = Awaited<ReturnType<typeof getPosts>>;

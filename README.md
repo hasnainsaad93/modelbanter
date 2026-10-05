@@ -33,7 +33,7 @@ Catalog sources checked October 4, 2026:
 
 ## DigitalOcean managed database
 
-The deployed installation uses the managed PostgreSQL database `modelbanterdb`. Its schema, data, and Prisma migration history were copied from the original local database. Local development currently uses `codex_signalist` on localhost. Every collection, analysis, and maintenance command writes to the database selected by its `DATABASE_URL`; check that destination before running it. Credentials and migration backups remain outside Git.
+The deployed installation uses the managed PostgreSQL database `modelbanterdb`. Its schema, data, and Prisma migration history were copied from the original local database. The local snapshot database is `codex_signalist` on localhost; the active `.env` may instead point to production. Every collection, analysis, and maintenance command writes to the database selected by its `DATABASE_URL`; check that destination before running it. Credentials and migration backups remain outside Git.
 
 For App Platform, set `DATABASE_URL` as a secret environment variable using the database's connection URL, selecting `modelbanterdb` and retaining `sslmode=require` (and `schema=public`). The local `.env` is not uploaded with the repository. Run `npx prisma migrate deploy` against this connection for subsequent schema updates; do not use `migrate dev` or `migrate reset` against the managed database. The health endpoint `/api/health` checks connectivity.
 
@@ -72,20 +72,30 @@ Platform references: [scheduled and deployment jobs](https://docs.digitalocean.c
 
 Set `TYPESAFE_JEV` (or `TYPESAFE_API_KEY`) to the TypeSafe API credential, and use `SENTIMENT_PROVIDER=typesafe`. The server calls https://api.typesafe.ai/v1/systemone with six independent Choice questions per post/model pair: relevance, overall, reasoning, speed, cost, and code quality. The target model appears explicitly in every question. Original post text is evidence, never instructions.
 
-Each category stores positive, negative, neutral, mixed, or not-discussed, plus confidence and the probability distribution. The actual Jev model version and our question version are recorded. Token counters accumulate successful saved responses, not a billing ledger (failed or unsaved requests may still be billable).
+Each category stores positive, negative, neutral, mixed, not-discussed, or cannot-determine, plus confidence and the probability distribution. The actual Jev model version and our question version are recorded. Token counters accumulate successful saved responses, not a billing ledger (failed or unsaved requests may still be billable).
 
 ```sh
 npm run ingest
-npm run analyze:pending
-# Reprocess results from older question versions:
-npm run analyze:pending -- --refresh
+# Preview only; no paid calls or data changes:
+npm run analyze:pending -- --refresh --limit 20
+# Prepare a fixed batch (database metadata only), then analyze without changing live labels:
+npm run analyze:pending -- --refresh --limit 20 --create
+npm run analyze:pending -- --run <batch-id>
+# After inspecting work/reclassification/<batch-id>/review.html:
+npm run analyze:pending -- --apply <batch-id>
+# Restore previous labels without repeating API calls:
+npm run analyze:pending -- --rollback <batch-id>
 # Small bounded collection for checking credentials and the pipeline:
 TARGET_UNIQUE_POSTS_PER_MODEL=1 X_RESULTS_PER_PAGE=10 X_MAX_PAGES_PER_MODEL=1 npm run ingest
 ```
 
-These commands use real API quota. `REANALYZE_LIMIT` caps each analysis batch (default 100, maximum 1000). A separate live regression check with four synthetic examples is available via `npm run test:jev:live`; it is intentionally excluded from normal tests.
+Ingestion uses real API quota. Reanalysis now previews by default; only `--run` makes paid Jev calls. `REANALYZE_LIMIT` caps a prepared batch (default 20, maximum 100). Remote context fetching is off for batches unless `--fetch-context` is included during creation. `npm run test:jev:live` previews a baseline/candidate comparison without making API calls; add `-- --run` to explicitly run the paid comparison. It is excluded from normal tests and never updates stored analyses or calls X. See the [classification guide](docs/jev-classification-guide.md) and [evaluation results](docs/jev-evaluation-results.md).
 
-Raw posts and pending mentions are saved before Jev is called. Failed analyses are retained and retried using `analyze:pending` or when their buffered collection resumes; no neutral result is fabricated on failure. Low-confidence relevance becomes UNCERTAIN, irrelevant matches become REJECTED, and successful decisions become COMPLETED. Legacy keyword results are excluded until reanalyzed. Duplicate post IDs and model associations are unique. Database leases prevent overlapping jobs, and a bounded collection run preserves partial progress on time limits or upstream quota errors. A scheduler must invoke the collection CLI or route; running the local app does not schedule jobs.
+New analyses use the `jev-sentiment-v4` rules with canonical model identity and verified aliases. The default classifier is pinned to `jev-1.13.0`; an explicit `TYPESAFE_MODEL` still overrides it. Coding now covers coding usefulness as well as generated code quality, while retaining the `code_quality` storage key. Existing v2 records remain unchanged and have a narrower category definition. Phase 4 adds atomic before/after history, reviewed batch application and rollback, and suppression of period comparisons across different classifier versions. See the [Phase 4 runbook](docs/jev-phase4-rollout.md). The Phase 2 review was accepted by the user; individual fixture annotations remain as originally drafted unless an edited review export is imported. This is not a validated accuracy benchmark. Run `npx tsx scripts/render-jev-review.ts` to generate the local review form.
+
+Phase 3 adds selective reply/quote context and independent uncertainty. Stored posts and cached context are reused first. Only uncertain decisions can trigger new one-hop context lookups, capped by `X_CONTEXT_MAX_POSTS_PER_DAY` (default 20 shared reservations per UTC day; 0 disables remote lookups). Context posts do not become collected samples. Apply the additive migration before running the new workers. See the [Phase 3 implementation and deployment notes](docs/jev-phase3-context.md).
+
+Raw posts and pending mentions are saved before Jev is called. Failed first analyses are retained for the staged reanalysis workflow or a resumed collection. A failed refresh retains the previous usable classification; no neutral result is fabricated on failure. Low-confidence relevance becomes UNCERTAIN, irrelevant matches become REJECTED, and successful decisions become COMPLETED. Legacy keyword results are excluded until reanalyzed. Duplicate post IDs and model associations are unique. Database leases prevent overlapping jobs, and a bounded collection run preserves partial progress on time limits or upstream quota errors. A scheduler must invoke the collection CLI or route; running the local app does not schedule jobs.
 
 Collection defaults to `MODELS_PER_RUN=3`, `TARGET_UNIQUE_POSTS_PER_MODEL=100`, `X_MAX_PAGES_PER_MODEL=20`, and `X_RESULTS_PER_PAGE=100`. Each run prioritizes models without a terminal collection outcome at the configured target in the last seven days, then sorts by oldest attempt within each group. A one-post credential check does not count as full collection coverage. Attempts are timestamped individually, not when a batch is merely selected. Approximately five successful batches cover 13 models, but reaching all targets may require further rotations.
 
@@ -116,7 +126,7 @@ Each model has a durable collection checkpoint: fixed search end time, next-page
 ## What the numbers mean
 
 - Every record is a model mention; one X post can contribute to multiple models.
-- Positive and negative percentages divide by all included opinions, including neutral and mixed. Not-discussed is excluded.
+- Positive and negative percentages divide by all included opinions, including neutral and mixed. Not-discussed and cannot-determine are excluded.
 - Only COMPLETED, relevant Jev results with confidence at least 0.3 are counted. This is an initial uncertainty threshold, not a measured accuracy guarantee.
 - Category views use that category's decision and confidence, independently of overall sentiment.
 - A sample below five mentions is labeled small. Changes compare net sentiment against the immediately preceding equal-duration period, only if both have at least five mentions. All-time has no previous-period comparison.
@@ -150,7 +160,7 @@ Pageviews count route changes, not filter-only query changes. Filter actions emi
 
 ## Routes and checks
 
-Public pages: `/` and `/models/[slug]`. Filters are shareable query parameters: `range=24h|7d|30d|all`, `vendor`, `model`, `category=all|reasoning|speed|cost|code_quality`, `sentiment=all|POSITIVE|NEGATIVE|NEUTRAL|MIXED`, `page`. The old `/compare`, `/posts` and `/methodology` addresses redirect into this flow.
+Public pages: `/` and `/models/[slug]`. Filters are shareable query parameters: `analysis=all|current`, `range=24h|7d|30d|all`, `vendor`, `model`, `category=all|reasoning|speed|cost|code_quality`, `sentiment=all|POSITIVE|NEGATIVE|NEUTRAL|MIXED`, `page`. The old `/compare`, `/posts` and `/methodology` addresses redirect into this flow.
 
 Read APIs: `/api/dashboard`, `/api/models`, `/api/models/[slug]`, `/api/posts`, `/api/ingestion/history`, `/api/health`. Responses use `{data,error}` and query inputs are validated. `/api/health` checks the database connection.
 
@@ -165,7 +175,9 @@ Send `POST /api/debug/jev` from Postman with `Content-Type: application/json`:
 }
 ```
 
-`postId` accepts an X post ID or the internal `XPost.id`; always send it as a string. `modelSlug` is optional when the post has exactly one stored model association. For multiple or missing associations, specify a catalog model slug. An explicit slug can also test relevance against a different catalog model. The endpoint reads the configured `DATABASE_URL`, calls `analyzeWithJev` with stored text and the target's catalog name, and returns the input/questions, structured analysis (labels, probabilities, confidence, resolved Jev version, token usage), elapsed time, and `persisted: false`. It does not write classifications or fetch anything from X. Each successful request makes a billable Jev call, subject to the function's existing retry behavior.
+`postId` accepts an X post ID or the internal `XPost.id`; always send it as a string. `modelSlug` is optional when the post has exactly one stored model association. For multiple or missing associations, specify a catalog model slug. An explicit slug can also test relevance against a different catalog model. The endpoint reads the configured `DATABASE_URL`, uses stored/cached context, and calls `analyzeWithJev` through the shared context-aware pipeline. It returns the final classification input/questions, structured analysis, context provenance, combined token usage, elapsed time, and `persisted: false`. By default it makes no X calls or database writes. Add `"fetchContext": true` to permit selective X lookups under the same daily cap as ingestion; this may write cache/budget records but never saved classifications. A request makes one billable Jev analysis, or two if newly fetched context is used for refinement, with the existing bounded transport retries. `analysis.contextLookup` records lookup outcomes when the first classification was retained.
+
+History is available at `GET /api/debug/jev/history?postId=<X-ID>&modelSlug=<slug>` with the same authorization. It returns up to 20 before/after revisions and a `nextBeforeRevision` cursor; pass that as `beforeRevision` for older entries.
 
 Authentication follows the ingestion endpoint: send `Authorization: Bearer <CRON_SECRET>` whenever configured; production always requires it. Secretless development allows requests without the header. Errors use `{data: null, error: {code, message}}`: 400 for invalid input or an ambiguous model, 404 for missing records, 401 for authorization, 503 for database failures, 429 for Jev rate limiting, and 502 for other Jev failures.
 

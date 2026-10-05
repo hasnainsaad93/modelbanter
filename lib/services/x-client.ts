@@ -1,3 +1,4 @@
+import { postText, type ContextPost } from "./post-context";
 import { collectionStart, recentSearchStart } from "./collection-window";
 export type XPostResponse = { id: string; text: string; created_at: string; author_id: string; lang?: string; conversation_id?: string; public_metrics?: { like_count: number; reply_count: number; retweet_count: number; quote_count: number; impression_count?: number } };
 export type XPage = { posts: XPostResponse[]; users: Map<string, { id: string; name: string; username: string }>; nextToken?: string };
@@ -70,4 +71,17 @@ function unixHeaderToIso(value: string | null) {
   if (!value) return undefined;
   const timestamp = Number(value);
   return Number.isFinite(timestamp) ? new Date(timestamp * 1000).toISOString() : undefined;
+}
+
+// Context lookup intentionally excludes user/media expansions and retries.
+export async function lookupContextPost(id: string, token = process.env.X_BEARER_TOKEN): Promise<ContextPost> {
+  if (!/^\d{1,25}$/.test(id)) throw new XApiError("Invalid context post ID", 400, "fatal");
+  if (!token) throw new XApiError("X_BEARER_TOKEN is not configured", 401, "auth");
+  const response = await fetch(`https://api.x.com/2/tweets/${id}?tweet.fields=id,text,author_id`, {
+    headers: { Authorization: `Bearer ${token}` }, signal: AbortSignal.timeout(10000),
+  });
+  if (!response.ok) throw new XApiError(`X context lookup failed (HTTP ${response.status})`, response.status, classifyXError(response.status, {}));
+  const body = await response.json() as { data?: { id?: string; text?: string; author_id?: string } };
+  if (body.data?.id !== id || typeof body.data.text !== "string" || !body.data.text.trim()) throw new XApiError("X context post is unavailable", 404, "fatal");
+  return { text: postText(body.data.text, body.data), authorXId: body.data.author_id };
 }

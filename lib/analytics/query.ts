@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { categoryKeys } from "../analysis";
 export const dashboardQuerySchema = z.object({
+  analysis: z.enum(["all", "current"]).default("all"),
   range: z.enum(["24h", "7d", "30d", "all"]).default("7d"),
   vendor: z.string().max(80).default(""),
   model: z.string().max(100).default(""),
