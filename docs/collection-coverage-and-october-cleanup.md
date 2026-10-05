@@ -1,6 +1,6 @@
 # Collection coverage and October cleanup runbook
 
-The user approved implementation on October 4, 2026. The collection fix and October cleanup are applied locally to `codex_signalist` on localhost. Production has not been changed. Local coverage improved from 3 to all 13 models reaching the 100-mention target. An initial credit shortage interrupted the backfill; after funding and explicit authorization, only the remaining three models were collected. This document preserves the original investigation and records the implementation, data changes, and procedure to repeat them on production.
+The user approved implementation on October 4, 2026. The collection fix and October cleanup were applied locally to `codex_signalist` on localhost. Local coverage improved from 3 to all 13 models reaching the 100-mention target. An initial credit shortage interrupted the backfill; after funding and explicit authorization, only the remaining three models were collected. After the user deployed the changes and authorized replacing production data, the local application dataset was copied to DigitalOcean `modelbanterdb` on October 5 UTC (October 4 Eastern). This document preserves the original investigation and records the implementation, data changes, and verified production replacement.
 
 ## Evidence from the local database
 
@@ -136,9 +136,9 @@ Verification at 23:13:52.429 UTC found 1,290 posts, 1,368 model mentions, 5,472 
 
 The X account balance was $24.81 at 23:11:14.293 UTC before collection and $23.09 at 23:13:32.977 UTC afterward: an observed decrease of $1.72. This is an account balance comparison, not an itemized job invoice; concurrent account activity could affect it. Classifier charges are separate. Private logs and balance snapshots listed above preserve the evidence. No production collection or deployment was performed.
 
-## Production procedure — not executed
+## Original production cleanup procedure
 
-Use this procedure when the release is deployed and production data changes are authorized. Production row counts will differ from local counts.
+This was the proposed procedure before production data changes were authorized. The user subsequently chose a complete replacement with the local dataset, recorded below. The production cleanup commands in this section were not executed.
 
 1. Verify the intended DigitalOcean account, app, managed database, collector command, target, batch size, four-hour schedule, and invocation logs. Current CLI access cannot see the deployed app, so the live scheduler has not been verified. A successful local backfill does not prove the live schedule works.
 2. Arrange a quiet maintenance period for collectors and reanalysis. Set the app-level run-time variable `COLLECTION_START_AT=2026-10-01T00:00:00Z` before allowing new collection. Preserve all secret settings; do not copy the local development database URL to production.
@@ -157,7 +157,7 @@ Use this procedure when the release is deployed and production data changes are 
 7. With X and Jev quota available, preview then apply initial missing-model coverage using the commands above. Record every cycle's target, cumulative accepted count, stop reason, and publication span. Exhaustion or page caps must remain distinguishable from reaching 100 and from blocked work.
 8. Verify `/api/health`, the dashboard's collection column and coverage notice, model detail, and `/api/ingestion/history`. Resume the schedule and confirm the first real invocation and subsequent rotation from job logs and database results. Keep the existing PostHog configuration.
 
-## Verification record
+## Original implementation verification record
 
 - 53 automated tests passed, including incomplete-model priority, one-post exclusion, resumed cumulative totals, failure signaling, cutoff validation, buffered-post cutoff enforcement, and existing rotation/checkpoint behavior.
 - Typecheck and lint passed.
@@ -165,3 +165,34 @@ Use this procedure when the release is deployed and production data changes are 
 - Local health, dashboard, and history endpoints returned HTTP 200 after restarting the app.
 - Initial browser verification showed 10/13 coverage, accepted counts, Haiku's upstream failure, DeepSeek's usage limit, and Grok's initial sample; incomplete evidence was explicitly labeled. After funding and the restricted completion run, the local dashboard API reported 13/13 coverage.
 - No production migration, deletion, deployment, push, scheduler change, or classification change was performed.
+
+## Authorized production data replacement
+
+After confirming deployment, the user explicitly requested deleting live data and copying local data to production. The target matched the managed database in the saved DigitalOcean app configuration: `modelbanterdb`. The source remained `codex_signalist` on localhost; the local `.env` was not switched to production.
+
+Preflight found that production still lacked `20261004020000_collection_coverage`, despite the reported deployment. After backups, `prisma migrate deploy` applied that missing migration. Production's original four migration records were preserved and verified, and the new migration checksum matched the committed SQL. Local and production column, constraint, index, and enum metadata matched before the data copy.
+
+Connection attempts intermittently timed out. Fifteen idle app sessions with no open transaction were closed to make room for maintenance connections. Collector and reanalysis job leases were acquired on both databases; orphaned leases from failed connection attempts were cleared by their recorded owner IDs. Failed attempts did not delete application records.
+
+Verified native PostgreSQL backups were saved privately before replacement:
+
+- Directory: `work/production-replacement/20261005T022938Z-b10872c5/` (0700; files 0600, Git-ignored).
+- `local-snapshot.dump`: 470,578 bytes; SHA-256 `46bffa525e3ddd34062fd35c435dfd2a6e292d2df4fb882a74491b0fa2651296`.
+- `production-before.dump`: 166,431 bytes; SHA-256 `27402e8803b14946e48f3a580648ed7e3fa8dee1b1ef61edb935fe4b0721b837`.
+- Both public-schema archives include schema and data; their table-of-contents lists were verified. They contain the temporary maintenance leases, identified by `leaseOwner` in `report.json`; release those leases if using a backup for recovery.
+
+Replacement committed at **2026-10-05T02:30:28.113077Z** (October 4, 10:30 p.m. Eastern). One transaction locked and truncated the seven application tables, imported local rows in foreign-key order, and checked each table's count and canonical row-content hash before committing. Readers could not observe a committed empty dataset. Production migration history and operational lock state were handled separately from application data.
+
+| Table | Production before | Production after, identical to local |
+| --- | ---: | ---: |
+| Model | 16 | 16 |
+| Topic | 4 | 4 |
+| XPost | 403 | 1,290 |
+| ModelMention | 411 | 1,368 |
+| MentionTopic | 1,644 | 5,472 |
+| IngestionRun | 8 | 6 |
+| IngestionModelResult | 28 | 28 |
+
+A post-commit migration-history query initially failed because the restore tool left the persistent session's search path empty. No schema or migration records were lost. Fresh, explicitly qualified checks verified the original migration records, the added migration, and every copied application row. All maintenance leases were released; verification found zero active leases, zero pre-October posts, and all 13 enabled models reaching the target of 100.
+
+The live health, dashboard, and collection-history endpoints returned HTTP 200. The dashboard reported `evaluated: 13`, `enabled: 13`, `target: 100`; collection history's latest run was `cmuufqu50000013ae02i8t1kp`, matching the local completion run. Private `report.json`, `verification-final.json`, `live-endpoint-verification.json`, API responses, migration log, and restore SQL preserve the execution evidence. The live scheduler was not changed or independently verified, and no X collection or classifier calls were made during the copy.

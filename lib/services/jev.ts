@@ -56,9 +56,11 @@ export async function analyzeWithJev(text: string, modelName: string): Promise<S
   for (let attempt = 0; attempt < 3; attempt++) {
     response = undefined;
     try {
+      const state = { target_model: modelName, post: text };
+      const questions = buildJevQuestions(modelName);
       response = await fetch("https://api.typesafe.ai/v1/systemone", {
         method: "POST", headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ model: process.env.TYPESAFE_MODEL || "jev-latest", state: { target_model: modelName, post: text }, questions: buildJevQuestions(modelName) }),
+        body: JSON.stringify({ model: process.env.TYPESAFE_MODEL || "jev-latest", state: state, questions: questions }),
         signal: AbortSignal.timeout(20000),
       });
     } catch {

@@ -154,6 +154,21 @@ Public pages: `/` and `/models/[slug]`. Filters are shareable query parameters: 
 
 Read APIs: `/api/dashboard`, `/api/models`, `/api/models/[slug]`, `/api/posts`, `/api/ingestion/history`, `/api/health`. Responses use `{data,error}` and query inputs are validated. `/api/health` checks the database connection.
 
+### Debug a stored post with Jev
+
+Send `POST /api/debug/jev` from Postman with `Content-Type: application/json`:
+
+```json
+{
+  "postId": "2106864289352937900",
+  "modelSlug": "<catalog-model-slug>"
+}
+```
+
+`postId` accepts an X post ID or the internal `XPost.id`; always send it as a string. `modelSlug` is optional when the post has exactly one stored model association. For multiple or missing associations, specify a catalog model slug. An explicit slug can also test relevance against a different catalog model. The endpoint reads the configured `DATABASE_URL`, calls `analyzeWithJev` with stored text and the target's catalog name, and returns the input/questions, structured analysis (labels, probabilities, confidence, resolved Jev version, token usage), elapsed time, and `persisted: false`. It does not write classifications or fetch anything from X. Each successful request makes a billable Jev call, subject to the function's existing retry behavior.
+
+Authentication follows the ingestion endpoint: send `Authorization: Bearer <CRON_SECRET>` whenever configured; production always requires it. Secretless development allows requests without the header. Errors use `{data: null, error: {code, message}}`: 400 for invalid input or an ambiguous model, 404 for missing records, 401 for authorization, 503 for database failures, 429 for Jev rate limiting, and 502 for other Jev failures.
+
 ```sh
 npm run typecheck
 npm run lint

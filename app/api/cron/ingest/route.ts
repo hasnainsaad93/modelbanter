@@ -1,14 +1,9 @@
 import { apiError, apiOk } from "@/lib/api";
 import { runIngestion } from "@/lib/services/ingestion";
+import { isCronAuthorized } from "@/lib/server/cron-auth";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
-
-export function isCronAuthorized(request: Request, env: { NODE_ENV?: string; CRON_SECRET?: string } = process.env) {
-  if (env.NODE_ENV !== "production" && !env.CRON_SECRET) return true;
-  if (!env.CRON_SECRET) return false;
-  return request.headers.get("authorization") === `Bearer ${env.CRON_SECRET}`;
-}
 
 export async function POST(request: Request) {
   if (!isCronAuthorized(request)) return apiError("UNAUTHORIZED", "A valid cron bearer token is required.", 401);
