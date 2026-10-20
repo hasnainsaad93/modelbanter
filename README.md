@@ -1,6 +1,6 @@
 # ModelBanter
 
-**The conversation around AI.**
+***The conversation around AI.***
 
 Repository: [hasnainsaad93/modelbanter](https://github.com/hasnainsaad93/modelbanter). Public domain: [modelbanter.com](https://modelbanter.com). Domain registration is separate from deployment and DNS configuration.
 
